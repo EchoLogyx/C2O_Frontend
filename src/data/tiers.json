@@ -1,0 +1,57 @@
+[
+  {
+    "id": "tier-001",
+    "name": "Budget",
+    "description": "Cost-effective options for high-volume orders and price-sensitive customers.",
+    "priceMin": 4,
+    "priceMax": 8,
+    "displayOrder": 1,
+    "active": true,
+    "productIds": ["prod-001", "prod-002", "prod-003", "prod-004", "prod-005", "prod-006", "prod-010", "prod-013", "prod-017", "prod-019", "prod-020", "prod-022", "prod-025", "prod-026", "prod-028", "prod-035"],
+    "colour": "#22c55e"
+  },
+  {
+    "id": "tier-002",
+    "name": "Everyday",
+    "description": "Quality workwear and corporate garments offering great value for money.",
+    "priceMin": 8,
+    "priceMax": 12,
+    "displayOrder": 2,
+    "active": true,
+    "productIds": ["prod-011", "prod-012", "prod-016", "prod-018", "prod-023", "prod-029", "prod-030", "prod-031", "prod-033", "prod-036"],
+    "colour": "#3b82f6"
+  },
+  {
+    "id": "tier-003",
+    "name": "Premium",
+    "description": "Ethically produced, high-quality garments from leading sustainable brands.",
+    "priceMin": 12,
+    "priceMax": 18,
+    "displayOrder": 3,
+    "active": true,
+    "productIds": ["prod-007", "prod-009", "prod-014", "prod-021", "prod-027", "prod-032"],
+    "colour": "#8b5cf6"
+  },
+  {
+    "id": "tier-004",
+    "name": "Retail",
+    "description": "Premium retail-quality garments for luxury brand and high-end corporate use.",
+    "priceMin": 18,
+    "priceMax": 25,
+    "displayOrder": 4,
+    "active": true,
+    "productIds": ["prod-008", "prod-015", "prod-024", "prod-034"],
+    "colour": "#f59e0b"
+  },
+  {
+    "id": "tier-005",
+    "name": "Designer",
+    "description": "Designer and luxury branded options for premium gifting and high-end promotions.",
+    "priceMin": 25,
+    "priceMax": 40,
+    "displayOrder": 5,
+    "active": false,
+    "productIds": [],
+    "colour": "#ef4444"
+  }
+]

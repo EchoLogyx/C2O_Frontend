@@ -1,0 +1,46 @@
+[
+  {
+    "id": "cat-001",
+    "name": "T-Shirts",
+    "slug": "t-shirts",
+    "description": "Classic and performance t-shirts for all occasions. From budget essentials to premium organic options.",
+    "visible": true,
+    "featured": true,
+    "productCount": 10,
+    "image": "/images/categories/t-shirts.jpg",
+    "displayOrder": 1
+  },
+  {
+    "id": "cat-002",
+    "name": "Polo Shirts",
+    "slug": "polo-shirts",
+    "description": "Smart casual polo shirts suitable for corporate, hospitality and sports use.",
+    "visible": true,
+    "featured": true,
+    "productCount": 8,
+    "image": "/images/categories/polo-shirts.jpg",
+    "displayOrder": 2
+  },
+  {
+    "id": "cat-003",
+    "name": "Hoodies",
+    "slug": "hoodies",
+    "description": "Comfortable hooded sweatshirts and zip hoodies for workwear, leisure and promotional use.",
+    "visible": true,
+    "featured": false,
+    "productCount": 10,
+    "image": "/images/categories/hoodies.jpg",
+    "displayOrder": 3
+  },
+  {
+    "id": "cat-004",
+    "name": "Jackets",
+    "slug": "jackets",
+    "description": "Softshell, fleece and showerproof jackets for outdoor, corporate and workwear applications.",
+    "visible": true,
+    "featured": false,
+    "productCount": 8,
+    "image": "/images/categories/jackets.jpg",
+    "displayOrder": 4
+  }
+]
