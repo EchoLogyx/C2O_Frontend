@@ -15,12 +15,12 @@ import {
 import { cn } from "@/lib/utils"
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Products", href: "/products", icon: Package },
-  { name: "Categories", href: "/categories", icon: Tag },
-  { name: "Tiers", href: "/tiers", icon: Layers },
-  { name: "Quotes", href: "/quotes", icon: FileText },
-  { name: "CSV Import", href: "/csv-import", icon: Upload },
+  { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { name: "Products", href: "/admin/products", icon: Package },
+  { name: "Categories", href: "/admin/categories", icon: Tag },
+  { name: "Tiers", href: "/admin/tiers", icon: Layers },
+  { name: "Quotes", href: "/admin/quotes", icon: FileText },
+  { name: "CSV Import", href: "/admin/csv-import", icon: Upload },
 ]
 
 export function Sidebar() {

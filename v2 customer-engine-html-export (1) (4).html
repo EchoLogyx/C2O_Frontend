@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>C2O Customer Engine — MVP Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 0; font-family: "Lato", "Quicksand", "Arial", -apple-system, BlinkMacSystemFont, sans-serif; }
+  #root { height: 100vh; }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type="number"] { -moz-appearance: textfield; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useRef, useEffect } = React;
+
+const Icon = ({ name, size = 14, style = {} }) => {
+  const icons = {
+    Send: <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>,
+    MessageSquare: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>,
+    FileText: <g><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></g>,
+    ShoppingCart: <g><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></g>,
+    Sparkles: <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3zM19 13l.75 2.25L22 16l-2.25.75L19 19l-.75-2.25L16 16l2.25-.75L19 13zM5 13l.75 2.25L8 16l-2.25.75L5 19l-.75-2.25L2 16l2.25-.75L5 13z"/>,
+    Headphones: <path d="M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>,
+    RefreshCw: <g><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></g>,
+    Check: <polyline points="20 6 9 17 4 12"/>,
+    Mail: <g><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></g>,
+    X: <g><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></g>,
+    Info: <g><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></g>,
+    ExternalLink: <g><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></g>,
+    Truck: <g><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></g>,
+    Phone: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>,
+    CreditCard: <g><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></g>,
+    ArrowLeft: <g><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></g>,
+    Edit: <g><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></g>,
+  };
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+      {icons[name]}
+    </svg>
+  );
+};
+
+const NAVY = '#4A90E2';
+const NAVY_DARK = '#2c6cb8';
+const NAVY_LIGHT = '#6ba5e8';
+const GOLD = '#d4a574';
+const GREEN = '#16a34a';
+const AMBER = '#f59e0b';
+const GREY_BG = '#f8fafc';
+const BORDER = '#e5e7eb';
+const MUTED = '#6b7280';
+const INK = '#111827';
+const CAD_BG = '#f3f6fb';
+const CAD_STROKE = '#4A90E2';
+const FONT_HEAD = '"Lato", "Arial", sans-serif';
+
+function CadIcon({ type, size = 56 }) {
+  const stroke = CAD_STROKE;
+  return (
+    <div style={{ width: size, height: size, background: CAD_BG, borderRadius: 8, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+      <svg viewBox="0 0 64 64" width={size * 0.8} height={size * 0.8} fill="none" stroke={stroke} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round">
+        {type === 'tshirts' && <g><path d="M22 10 L14 16 L10 26 L18 30 L20 26 L20 54 L44 54 L44 26 L46 30 L54 26 L50 16 L42 10 L38 14 Q32 18 26 14 Z"/><path d="M26 14 Q32 18 38 14"/></g>}
+        {type === 'polos' && <g><path d="M22 10 L14 16 L10 26 L18 30 L20 26 L20 54 L44 54 L44 26 L46 30 L54 26 L50 16 L42 10"/><path d="M22 10 L28 16 L32 22 L36 16 L42 10"/><line x1="32" y1="22" x2="32" y2="30"/><circle cx="30" cy="24" r="0.6" fill={stroke}/><circle cx="30" cy="28" r="0.6" fill={stroke}/></g>}
+        {type === 'hoodies' && <g><path d="M22 12 L14 18 L8 30 L18 34 L20 30 L20 56 L44 56 L44 30 L46 34 L56 30 L50 18 L42 12 Q38 20 32 22 Q26 20 22 12 Z"/><path d="M22 12 Q26 4 32 4 Q38 4 42 12"/><line x1="30" y1="34" x2="30" y2="48"/><line x1="34" y1="34" x2="34" y2="48"/></g>}
+        {type === 'jackets' && <g><path d="M22 10 L14 16 L10 28 L16 32 L16 54 L48 54 L48 32 L54 28 L50 16 L42 10"/><line x1="32" y1="10" x2="32" y2="54"/><line x1="22" y1="10" x2="32" y2="14"/><line x1="42" y1="10" x2="32" y2="14"/><rect x="20" y="38" width="6" height="8"/><rect x="38" y="38" width="6" height="8"/></g>}
+      </svg>
+    </div>
+  );
+}
+
+const PRODUCT_TYPES = [
+  { id: 'tshirts', name: 'T-Shirts', desc: 'Light, versatile, everyday wear' },
+  { id: 'polos',   name: 'Polo Shirts', desc: 'Smart-casual workhorse' },
+  { id: 'hoodies', name: 'Hoodies & Sweats', desc: 'Layering and warmth' },
+  { id: 'jackets', name: 'Jackets', desc: 'Outerwear and softshells' },
+];
+
+const PRODUCTS = [
+  { id: 'tee-classic', type: 'tshirts', name: 'Classic Cotton T-Shirt', url: 'https://www.clothes2order.com/t-shirts/', tiers: { Budget: 2.8, Everyday: 4.5, Premium: 8, Retail: 12, Designer: 18 } },
+  { id: 'tee-heavy', type: 'tshirts', name: 'Heavyweight T-Shirt', url: 'https://www.clothes2order.com/t-shirts/', tiers: { Budget: 3.5, Everyday: 5.8, Premium: 9.5, Retail: 14, Designer: 21 } },
+  { id: 'tee-perf', type: 'tshirts', name: 'Performance T-Shirt', url: 'https://www.clothes2order.com/t-shirts/', tiers: { Budget: 4.2, Everyday: 6.8, Premium: 10, Retail: 15, Designer: 22 } },
+  { id: 'polo-classic', type: 'polos', name: 'Classic Polo Shirt', url: 'https://www.clothes2order.com/polo-shirts/', tiers: { Budget: 4.5, Everyday: 7.2, Premium: 12.5, Retail: 18, Designer: 28 } },
+  { id: 'polo-perf', type: 'polos', name: 'Performance Polo', url: 'https://www.clothes2order.com/polo-shirts/', tiers: { Budget: 5.2, Everyday: 8.5, Premium: 14, Retail: 20, Designer: 32 } },
+  { id: 'polo-ls', type: 'polos', name: 'Long-Sleeve Polo', url: 'https://www.clothes2order.com/polo-shirts/', tiers: { Budget: 5.8, Everyday: 9.5, Premium: 15, Retail: 22, Designer: 34 } },
+  { id: 'hood-pullover', type: 'hoodies', name: 'Pullover Hoodie', url: 'https://www.clothes2order.com/hoodies/', tiers: { Budget: 9, Everyday: 15.5, Premium: 24, Retail: 35, Designer: 52 } },
+  { id: 'hood-zip', type: 'hoodies', name: 'Zip-Through Hoodie', url: 'https://www.clothes2order.com/hoodies/', tiers: { Budget: 11, Everyday: 17.5, Premium: 26, Retail: 38, Designer: 55 } },
+  { id: 'hood-qz', type: 'hoodies', name: 'Quarter-Zip Sweat', url: 'https://www.clothes2order.com/sweatshirts/', tiers: { Budget: 10, Everyday: 16, Premium: 25, Retail: 36, Designer: 54 } },
+  { id: 'jkt-soft', type: 'jackets', name: 'Softshell Jacket', url: 'https://www.clothes2order.com/jackets/', tiers: { Budget: 18, Everyday: 28, Premium: 42, Retail: 60, Designer: 95 } },
+  { id: 'jkt-wp', type: 'jackets', name: 'Waterproof Shell', url: 'https://www.clothes2order.com/jackets/', tiers: { Budget: 22, Everyday: 34, Premium: 52, Retail: 75, Designer: 110 } },
+  { id: 'jkt-vest', type: 'jackets', name: 'Padded Bodywarmer', url: 'https://www.clothes2order.com/jackets/', tiers: { Budget: 16, Everyday: 24, Premium: 36, Retail: 52, Designer: 78 } },
+];
+
+const TIER_META = {
+  Budget:   { name: 'Budget-friendly',   brand: 'Fruit of the Loom Value',  desc: 'Solid, reliable, good for high volume.' },
+  Everyday: { name: 'Everyday classic',  brand: 'Gildan SoftStyle',         desc: 'The workhorse — soft feel, great print.' },
+  Premium:  { name: 'Premium mid-range', brand: 'Stanley/Stella Prepster',  desc: '220gsm organic cotton, photographs well.', recommended: true },
+  Retail:   { name: 'Retail quality',    brand: 'Tee Jays Luxury',          desc: 'Heavier weight, keeps shape after washes.' },
+  Designer: { name: 'Designer brand',    brand: 'Fred Perry / Nike',        desc: 'Recognised branded garment, executive feel.' },
+};
+
+const USE_CASES = ['Workwear', 'Sports & Teamwear', 'Corporate', 'Events', 'Hospitality', 'Schools', 'Other'];
+const PLACEMENTS = ['Left chest', 'Right chest', 'Centre back', 'Left sleeve', 'Right sleeve', 'Nape of neck'];
+const METHODS = [
+  { id: 'embroidery', name: 'Embroidery', costPer: 2.5, setup: 15, blurb: 'Premium look. Best for polos, hoodies, jackets.' },
+  { id: 'print', name: 'Print', costPer: 1.5, setup: 25, blurb: 'Best for t-shirts, large logos, and higher volumes.' },
+];
+
+const FAQ = [
+  { q: 'What is your minimum order?', a: "Our minimum is just 1 garment — there's no minimum, though pricing improves with volume." },
+  { q: 'Do you offer free setup?', a: "Yes — if your logo is already on file with us, setup is always free. For first-time designs, we waive the setup fee on orders over 250 units." },
+  { q: 'How long does delivery take?', a: "Standard turnaround is 7–10 working days from artwork approval. Express (3–5 days) is available, and Next Day delivery if you order before 11am — there's an uplift, which I'll show in your quote." },
+  { q: 'Can I see a mockup before I order?', a: "Absolutely. Every order gets a free digital mockup before we go to production. Nothing prints until you approve it." },
+  { q: 'Do you ship internationally?', a: "Yes, we ship to most of Europe and selected worldwide destinations. International shipping costs depend on weight and destination — our team will quote it directly. Hit 'Human' below and we'll come back to you with a number." },
+  { q: 'What file format do you need for my logo?', a: "Vector files (.ai, .eps, .pdf, .svg) work best. We can work with high-res PNG or JPG too — our artwork team will tidy it up before production." },
+];
+
+function Bubble({ from, children }) {
+  const isMorgan = from === 'morgan';
+  return (
+    <div style={{ display: 'flex', justifyContent: isMorgan ? 'flex-start' : 'flex-end', marginBottom: 12 }}>
+      <div style={{ maxWidth: '78%', padding: '10px 14px', borderRadius: isMorgan ? '14px 14px 14px 4px' : '14px 14px 4px 14px', background: isMorgan ? '#fff' : NAVY, color: isMorgan ? INK : '#fff', border: isMorgan ? `1px solid ${BORDER}` : 'none', fontSize: 14, lineHeight: 1.5, boxShadow: isMorgan ? '0 1px 2px rgba(0,0,0,0.04)' : 'none' }}>{children}</div>
+    </div>
+  );
+}
+
+function QuickReply({ children, onClick, highlight }) {
+  return <button onClick={onClick} style={{ padding: '8px 14px', borderRadius: 20, border: `1.5px solid ${highlight ? NAVY : BORDER}`, background: highlight ? NAVY : '#fff', color: highlight ? '#fff' : NAVY, fontSize: 13, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>{children}</button>;
+}
+
+function InlineOptions({ children, label }) {
+  return (
+    <div style={{ marginBottom: 16 }}>
+      {label && <div style={{ fontSize: 11, fontWeight: 600, color: MUTED, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8, fontFamily: FONT_HEAD }}>{label}</div>}
+      {children}
+    </div>
+  );
+}
+
+function PhaseTag() {
+  return <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.5px', background: '#fef3c7', color: '#92400e', padding: '2px 6px', borderRadius: 4, marginLeft: 6, textTransform: 'uppercase' }}>Phase 2</span>;
+}
+
+function MorganAvatar({ size = 32 }) {
+  return (
+    <div style={{ width: size, height: size, borderRadius: '50%', background: NAVY, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+      <svg viewBox="0 0 24 24" width={size * 0.6} height={size * 0.6} fill="#fff">
+        <path d="M4 4h13a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-4l-4 3.5V17H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z" fill="#fff"/>
+        <circle cx="9.5" cy="10.5" r="1.4" fill={NAVY}/>
+        <circle cx="14.5" cy="10.5" r="1.4" fill={NAVY}/>
+      </svg>
+    </div>
+  );
+}
+
+function ProductLink({ url }) {
+  return <a href={url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: NAVY, fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 3, marginTop: 4 }}>View product <Icon name="ExternalLink" size={10} /></a>;
+}
+
+const FEATURE_LABELS = { durable: 'durable', waterproof: 'waterproof', breathable: 'breathable', eco: 'eco-friendly', premium: 'premium feel', easycare: 'easy-care', hivis: 'hi-vis', stretchy: 'stretch', lightweight: 'lightweight', warm: 'warm' };
+
+function AdviceShortlist({ scenario }) {
+  return (
+    <div>
+      <div style={{ marginBottom: 10 }}>{scenario.intro}</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {scenario.items.map((r, i) => (
+          <div key={i} style={{ background: GREY_BG, padding: 10, borderRadius: 8, fontSize: 13, display: 'flex', gap: 10 }}>
+            <CadIcon type={r.cad || 'polos'} size={56} />
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>
+                <div style={{ fontWeight: 600, color: INK }}>{r.name}</div>
+                <div style={{ fontSize: 12, fontWeight: 600, color: NAVY, whiteSpace: 'nowrap' }}>{r.price}</div>
+              </div>
+              <div style={{ fontSize: 12, color: MUTED, marginTop: 2 }}>{r.why}</div>
+              <ProductLink url={r.url || 'https://www.clothes2order.com/'} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ marginTop: 10, fontSize: 12, color: MUTED, fontStyle: 'italic', lineHeight: 1.5 }}>{scenario.note}</div>
+    </div>
+  );
+}
+
+const ADVICE_SCENARIOS = [
+  { id: 'tech', label: '40-person tech company', request: "We're a 40-person tech company in Manchester. Want something smart-casual, summer wear, with our logo subtly placed. Budget around £20 a head.", intro: "Got it — smart-casual, summer-friendly, subtle branding, around £20 a head. Here's a shortlist that fits:", items: [{ name: 'Premium Polo (Heather Grey)', cad: 'polos', why: "Cotton-rich, modern slim fit. Doesn't shout 'corporate uniform'.", price: '£14.50', url: 'https://www.clothes2order.com/polo-shirts/' },{ name: 'Lightweight Crew Neck Tee', cad: 'tshirts', why: 'Layers under the polo or stands alone for warmer days.', price: '£8.20', url: 'https://www.clothes2order.com/t-shirts/' },{ name: 'Quarter-Zip Sweat (Optional)', cad: 'hoodies', why: 'For cooler office days. Same brand family.', price: '£18.00', url: 'https://www.clothes2order.com/sweatshirts/' }], note: "Total budget: ~£20.50 per head if you go polo + tee." },
+  { id: 'restaurant', label: 'Independent restaurant', request: "Just opened a 12-cover bistro in Bristol. Front-of-house team of 5, kitchen team of 3. Need uniforms that look sharp but practical. Budget £15 a head.", intro: "Lovely — bistro front and back of house, 8 people total, sharp but practical, ~£15 a head. Here's what works:", items: [{ name: 'Black Bistro Apron', cad: 'tshirts', why: 'Cross-back straps, two pockets.', price: '£8.50', url: 'https://www.clothes2order.com/aprons/' },{ name: 'Short-Sleeve Black Polo', cad: 'polos', why: 'Easy-care fabric.', price: '£9.00', url: 'https://www.clothes2order.com/polo-shirts/' },{ name: 'Chef Beanie', cad: 'hoodies', why: 'Ties FOH and BOH visually.', price: '£4.20', url: 'https://www.clothes2order.com/headwear/' }], note: "Apron + polo lands at ~£17.50 per head." },
+  { id: 'school', label: 'School PE kit', request: "Independent school in Surrey. 280 pupils across three houses. £25 budget per pupil.", intro: "280 across three houses, ~£25 a head, durability is the real ask. Here's a kit that lasts:", items: [{ name: 'House Polo (3 colours)', cad: 'polos', why: 'Quick-dry mesh fabric.', price: '£10.50', url: 'https://www.clothes2order.com/sports-teamwear/' },{ name: 'Performance Shorts', cad: 'tshirts', why: 'Elastic waist, mesh side panels.', price: '£8.00', url: 'https://www.clothes2order.com/sports-teamwear/' },{ name: 'Drawstring Kit Bag', cad: 'tshirts', why: 'Names go on the strap.', price: '£5.50', url: 'https://www.clothes2order.com/bags/' }], note: "Comes in at £24 per pupil with all three. At 280 units you're past our free-setup threshold." },
+  { id: 'construction', label: 'Construction firm — workwear', request: "Civils contractor. 60 site staff, hi-vis compliant, £40 a head.", intro: "60 site staff, hi-vis Class 2, £40 budget. Here's a compliant kit:", items: [{ name: 'Hi-Vis Class 2 Polo', cad: 'polos', why: 'EN ISO 20471 certified.', price: '£18.00', url: 'https://www.clothes2order.com/workwear/' },{ name: 'Cargo Work Trousers', cad: 'tshirts', why: 'Knee-pad pockets, reinforced seams.', price: '£22.00', url: 'https://www.clothes2order.com/workwear/' },{ name: 'Padded Bodywarmer (Hi-Vis)', cad: 'jackets', why: 'Layering for cold site days.', price: '£32.00', url: 'https://www.clothes2order.com/workwear/' }], note: "Polo + trousers is £40 per head exactly." },
+];
+
+function CustomerEngine() {
+  const [view, setView] = useState('home');
+  const [messages, setMessages] = useState([]);
+  const [quote, setQuote] = useState({ useCase: null, qty: 10, priority: null, productType: null, product: null, placement: null, method: null, logoStatus: null, deadline: null, selectedTier: null, name: '', email: '' });
+  const [step, setStep] = useState(0);
+  const [textInput, setTextInput] = useState('');
+  const [usedAdvice, setUsedAdvice] = useState([]);
+  const [adviceProfile, setAdviceProfile] = useState({ sector: null, headcount: null, budget: null, tier: null, productType: null, features: [], season: null, formality: null, branding: null, asked: [], pending: null });
+  const [actionMode, setActionMode] = useState(null);
+  const scrollRef = useRef(null);
+
+  useEffect(() => { if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight; }, [messages, view, step]);
+
+  const reset = () => { setView('home'); setMessages([]); setQuote({ useCase: null, qty: 10, priority: null, productType: null, product: null, placement: null, method: null, logoStatus: null, deadline: null, selectedTier: null, name: '', email: '' }); setStep(0); setTextInput(''); setUsedAdvice([]); setAdviceProfile({ sector: null, headcount: null, budget: null, tier: null, productType: null, features: [], season: null, formality: null, branding: null, asked: [], pending: null }); setActionMode(null); };
+
+  const push = (from, content) => setMessages(m => [...m, { from, content, t: Date.now() + Math.random() }]);
+
+  const isWithinCallHours = () => { const now = new Date(); const h = now.getHours(); const day = now.getDay(); return day >= 1 && day <= 5 && h >= 9 && h < 17; };
+  const nextDayAvailable = () => new Date().getHours() < 11;
+
+  const startCapability = (cap) => {
+    setView(cap); setStep(0); setTextInput(''); setActionMode(null);
+    if (cap === 'quote') setMessages([{ from: 'morgan', content: "Great — I'll get you five priced options in under two minutes. First, what's the order for?", t: 1 }]);
+    else if (cap === 'faq') setMessages([{ from: 'morgan', content: "Sure — tap one of these, or type your own question below.", t: 1 }]);
+    else if (cap === 'chat') {
+      const callWindow = isWithinCallHours();
+      setMessages([
+        { from: 'morgan', content: callWindow ? "Connecting you to our team now. Sarah is online — we typically respond within 30 minutes during working hours (9am–5pm)." : "Our team is offline (working hours 9am–5pm Mon–Fri). I'll take your details and we'll be in touch within 30 minutes of opening tomorrow.", t: 1 },
+        { from: 'system', content: "Sarah from C2O has joined the chat", t: 2 },
+        { from: 'human', content: "Hi there! I'm Sarah — how can I help today?", t: 3 },
+      ]);
+    } else if (cap === 'advice') {
+      setUsedAdvice([]);
+      setAdviceProfile({ sector: null, headcount: null, budget: null, tier: null, productType: null, features: [], season: null, formality: null, branding: null, asked: [], pending: null });
+      setMessages([{ from: 'morgan', content: "I'll help you find the right kit. Tell me about your team — who's it for, what for, and any specific needs?", t: 1 }]);
+    }
+  };
+
+  const quoteSteps = [
+    { key: 'useCase', q: "What's the order for?", options: USE_CASES, freeText: true },
+    { key: 'qty', q: "How many do you need?", qtyStepper: true },
+    { key: 'priority', q: "What matters most for this order?", options: ['Lowest price', 'Best quality', 'Most durable', 'Sustainability', 'Best balance'], freeText: true },
+    { key: 'productType', q: "Which type of garment?", productTypes: true },
+    { key: 'product', q: "Pick your specific style:", products: true },
+    { key: 'placement', q: "Where would you like the logo?", options: PLACEMENTS },
+    { key: 'method', q: "And how should we apply it?", methods: true },
+    { key: 'logoStatus', q: "Is this a new logo, or one we already have on file?", options: ['New design', 'Existing logo on file'] },
+    { key: 'deadline', q: "When do you need them by?", deadline: true },
+  ];
+
+  const handleQuoteAnswer = (key, value, label) => {
+    setQuote(q => ({ ...q, [key]: value })); push('user', label || value);
+    setTimeout(() => {
+      const next = step + 1;
+      if (next < quoteSteps.length) { push('morgan', quoteSteps[next].q); setStep(next); }
+      else { push('morgan', 'Brilliant — generating your five options now…'); setTimeout(() => setStep(quoteSteps.length), 600); }
+    }, 300);
+  };
+
+  const goBackToStep = (targetStep) => {
+    if (targetStep < 0 || targetStep >= step) return;
+    const updated = { ...quote };
+    quoteSteps.forEach((s, i) => { if (i >= targetStep) { if (s.key === 'qty') updated.qty = 10; else updated[s.key] = null; } });
+    updated.selectedTier = null;
+    setQuote(updated);
+    setMessages(prev => {
+      let morganCount = -1; let cutoff = prev.length;
+      for (let i = 0; i < prev.length; i++) {
+        if (prev[i].from === 'morgan') { morganCount++; if (morganCount === targetStep + 1) { cutoff = i + 1; break; } }
+      }
+      return prev.slice(0, cutoff);
+    });
+    setStep(targetStep);
+  };
+
+  const handleQuoteFreeText = (text) => {
+    const s = quoteSteps[step];
+    if (!s || !s.freeText) return;
+    handleQuoteAnswer(s.key, text, text);
+  };
+
+  const getDelivery = () => { if (!quote.deadline) return 9.95; if (quote.deadline.includes('Next day')) return 34.95; if (quote.deadline.includes('Express')) return 24.95; if (quote.deadline.includes('Standard') || quote.deadline.includes('7–10')) return 9.95; return 6.95; };
+
+  const computeQuote = () => {
+    if (!quote.product || !quote.qty || !quote.method) return null;
+    const product = PRODUCTS.find(p => p.id === quote.product);
+    const method = METHODS.find(m => m.id === quote.method);
+    const qty = parseInt(quote.qty) || 10;
+    const existingLogo = quote.logoStatus === 'Existing logo on file';
+    const volumeWaiver = qty >= 250;
+    const setupFree = existingLogo || volumeWaiver;
+    const setupReason = existingLogo ? 'existing' : volumeWaiver ? 'volume' : 'none';
+    const delivery = getDelivery();
+    return ['Budget', 'Everyday', 'Premium', 'Retail', 'Designer'].map(tier => {
+      const unit = product.tiers[tier] + method.costPer;
+      const setup = setupFree ? 0 : method.setup;
+      const total = unit * qty + setup + delivery;
+      return { tier, unit, qty, setup, setupFree, setupReason, delivery, total, perUnit: total / qty, garment: product.tiers[tier], decoration: method.costPer };
+    });
+  };
+  const quoteOptions = computeQuote();
+
+  const askFAQ = (item) => { push('user', item.q); setTimeout(() => push('morgan', item.a), 300); };
+
+  const handleFAQText = () => {
+    const q = textInput.trim(); if (!q) return;
+    push('user', q); setTextInput('');
+    const lower = q.toLowerCase();
+    let answer = null;
+    const match = FAQ.find(f => { const kws = f.q.toLowerCase().match(/\b\w{4,}\b/g) || []; return kws.some(k => lower.includes(k)); });
+    if (match) answer = match.a;
+    if (!answer) {
+      if (lower.includes('price') || lower.includes('cost') || lower.includes('how much')) answer = "Pricing depends on quantity, garment and decoration method. Fastest way to a real number is the Express Quote — about 2 minutes. Want me to start?";
+      else if (lower.includes('return')) answer = "Branded items are made to order, so we can't take general returns. Quality issues we always sort.";
+      else if (lower.includes('sample')) answer = "Yes — unbranded blank samples available. Small charge that gets refunded against your order.";
+      else if (lower.includes('vat')) answer = "All quoted prices are ex-VAT. We add 20% VAT at checkout.";
+      else if (lower.includes('next day')) answer = "Yes — Next Day delivery is available if you order before 11am. There's an uplift on delivery cost which I'll show in the quote.";
+    }
+    if (!answer) answer = "Good question — let me pass that to a human. Hit 'Human' below for a live conversation.";
+    setTimeout(() => push('morgan', answer), 500);
+  };
+
+  const handleAdviceScenario = (scenario) => {
+    setUsedAdvice(u => [...u, scenario.id]);
+    push('user', scenario.request);
+    setTimeout(() => push('morgan', <AdviceShortlist scenario={scenario} />), 600);
+  };
+
+  const renderQuoteInline = () => {
+    if (step >= quoteSteps.length) return null;
+    const s = quoteSteps[step];
+
+    if (s.qtyStepper) {
+      const qty = quote.qty || 10;
+      const setQty = (v) => setQuote(q => ({ ...q, qty: Math.max(1, Math.min(10000, v)) }));
+      const bump = (delta) => setQty((quote.qty || 10) + delta);
+      return (
+        <InlineOptions>
+          <div style={{ background: '#fff', border: `1.5px solid ${BORDER}`, borderRadius: 12, padding: 16, maxWidth: 380 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
+              <button onClick={() => bump(-1)} style={{ width: 40, height: 40, borderRadius: 8, border: `1.5px solid ${BORDER}`, background: '#fff', cursor: 'pointer', fontSize: 20, fontWeight: 600, color: NAVY, fontFamily: 'inherit' }}>−</button>
+              <input type="number" value={qty} onChange={e => setQty(parseInt(e.target.value) || 1)} style={{ width: 100, padding: '10px 12px', borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 20, fontWeight: 700, color: INK, textAlign: 'center', fontFamily: FONT_HEAD, outline: 'none' }} />
+              <button onClick={() => bump(1)} style={{ width: 40, height: 40, borderRadius: 8, border: `1.5px solid ${BORDER}`, background: '#fff', cursor: 'pointer', fontSize: 20, fontWeight: 600, color: NAVY, fontFamily: 'inherit' }}>+</button>
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginTop: 12 }}>
+              {[1, 5, 10, 25, 50, 100, 250, 500].map(n => (
+                <button key={n} onClick={() => setQty(n)} style={{ padding: '4px 10px', borderRadius: 14, border: `1px solid ${qty === n ? NAVY : BORDER}`, background: qty === n ? NAVY : '#fff', color: qty === n ? '#fff' : MUTED, fontSize: 11, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>{n}</button>
+              ))}
+            </div>
+            <button onClick={() => handleQuoteAnswer('qty', qty, `${qty} units`)} style={{ width: '100%', marginTop: 12, padding: '10px 16px', borderRadius: 8, border: 'none', background: NAVY, color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>Continue with {qty} →</button>
+          </div>
+        </InlineOptions>
+      );
+    }
+
+    if (s.productTypes) {
+      return (
+        <InlineOptions>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
+            {PRODUCT_TYPES.map(pt => (
+              <button key={pt.id} onClick={() => handleQuoteAnswer('productType', pt.id, pt.name)} style={{ padding: 12, borderRadius: 10, border: `1.5px solid ${BORDER}`, background: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'inherit' }}>
+                <CadIcon type={pt.id} size={48} />
+                <div style={{ textAlign: 'left', minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: INK, fontFamily: FONT_HEAD }}>{pt.name}</div>
+                  <div style={{ fontSize: 11, color: MUTED }}>{pt.desc}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </InlineOptions>
+      );
+    }
+
+    if (s.products) {
+      const filtered = PRODUCTS.filter(p => p.type === quote.productType);
+      return (
+        <InlineOptions>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
+            {filtered.map(p => (
+              <button key={p.id} onClick={() => handleQuoteAnswer('product', p.id, p.name)} style={{ padding: 10, borderRadius: 10, border: `1.5px solid ${BORDER}`, background: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'inherit' }}>
+                <CadIcon type={p.type} size={48} />
+                <div style={{ textAlign: 'left', minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: INK, fontFamily: FONT_HEAD }}>{p.name}</div>
+                  <div style={{ fontSize: 11, color: MUTED }}>From £{p.tiers.Budget.toFixed(2)}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </InlineOptions>
+      );
+    }
+
+    if (s.methods) {
+      return (
+        <InlineOptions>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {METHODS.map(m => (
+              <button key={m.id} onClick={() => handleQuoteAnswer('method', m.id, m.name)} style={{ padding: 14, borderRadius: 10, border: `1.5px solid ${BORDER}`, background: '#fff', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: INK, fontFamily: FONT_HEAD }}>{m.name}</div>
+                <div style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>{m.blurb}</div>
+              </button>
+            ))}
+          </div>
+        </InlineOptions>
+      );
+    }
+
+    if (s.deadline) {
+      const nextDay = nextDayAvailable();
+      const options = [
+        { label: 'Next day (before 11am cutoff)', value: 'Next day', enabled: nextDay, tag: nextDay ? 'AVAILABLE' : 'CUT OFF FOR TODAY' },
+        { label: 'Within 5 days (Express)', value: 'Within 5 days (Express)', enabled: true },
+        { label: '7–10 working days (Standard)', value: '7–10 working days (Standard)', enabled: true },
+        { label: '2–3 weeks', value: '2–3 weeks', enabled: true },
+        { label: 'No rush', value: 'No rush', enabled: true },
+      ];
+      return (
+        <InlineOptions>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 420 }}>
+            {options.map(opt => (
+              <button key={opt.value} onClick={() => opt.enabled && handleQuoteAnswer('deadline', opt.value)} disabled={!opt.enabled} style={{ padding: '12px 14px', borderRadius: 10, border: `1.5px solid ${BORDER}`, background: opt.enabled ? '#fff' : '#f3f4f6', cursor: opt.enabled ? 'pointer' : 'not-allowed', textAlign: 'left', fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: opt.enabled ? 1 : 0.6 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: opt.enabled ? INK : MUTED }}>{opt.label}</div>
+                {opt.tag && <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.5px', background: opt.enabled ? '#dcfce7' : '#fee2e2', color: opt.enabled ? '#166534' : '#991b1b', padding: '2px 6px', borderRadius: 4 }}>{opt.tag}</span>}
+              </button>
+            ))}
+          </div>
+        </InlineOptions>
+      );
+    }
+
+    // Default — chips with optional free-text input
+    return (
+      <InlineOptions>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: s.freeText ? 10 : 0 }}>
+          {s.options.map(opt => <QuickReply key={opt} onClick={() => handleQuoteAnswer(s.key, opt)}>{opt}</QuickReply>)}
+        </div>
+        {s.freeText && (
+          <div style={{ display: 'flex', gap: 8, maxWidth: 420 }}>
+            <input value={textInput} onChange={e => setTextInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && textInput.trim()) { handleQuoteFreeText(textInput.trim()); setTextInput(''); } }} placeholder="Or type your own answer…" style={{ flex: 1, padding: '10px 12px', borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 13, fontFamily: 'inherit', outline: 'none' }} />
+            <button onClick={() => { if (textInput.trim()) { handleQuoteFreeText(textInput.trim()); setTextInput(''); } }} style={{ padding: '10px 14px', borderRadius: 8, border: 'none', background: NAVY, color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center' }}><Icon name="Send" size={14} /></button>
+          </div>
+        )}
+      </InlineOptions>
+    );
+  };
+
+  const selectTier = (tier) => { setQuote(q => ({ ...q, selectedTier: tier })); setActionMode(null); };
+
+  const renderQuoteResults = () => {
+    if (!quoteOptions) return null;
+    const product = PRODUCTS.find(p => p.id === quote.product);
+    const method = METHODS.find(m => m.id === quote.method);
+    const selected = quoteOptions.find(o => o.tier === quote.selectedTier);
+
+    return (
+      <div>
+        <Bubble from="morgan">
+          <div style={{ display: 'flex', gap: 10, marginBottom: 8 }}>
+            <CadIcon type={product.type} size={56} />
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontWeight: 700, color: INK, marginBottom: 2, fontFamily: FONT_HEAD }}>{quote.qty} × {product.name}</div>
+              <div style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>{method.name} on {quote.placement?.toLowerCase()} · {quote.logoStatus === 'Existing logo on file' ? 'logo on file' : 'new design'}{quote.priority && ` · prioritising ${quote.priority.toLowerCase()}`}</div>
+              <ProductLink url={product.url} />
+            </div>
+          </div>
+          <div>Here are your five quality options. <strong>Tap one to select it</strong> — full breakdown and next steps will appear below.</div>
+        </Bubble>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
+          {quoteOptions.map((o) => {
+            const meta = TIER_META[o.tier] || {};
+            const isSelected = quote.selectedTier === o.tier;
+            const anythingSelected = !!quote.selectedTier;
+            const showRecommended = meta.recommended && !anythingSelected;
+            return (
+              <button key={o.tier} onClick={() => selectTier(o.tier)} style={{ padding: '12px 14px', borderRadius: 12, background: isSelected ? '#eff6ff' : '#fff', border: isSelected ? `2px solid ${NAVY}` : (showRecommended ? `2px solid ${NAVY_LIGHT}` : `1px solid ${BORDER}`), position: 'relative', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left', width: '100%' }}>
+                {showRecommended && <div style={{ position: 'absolute', top: -9, left: 14, background: NAVY_LIGHT, color: '#fff', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10, letterSpacing: '0.3px' }}>RECOMMENDED</div>}
+                <div style={{ width: 20, height: 20, borderRadius: '50%', border: `2px solid ${isSelected ? NAVY : '#cbd5e1'}`, background: '#fff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {isSelected && <div style={{ width: 10, height: 10, borderRadius: '50%', background: NAVY }} />}
+                </div>
+                <CadIcon type={product.type} size={48} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: INK, fontFamily: FONT_HEAD }}>{meta.name || o.tier}</div>
+                    <div style={{ fontSize: 11, color: NAVY, fontWeight: 600 }}>{meta.brand}</div>
+                  </div>
+                  <div style={{ fontSize: 12, color: MUTED, marginTop: 2 }}>{meta.desc}</div>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <div style={{ fontSize: 20, fontWeight: 800, color: INK, lineHeight: 1, fontFamily: FONT_HEAD }}>£{o.total.toFixed(0)}</div>
+                  <div style={{ fontSize: 10, color: MUTED, marginTop: 4 }}>£{o.perUnit.toFixed(2)}/unit</div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {selected && (() => {
+          const meta = TIER_META[selected.tier];
+          return (
+            <div style={{ background: '#fff', border: `2px solid ${NAVY}`, borderRadius: 12, padding: 16, marginBottom: 12, boxShadow: '0 4px 12px rgba(74, 144, 226, 0.15)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: INK, fontFamily: FONT_HEAD }}>Your selection: {meta.name}</div>
+                <div style={{ fontSize: 11, color: NAVY, fontWeight: 600, background: '#eff6ff', padding: '4px 8px', borderRadius: 6 }}>{meta.brand}</div>
+              </div>
+              <div style={{ background: GREY_BG, borderRadius: 8, padding: 12, marginBottom: 12 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: MUTED, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8 }}>Full breakdown</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13, color: INK }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Garment ({product.name}, {selected.tier})</span><span>£{selected.garment.toFixed(2)} × {selected.qty} = £{(selected.garment * selected.qty).toFixed(2)}</span></div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>{method.name} (per unit)</span><span>£{selected.decoration.toFixed(2)} × {selected.qty} = £{(selected.decoration * selected.qty).toFixed(2)}</span></div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>Setup fee {selected.setupFree && <span style={{ color: GREEN, fontWeight: 600 }}>(FREE {selected.setupReason === 'existing' ? '— logo on file' : '— 250+ units'})</span>}</span><span>{selected.setupFree ? '£0.00' : `£${selected.setup.toFixed(2)}`}</span></div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Icon name="Truck" size={12} /> Delivery ({quote.deadline})</span><span>£{selected.delivery.toFixed(2)}</span></div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: `1px solid ${BORDER}`, paddingTop: 8, marginTop: 4, fontSize: 15, fontWeight: 700, color: INK, fontFamily: FONT_HEAD }}><span>Total (ex. VAT)</span><span>£{selected.total.toFixed(2)}</span></div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: MUTED }}><span>Per-unit cost</span><span>£{selected.perUnit.toFixed(2)}</span></div>
+                </div>
+              </div>
+              {!actionMode && (
+                <div>
+                  <div style={{ fontSize: 12, color: MUTED, marginBottom: 10 }}>What would you like to do next?</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                    <button onClick={() => setActionMode('email')} style={{ padding: '12px 18px', borderRadius: 8, border: `1.5px solid ${NAVY}`, background: '#fff', color: NAVY, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 6 }}><Icon name="Mail" size={14} /> Email me this quote</button>
+                    <button onClick={() => setActionMode('callback')} style={{ padding: '12px 18px', borderRadius: 8, border: `1.5px solid ${NAVY}`, background: '#fff', color: NAVY, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 6 }}><Icon name="Phone" size={14} /> Request a callback {isWithinCallHours() && <span style={{ fontSize: 9, fontWeight: 700, background: '#dcfce7', color: '#166534', padding: '2px 6px', borderRadius: 4 }}>WITHIN 30 MIN</span>}</button>
+                    <button onClick={() => setActionMode('proceed')} style={{ padding: '12px 20px', borderRadius: 8, border: 'none', background: NAVY, color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 6 }}><Icon name="CreditCard" size={14} /> I want to order this — £{selected.total.toFixed(2)}</button>
+                  </div>
+                </div>
+              )}
+              {actionMode && (() => {
+                const labels = {
+                  email: { title: "Where shall I send this quote?", cta: 'Email me the quote' },
+                  callback: { title: isWithinCallHours() ? "Drop your details and we'll call within 30 minutes:" : "We'll call you within 30 minutes of opening at 9am tomorrow:", cta: 'Request my callback' },
+                  proceed: { title: "Final details and we'll book this in:", cta: `Confirm order — £${selected.total.toFixed(2)}` },
+                };
+                const l = labels[actionMode];
+                const showPhone = actionMode === 'callback';
+                return (
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: INK }}>{l.title}</div>
+                      <button onClick={() => setActionMode(null)} style={{ background: 'transparent', border: 'none', color: MUTED, cursor: 'pointer', fontSize: 11, fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 3 }}><Icon name="X" size={11} /> Cancel</button>
+                    </div>
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}>
+                      <input value={quote.name} onChange={e => setQuote(q => ({ ...q, name: e.target.value }))} placeholder="Your name" style={{ flex: '1 1 160px', padding: '10px 12px', borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 13, fontFamily: 'inherit', outline: 'none' }} />
+                      <input value={quote.email} onChange={e => setQuote(q => ({ ...q, email: e.target.value }))} placeholder="Email address" type="email" style={{ flex: '1 1 200px', padding: '10px 12px', borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 13, fontFamily: 'inherit', outline: 'none' }} />
+                      {showPhone && <input placeholder="Phone number" type="tel" style={{ flex: '1 1 200px', padding: '10px 12px', borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 13, fontFamily: 'inherit', outline: 'none' }} />}
+                    </div>
+                    <button onClick={() => {
+                      if (!quote.name || !quote.email) { push('morgan', 'Just pop your name and email in first.'); return; }
+                      if (actionMode === 'proceed') { push('user', `Confirmed order: ${meta.name} — £${selected.total.toFixed(2)}`); setTimeout(() => setView('order'), 200); }
+                      else if (actionMode === 'email') { push('user', `Send quote to ${quote.email}`); setTimeout(() => push('morgan', `Sent — check your inbox. The full quote for the ${meta.name} option is on its way to ${quote.email} ✓`), 200); setActionMode(null); }
+                      else if (actionMode === 'callback') { push('user', `Callback requested`); setTimeout(() => push('morgan', isWithinCallHours() ? `Got it — Sarah or someone from the team will call ${quote.name} within 30 minutes.` : `Got it — we'll call ${quote.name} within 30 minutes of opening at 9am tomorrow.`), 200); setActionMode(null); }
+                    }} style={{ padding: '12px 20px', borderRadius: 8, border: 'none', background: (!quote.name || !quote.email) ? '#94a3b8' : NAVY, color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <Icon name={actionMode === 'proceed' ? 'CreditCard' : actionMode === 'callback' ? 'Phone' : 'Mail'} size={14} /> {l.cta}
+                    </button>
+                  </div>
+                );
+              })()}
+            </div>
+          );
+        })()}
+
+        {!selected && <div style={{ background: '#fff7ed', border: `1px dashed ${AMBER}`, borderRadius: 8, padding: '10px 14px', fontSize: 12, color: '#92400e', textAlign: 'center', marginBottom: 12 }}>👆 Tap one of the options above to see the full breakdown and proceed</div>}
+      </div>
+    );
+  };
+
+  const renderOrderIntent = () => {
+    const product = PRODUCTS.find(p => p.id === quote.product);
+    const selected = quoteOptions?.find(o => o.tier === quote.selectedTier);
+    return (
+      <div>
+        <Bubble from="morgan">
+          <div style={{ fontWeight: 700, marginBottom: 6, fontFamily: FONT_HEAD }}>Brilliant — order received.</div>
+          <div>{isWithinCallHours() ? "I'll have a member of the team call you within 30 minutes to confirm artwork, sizes and delivery details." : "We're outside working hours right now — a team member will be in touch within 30 minutes of opening at 9am tomorrow."}</div>
+        </Bubble>
+        <div style={{ background: '#f0fdf4', border: `1px solid #bbf7d0`, borderRadius: 12, padding: 16, marginBottom: 12 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#166534', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10 }}>Order placed</div>
+          <div style={{ display: 'flex', gap: 12, marginBottom: 10 }}>
+            <CadIcon type={product?.type} size={48} />
+            <div style={{ fontSize: 13, color: INK, lineHeight: 1.6 }}>
+              <div><strong>{quote.qty} × {product?.name}</strong></div>
+              <div style={{ fontSize: 12, color: MUTED }}>{METHODS.find(m => m.id === quote.method)?.name} on {quote.placement?.toLowerCase()}</div>
+              {selected && <div style={{ fontSize: 12, color: NAVY, fontWeight: 600, marginTop: 2 }}>{TIER_META[selected.tier].name} — £{selected.total.toFixed(2)}</div>}
+            </div>
+          </div>
+          <div style={{ fontSize: 13, color: INK, lineHeight: 1.7, borderTop: `1px solid #bbf7d0`, paddingTop: 10 }}>
+            <div><strong>Name:</strong> {quote.name}</div>
+            <div><strong>Email:</strong> {quote.email}</div>
+            <div><strong>Logo:</strong> {quote.logoStatus}</div>
+            <div><strong>Need by:</strong> {quote.deadline}</div>
+          </div>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: GREEN, marginBottom: 16 }}><Icon name="Check" size={14} /> Pushed to HubSpot CRM as a qualified lead</div>
+      </div>
+    );
+  };
+
+  const renderMessages = () => {
+    let userMsgIdx = -1;
+    return (
+      <>
+        {messages.map(m => {
+          if (m.from === 'system') return <div key={m.t} style={{ textAlign: 'center', fontSize: 11, color: MUTED, margin: '8px 0' }}>— {m.content} —</div>;
+          let stepForEdit = null;
+          if (m.from === 'user' && view === 'quote') {
+            userMsgIdx++;
+            if (userMsgIdx < step) stepForEdit = userMsgIdx;
+          }
+          return (
+            <div key={m.t} style={{ position: 'relative' }}>
+              <Bubble from={m.from === 'user' ? 'user' : 'morgan'}>{m.content}</Bubble>
+              {stepForEdit !== null && (
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: -8, marginBottom: 10, paddingRight: 4 }}>
+                  <button onClick={() => goBackToStep(stepForEdit)} style={{ fontSize: 11, color: NAVY, background: 'transparent', border: 'none', padding: '2px 6px', cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 3, fontWeight: 600 }}>
+                    <Icon name="Edit" size={10} /> Edit
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </>
+    );
+  };
+
+  const renderFAQChips = () => (
+    <InlineOptions label="Common questions">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        {FAQ.map(item => <QuickReply key={item.q} onClick={() => askFAQ(item)}>{item.q}</QuickReply>)}
+      </div>
+    </InlineOptions>
+  );
+
+  const renderAdviceChips = () => {
+    const isStart = messages.length <= 1;
+    if (!isStart) return null;
+    const remaining = ADVICE_SCENARIOS.filter(s => !usedAdvice.includes(s.id));
+    if (remaining.length === 0) return null;
+    return (
+      <InlineOptions label="Or try a starter scenario">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+          {remaining.map(s => <QuickReply key={s.id} onClick={() => handleAdviceScenario(s)}>{s.label}</QuickReply>)}
+        </div>
+      </InlineOptions>
+    );
+  };
+
+  const renderFooterInput = () => {
+    if (view === 'faq') return (
+      <div style={{ display: 'flex', gap: 8 }}>
+        <input value={textInput} onChange={e => setTextInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') handleFAQText(); }} placeholder="Type your own question…" style={{ flex: 1, padding: '11px 14px', borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: 'inherit', outline: 'none' }} />
+        <button onClick={handleFAQText} style={{ padding: '11px 14px', borderRadius: 8, border: 'none', background: NAVY, color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center' }}><Icon name="Send" size={16} /></button>
+      </div>
+    );
+    if (view === 'chat') return (
+      <div style={{ display: 'flex', gap: 8 }}>
+        <input value={textInput} onChange={e => setTextInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && textInput.trim()) { push('user', textInput); setTextInput(''); setTimeout(() => push('human', "Thanks — let me check that for you."), 800); } }} placeholder="Type your message…" style={{ flex: 1, padding: '11px 14px', borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: 'inherit', outline: 'none' }} />
+        <button onClick={() => { if (!textInput.trim()) return; push('user', textInput); setTextInput(''); setTimeout(() => push('human', "Thanks — let me check that for you."), 800); }} style={{ padding: '11px 14px', borderRadius: 8, border: 'none', background: NAVY, color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center' }}><Icon name="Send" size={16} /></button>
+      </div>
+    );
+    return null;
+  };
+
+  const showFooter = view === 'faq' || view === 'chat';
+
+  const renderHome = () => (
+    <div>
+      <div style={{ textAlign: 'center', padding: '32px 0 24px' }}>
+        <div style={{ marginBottom: 12 }}><MorganAvatar size={64} /></div>
+        <div style={{ fontSize: 22, fontWeight: 900, color: INK, fontFamily: FONT_HEAD }}>Hi, I'm Morgan</div>
+        <div style={{ fontSize: 13, color: MUTED, marginTop: 4 }}>Your assistant at Clothes2Order. What can I help with today?</div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
+        {[
+          { v: 'quote', icon: 'FileText', label: 'Get a quote', sub: 'Five priced options in 2 min', color: NAVY },
+          { v: 'faq', icon: 'MessageSquare', label: 'Ask a question', sub: 'Setup, delivery, minimums', color: '#7c3aed' },
+          { v: 'chat', icon: 'Headphones', label: 'Speak to a person', sub: 'Live team — 9am to 5pm', color: GREEN },
+          { v: 'advice', icon: 'Sparkles', label: 'Help me choose', sub: 'Product advice', color: AMBER, phase2: true },
+        ].map(c => (
+          <button key={c.v} onClick={() => startCapability(c.v)} style={{ padding: 16, borderRadius: 12, border: `1.5px solid ${BORDER}`, background: '#fff', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: `${c.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: c.color }}><Icon name={c.icon} size={18} /></div>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: INK, display: 'flex', alignItems: 'center', fontFamily: FONT_HEAD }}>{c.label}{c.phase2 && <PhaseTag />}</div>
+              <div style={{ fontSize: 12, color: MUTED, marginTop: 2 }}>{c.sub}</div>
+            </div>
+          </button>
+        ))}
+      </div>
+      <div style={{ marginTop: 20, padding: 12, background: '#eff6ff', border: `1px solid ${NAVY_LIGHT}`, borderRadius: 10, fontSize: 12, color: NAVY_DARK, display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+        <Icon name="Info" size={14} style={{ marginTop: 1, flexShrink: 0 }} />
+        <div><strong>Demo mode.</strong> All pricing and products are dummy data for stakeholder review. CAD-style thumbnails are placeholders. Freeform AI answers are illustrative — production will use a tuned LLM over the C2O knowledge base, with accuracy refined in QA.</div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{ height: '100vh', width: '100%', display: 'flex', flexDirection: 'column', fontFamily: '"Lato", "Quicksand", "Arial", sans-serif', background: GREY_BG }}>
+      <div style={{ background: NAVY_DARK, color: '#fff', padding: '10px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: `1px solid ${NAVY_LIGHT}` }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ fontSize: 16, fontWeight: 900, letterSpacing: '-0.3px', fontFamily: FONT_HEAD }}>C2O</div>
+          <div style={{ width: 1, height: 16, background: 'rgba(255,255,255,0.2)' }} />
+          <div style={{ fontSize: 13, opacity: 0.85 }}>Customer Engine</div>
+          <div style={{ fontSize: 10, fontWeight: 700, background: GOLD, color: NAVY_DARK, padding: '2px 8px', borderRadius: 4, letterSpacing: '0.5px' }}>MVP DEMO</div>
+        </div>
+        <button onClick={reset} style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: 6, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'inherit' }}><Icon name="RefreshCw" size={12} /> Reset demo</button>
+      </div>
+      <div style={{ flex: 1, display: 'flex', minHeight: 0 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: GREY_BG, minWidth: 0 }}>
+          <div style={{ padding: '12px 24px', borderBottom: `1px solid ${BORDER}`, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              {view !== 'home' && (
+                <button onClick={() => {
+                  if (view === 'quote' && step > 0 && step < quoteSteps.length) goBackToStep(step - 1);
+                  else if (view === 'quote' && step >= quoteSteps.length) goBackToStep(quoteSteps.length - 1);
+                  else setView('home');
+                }} style={{ background: 'transparent', border: `1px solid ${BORDER}`, color: MUTED, width: 28, height: 28, borderRadius: 6, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'inherit', flexShrink: 0 }} title="Back"><Icon name="ArrowLeft" size={14} /></button>
+              )}
+              <MorganAvatar size={32} />
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: INK, lineHeight: 1.2, fontFamily: FONT_HEAD }}>Morgan</div>
+                <div style={{ fontSize: 11, color: MUTED, display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e' }} />
+                  {view === 'home' && 'Always on · 24/7'}
+                  {view === 'quote' && `Express Quote · Step ${Math.min(step + 1, quoteSteps.length)} of ${quoteSteps.length}`}
+                  {view === 'faq' && 'Answering questions'}
+                  {view === 'order' && 'Order placed'}
+                  {view === 'advice' && 'Product advice'}
+                  {view === 'chat' && 'Live chat — Sarah'}
+                </div>
+              </div>
+            </div>
+            {view !== 'home' && <button onClick={() => setView('home')} style={{ background: 'transparent', border: 'none', color: MUTED, cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 4 }}><Icon name="X" size={14} /> Home</button>}
+          </div>
+          {view === 'quote' && step < quoteSteps.length && <div style={{ height: 3, background: BORDER }}><div style={{ height: '100%', width: `${((step + 1) / quoteSteps.length) * 100}%`, background: NAVY, transition: 'width 0.3s' }} /></div>}
+          <div ref={scrollRef} style={{ flex: 1, overflow: 'auto', padding: '20px 24px' }}>
+            {view === 'home' ? renderHome() : (
+              <div style={{ maxWidth: 720, margin: '0 auto' }}>
+                {renderMessages()}
+                {view === 'quote' && step < quoteSteps.length && renderQuoteInline()}
+                {view === 'faq' && renderFAQChips()}
+                {view === 'advice' && renderAdviceChips()}
+                {view === 'quote' && step >= quoteSteps.length && renderQuoteResults()}
+                {view === 'order' && renderOrderIntent()}
+              </div>
+            )}
+          </div>
+          {showFooter && <div style={{ padding: '14px 24px 0', background: '#fff' }}><div style={{ maxWidth: 720, margin: '0 auto' }}>{renderFooterInput()}</div></div>}
+          <div style={{ padding: '12px 24px 14px', background: '#fff', borderTop: showFooter ? 'none' : `1px solid ${BORDER}` }}>
+            <div style={{ maxWidth: 720, margin: '0 auto', display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+              {[
+                { v: 'quote', icon: 'FileText', label: 'Quote' },
+                { v: 'faq', icon: 'MessageSquare', label: 'FAQ' },
+                { v: 'advice', icon: 'Sparkles', label: 'Advice' },
+                { v: 'chat', icon: 'Headphones', label: 'Human' },
+              ].map(c => {
+                const isActive = view === c.v;
+                return (
+                  <button key={c.v} onClick={() => startCapability(c.v)} style={{ padding: '9px 16px', borderRadius: 22, border: `2px solid ${NAVY}`, background: isActive ? NAVY : '#fff', color: isActive ? '#fff' : NAVY, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 6, boxShadow: isActive ? '0 2px 6px rgba(74, 144, 226, 0.25)' : 'none' }}>
+                    <Icon name={c.icon} size={14} /> {c.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<CustomerEngine />);
+</script>
+</body>
+</html>
