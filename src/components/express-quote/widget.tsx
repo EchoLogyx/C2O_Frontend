@@ -3,199 +3,155 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import {
   FileText, MessageSquare, Headphones, Sparkles, Send, ArrowLeft, X,
-  RefreshCw, Info, ChevronRight, CheckCircle, Phone, Mail, ShoppingCart,
-  Minus, Plus, ChevronLeft,
+  RefreshCw, Info, Phone, Mail, ShoppingCart, Minus, Plus,
 } from "lucide-react"
 import {
   NAVY, NAVY_DARK, NAVY_LIGHT, GOLD, INK, MUTED, BORDER, GREY_BG,
-  GREEN, AMBER, PRODUCTS, PRODUCT_TYPES, USE_CASES, PRIORITIES,
-  PLACEMENTS, METHODS, LOGO_STATUS, DEADLINE_OPTIONS, TIERS,
-  FAQ_CHIPS, ADVICE_CHIPS,
+  GREEN, AMBER, USE_CASES, PRIORITIES, DECORATION_TYPES, LOGO_POSITIONS,
+  LOGO_STATUS, DEADLINE_OPTIONS, FAQ_CHIPS, ADVICE_CHIPS,
 } from "./data"
 import type { ViewMode, Message, QuoteAnswers } from "./types"
+import { runQuoteEngine, getCategories, getProductsForCategory } from "@/lib/quoteEngine"
+import type { TierBucket } from "@/lib/quoteEngine"
 
-// ─── Morgan Avatar ────────────────────────────────────────────────
+// ─── Morgan Avatar ─────────────────────────────────────────────────
 function MorganAvatar({ size = 40 }: { size?: number }) {
   return (
-    <div
-      style={{
-        width: size, height: size, borderRadius: "50%",
-        background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_DARK} 100%)`,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        fontSize: size * 0.4, flexShrink: 0,
-        boxShadow: "0 2px 8px rgba(74,144,226,0.35)",
-      }}
-    >
-      🤖
-    </div>
+    <div style={{
+      width: size, height: size, borderRadius: "50%",
+      background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_DARK} 100%)`,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      fontSize: size * 0.4, flexShrink: 0,
+      boxShadow: "0 2px 8px rgba(74,144,226,0.35)",
+    }}>🤖</div>
   )
 }
 
-// ─── Chat bubble ──────────────────────────────────────────────────
+// ─── Bubble ────────────────────────────────────────────────────────
 function Bubble({ role, text }: { role: Message["role"]; text: string }) {
   const isUser = role === "user"
   return (
     <div style={{ display: "flex", justifyContent: isUser ? "flex-end" : "flex-start", marginBottom: 10 }}>
-      {!isUser && (
-        <div style={{ marginRight: 8, marginTop: 2 }}>
-          <MorganAvatar size={28} />
-        </div>
-      )}
-      <div
-        style={{
-          maxWidth: "75%", padding: "10px 14px", borderRadius: isUser ? "18px 18px 4px 18px" : "4px 18px 18px 18px",
-          background: isUser ? NAVY : "#fff",
-          color: isUser ? "#fff" : INK,
-          fontSize: 14, lineHeight: 1.55,
-          boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-          border: isUser ? "none" : `1px solid ${BORDER}`,
-        }}
-      >
-        {text}
-      </div>
+      {!isUser && <div style={{ marginRight: 8, marginTop: 2 }}><MorganAvatar size={28} /></div>}
+      <div style={{
+        maxWidth: "75%", padding: "10px 14px",
+        borderRadius: isUser ? "18px 18px 4px 18px" : "4px 18px 18px 18px",
+        background: isUser ? NAVY : "#fff", color: isUser ? "#fff" : INK,
+        fontSize: 14, lineHeight: 1.55,
+        boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+        border: isUser ? "none" : `1px solid ${BORDER}`,
+      }}>{text}</div>
     </div>
   )
 }
 
-// ─── Quick-reply pill ─────────────────────────────────────────────
-function QuickReply({ label, onClick, active }: { label: string; onClick: () => void; active?: boolean }) {
+// ─── Pill button ───────────────────────────────────────────────────
+function QuickReply({ label, onClick }: { label: string; onClick: () => void }) {
   return (
-    <button
-      onClick={onClick}
-      style={{
-        padding: "7px 14px", borderRadius: 20,
-        border: `1.5px solid ${active ? NAVY : BORDER}`,
-        background: active ? NAVY : "#fff",
-        color: active ? "#fff" : INK,
-        fontSize: 13, cursor: "pointer", fontFamily: "inherit", fontWeight: 500,
-        transition: "all 0.15s",
-      }}
-    >
-      {label}
-    </button>
+    <button onClick={onClick} style={{
+      padding: "7px 14px", borderRadius: 20,
+      border: `1.5px solid ${BORDER}`, background: "#fff", color: INK,
+      fontSize: 13, cursor: "pointer", fontFamily: "inherit", fontWeight: 500,
+    }}>{label}</button>
   )
 }
 
-// ─── Compute tier prices ───────────────────────────────────────────
-function computeTiers(qty: number) {
-  const qtyDiscount = qty >= 100 ? 0.85 : qty >= 50 ? 0.92 : qty >= 25 ? 0.96 : 1
-  return TIERS.map(t => {
-    const unitPrice = parseFloat((t.baseUnit * qtyDiscount).toFixed(2))
-    const totalPrice = parseFloat((unitPrice * qty + t.setup).toFixed(2))
-    return { ...t, unitPrice, totalPrice, setupFee: t.setup }
-  })
-}
-
-// ─── Main widget ──────────────────────────────────────────────────
+// ─── Widget ────────────────────────────────────────────────────────
 export function ExpressQuoteWidget() {
-  const [view, setView]           = useState<ViewMode>("home")
-  const [messages, setMessages]   = useState<Message[]>([])
-  const [answers, setAnswers]     = useState<QuoteAnswers>({ qty: 50 })
-  const [step, setStep]           = useState(0)
-  const [textInput, setTextInput] = useState("")
+  const [view, setView]             = useState<ViewMode>("home")
+  const [messages, setMessages]     = useState<Message[]>([])
+  const [answers, setAnswers]       = useState<QuoteAnswers>({ qty: 50 })
+  const [step, setStep]             = useState(0)
+  const [textInput, setTextInput]   = useState("")
+  const [tierBuckets, setTierBuckets] = useState<TierBucket[]>([])
   const [selectedTier, setSelectedTier] = useState<string | null>(null)
   const [actionView, setActionView]     = useState<"" | "email" | "callback" | "order">("")
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  // auto-scroll on message push
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
-    }
-  }, [messages, step, view])
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+  }, [messages, step, tierBuckets])
 
-  const push = useCallback((role: Message["role"], text: string, stepIdx?: number) => {
-    setMessages(prev => [...prev, { id: Date.now().toString(), role, text, step: stepIdx }])
+  const push = useCallback((role: Message["role"], text: string) => {
+    setMessages(prev => [...prev, { id: `${Date.now()}-${Math.random()}`, role, text }])
   }, [])
 
-  // ─── Quote steps definition ──────────────────────────────────────
+  // ─── 8 quote steps ──────────────────────────────────────────────
   const quoteSteps = [
-    { key: "useCase",     question: "What's the main purpose of this order?" },
-    { key: "qty",         question: "How many items do you need?" },
-    { key: "priority",    question: "What matters most to you?" },
-    { key: "productType", question: "What type of garment are you looking for?" },
-    { key: "product",     question: "Pick the product you'd like quoted:" },
-    { key: "placement",   question: "Where should the logo/design go?" },
-    { key: "method",      question: "How would you like your logo applied?" },
-    { key: "logoStatus",  question: "What's the status of your logo?" },
-    { key: "deadline",    question: "When do you need the order?" },
+    { key: "purpose",       question: "What's the main purpose of this order?" },
+    { key: "qty",           question: "How many items do you need?" },
+    { key: "priority",      question: "What matters most to you?" },
+    { key: "category",      question: "What type of garment are you looking for?" },
+    { key: "decorationType",question: "How would you like your logo applied?" },
+    { key: "logoPosition",  question: "Where should the logo go?" },
+    { key: "logoStatus",    question: "What's the status of your logo/artwork?" },
+    { key: "deadline",      question: "When do you need the order?" },
   ]
 
-  // ─── Start a capability ──────────────────────────────────────────
   function startCapability(v: ViewMode) {
-    setView(v)
-    setMessages([])
-    setStep(0)
-    setAnswers({ qty: 50 })
-    setSelectedTier(null)
-    setActionView("")
-    setTextInput("")
-
-    if (v === "quote") {
-      push("morgan", "Great! Let's get you an instant quote. I'll ask a few quick questions.", 0)
-    } else if (v === "faq") {
-      push("morgan", "Hi! I can answer questions about ordering, delivery, and more. Pick a topic or type your own.")
-    } else if (v === "advice") {
-      push("morgan", "I'll help you find the perfect product. Pick a scenario or describe what you need.")
-    } else if (v === "chat") {
-      push("morgan", "Connecting you to our team… You're through to Sarah 👋 How can I help?")
-    }
+    setView(v); setMessages([]); setStep(0)
+    setAnswers({ qty: 50 }); setSelectedTier(null)
+    setActionView(""); setTextInput(""); setTierBuckets([])
+    if (v === "quote")  push("morgan", "Great! Let's get you an instant quote — I'll ask 8 quick questions.")
+    if (v === "faq")    push("morgan", "Hi! Pick a topic or type your own question below.")
+    if (v === "advice") push("morgan", "I'll help you find the perfect product. Pick a scenario or describe what you need.")
+    if (v === "chat")   push("morgan", "Connecting you to our team… You're through to Sarah 👋 How can I help?")
   }
 
-  // ─── Record a quote answer ────────────────────────────────────────
-  function handleQuoteAnswer(key: string, value: string | number) {
-    const label = typeof value === "string" ? value : `${value} items`
-    push("user", label, step)
+  function handleQuoteAnswer(key: string, value: string | number, displayLabel?: string) {
+    const label = displayLabel ?? (typeof value === "number" ? `${value} items` : String(value))
+    push("user", label)
+    const updated = { ...answers, [key]: value }
+    setAnswers(updated)
     const nextStep = step + 1
-    setAnswers(prev => ({ ...prev, [key]: value }))
     setTimeout(() => {
       if (nextStep < quoteSteps.length) {
-        push("morgan", quoteSteps[nextStep].question, nextStep)
+        push("morgan", quoteSteps[nextStep].question)
         setStep(nextStep)
       } else {
-        push("morgan", "Perfect! Here are your 5 pricing options based on your requirements.")
-        setStep(nextStep)
+        // run engine
+        push("morgan", "Calculating your personalised quote from our live product catalogue…")
+        setTimeout(() => {
+          const input = {
+            purpose:        updated.purpose ?? "",
+            qty:            updated.qty ?? 50,
+            priority:       (updated.priority ?? "Balance") as "Speed" | "Balance" | "Quality",
+            category:       updated.category ?? "t-shirts",
+            decorationType: (updated.decorationType ?? "Printing") as "Printing" | "Embroidery",
+            logoPosition:   updated.logoPosition ?? "5. Left Chest",
+            logoStatus:     updated.logoStatus ?? "",
+            deadline:       updated.deadline ?? "flexible",
+          }
+          const buckets = runQuoteEngine(input)
+          setTierBuckets(buckets)
+          push("morgan", `Here are ${buckets.length} pricing tiers for ${input.qty} × ${input.decorationType} on ${input.category}. Tap any tier to see the full breakdown.`)
+          setStep(nextStep)
+        }, 400)
       }
-    }, 350)
+    }, 300)
   }
 
   function goBack() {
-    if (view === "quote" && step > 0 && step < quoteSteps.length) {
-      const prev = step - 1
-      setStep(prev)
-      // remove last two messages (user answer + morgan question for current step)
+    if (view === "quote" && step > 0 && step <= quoteSteps.length) {
+      setStep(s => s - 1)
       setMessages(m => m.slice(0, -2))
-    } else if (view === "quote" && step >= quoteSteps.length) {
-      setStep(quoteSteps.length - 1)
-      setMessages(m => m.slice(0, -2))
-      setSelectedTier(null)
-      setActionView("")
+      if (step >= quoteSteps.length) { setTierBuckets([]); setSelectedTier(null) }
     } else {
       setView("home")
     }
   }
 
-  // ─── FAQ text submit ──────────────────────────────────────────────
-  function handleFAQText() {
-    if (!textInput.trim()) return
-    push("user", textInput)
-    setTextInput("")
-    setTimeout(() => {
-      push("morgan", "Thanks for your question! Our standard minimum order is 10 items. Typical delivery is 5–7 working days. For further help contact team@c2o.co.uk.")
-    }, 600)
-  }
-
-  // ─── Render quote step inline options ────────────────────────────
-  function renderQuoteStep() {
+  // ─── Step renderers ─────────────────────────────────────────────
+  function renderStep() {
     const current = quoteSteps[step]
     if (!current) return null
 
     switch (current.key) {
-      case "useCase":
+      case "purpose":
         return (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
             {USE_CASES.map(u => (
-              <button key={u.id} onClick={() => handleQuoteAnswer("useCase", u.label)}
+              <button key={u.id} onClick={() => handleQuoteAnswer("purpose", u.label)}
                 style={{ padding: "12px 10px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
                 <span style={{ fontSize: 20 }}>{u.emoji}</span>
                 <div style={{ fontSize: 13, fontWeight: 600, color: INK, marginTop: 4 }}>{u.label}</div>
@@ -206,15 +162,15 @@ export function ExpressQuoteWidget() {
 
       case "qty":
         return (
-          <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "12px 0" }}>
-            <button onClick={() => setAnswers(a => ({ ...a, qty: Math.max(10, (a.qty ?? 50) - 10) }))}
+          <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "8px 0" }}>
+            <button onClick={() => setAnswers(a => ({ ...a, qty: Math.max(1, (a.qty ?? 50) - 10) }))}
               style={{ width: 38, height: 38, borderRadius: 8, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Minus size={16} />
             </button>
             <div style={{ fontSize: 28, fontWeight: 800, color: NAVY, minWidth: 70, textAlign: "center" }}>
-              {answers.qty ?? 50}
+              {answers.qty}
             </div>
-            <button onClick={() => setAnswers(a => ({ ...a, qty: Math.min(500, (a.qty ?? 50) + 10) }))}
+            <button onClick={() => setAnswers(a => ({ ...a, qty: Math.min(1000, (a.qty ?? 50) + 10) }))}
               style={{ width: 38, height: 38, borderRadius: 8, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Plus size={16} />
             </button>
@@ -229,7 +185,7 @@ export function ExpressQuoteWidget() {
         return (
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {PRIORITIES.map(p => (
-              <button key={p.id} onClick={() => handleQuoteAnswer("priority", p.label)}
+              <button key={p.id} onClick={() => handleQuoteAnswer("priority", p.id, p.label)}
                 style={{ padding: "12px 16px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 12 }}>
                 <span style={{ fontSize: 22 }}>{p.emoji}</span>
                 <div>
@@ -241,55 +197,45 @@ export function ExpressQuoteWidget() {
           </div>
         )
 
-      case "productType":
+      case "category": {
+        const cats = getCategories()
         return (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
-            {PRODUCT_TYPES.map(pt => (
-              <button key={pt.id} onClick={() => handleQuoteAnswer("productType", pt.id)}
-                style={{ padding: "14px 12px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
-                <span style={{ fontSize: 28 }}>{pt.emoji}</span>
-                <div style={{ fontSize: 13, fontWeight: 700, color: INK, marginTop: 6 }}>{pt.label}</div>
-                <div style={{ fontSize: 11, color: MUTED }}>{pt.desc}</div>
-              </button>
-            ))}
-          </div>
-        )
-
-      case "product": {
-        const typeId = answers.productType ?? "tshirts"
-        const list = PRODUCTS[typeId] ?? []
-        return (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
-            {list.map(p => (
-              <button key={p.id} onClick={() => handleQuoteAnswer("product", p.name)}
-                style={{ padding: "12px 10px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: INK }}>{p.name}</div>
-                <div style={{ fontSize: 11, color: MUTED }}>{p.fabric}</div>
-              </button>
-            ))}
+            {cats.map(c => {
+              const count = getProductsForCategory(c.id).length
+              return (
+                <button key={c.id} onClick={() => handleQuoteAnswer("category", c.id, c.label)}
+                  style={{ padding: "14px 12px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
+                  <span style={{ fontSize: 28 }}>{c.emoji}</span>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: INK, marginTop: 6 }}>{c.label}</div>
+                  <div style={{ fontSize: 11, color: MUTED }}>{count} products</div>
+                </button>
+              )
+            })}
           </div>
         )
       }
 
-      case "placement":
+      case "decorationType":
         return (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {PLACEMENTS.map(pl => (
-              <QuickReply key={pl.id} label={pl.label} onClick={() => handleQuoteAnswer("placement", pl.label)} />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
+            {DECORATION_TYPES.map(d => (
+              <button key={d.id} onClick={() => handleQuoteAnswer("decorationType", d.id, d.label)}
+                style={{ padding: "14px 12px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
+                <span style={{ fontSize: 24 }}>{d.emoji}</span>
+                <div style={{ fontSize: 13, fontWeight: 700, color: INK, marginTop: 6 }}>{d.label}</div>
+                <div style={{ fontSize: 11, color: MUTED }}>{d.desc}</div>
+                <div style={{ fontSize: 11, color: NAVY, fontWeight: 600, marginTop: 4 }}>{d.setupNote}</div>
+              </button>
             ))}
           </div>
         )
 
-      case "method":
+      case "logoPosition":
         return (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
-            {METHODS.map(m => (
-              <button key={m.id} onClick={() => handleQuoteAnswer("method", m.label)}
-                style={{ padding: "12px 10px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
-                <span style={{ fontSize: 20 }}>{m.emoji}</span>
-                <div style={{ fontSize: 13, fontWeight: 700, color: INK, marginTop: 4 }}>{m.label}</div>
-                <div style={{ fontSize: 11, color: MUTED }}>{m.desc}</div>
-              </button>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {LOGO_POSITIONS.map(p => (
+              <QuickReply key={p.id} label={p.label} onClick={() => handleQuoteAnswer("logoPosition", p.id, p.label)} />
             ))}
           </div>
         )
@@ -314,81 +260,74 @@ export function ExpressQuoteWidget() {
         return (
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {DEADLINE_OPTIONS.map(d => (
-              <QuickReply key={d.id} label={d.label} onClick={() => handleQuoteAnswer("deadline", d.label)} />
+              <QuickReply key={d.id} label={d.label} onClick={() => handleQuoteAnswer("deadline", d.id, d.label)} />
             ))}
           </div>
         )
 
-      default:
-        return null
+      default: return null
     }
   }
 
-  // ─── Render quote results ─────────────────────────────────────────
-  function renderQuoteResults() {
-    const tierData = computeTiers(answers.qty ?? 50)
+  // ─── Tier results ───────────────────────────────────────────────
+  function renderTierResults() {
+    if (tierBuckets.length === 0) return (
+      <div style={{ padding: 20, textAlign: "center", color: MUTED, fontSize: 14 }}>
+        No products found matching all your criteria. Try a different position or decoration type.
+      </div>
+    )
 
     if (selectedTier) {
-      const t = tierData.find(x => x.id === selectedTier)!
-      if (actionView === "email") {
-        return (
-          <div style={{ background: "#fff", borderRadius: 12, border: `1.5px solid ${BORDER}`, padding: 20 }}>
-            <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginBottom: 12 }}>📧 Email your quote</div>
-            <input placeholder="Your email address" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
-            <input placeholder="Your name" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", marginTop: 8, boxSizing: "border-box" }} />
-            <button style={{ width: "100%", marginTop: 12, padding: "12px", borderRadius: 8, background: NAVY, color: "#fff", border: "none", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>
-              Send quote to my inbox
-            </button>
-            <button onClick={() => setActionView("")} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 8, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>
-              ← Back
-            </button>
-          </div>
-        )
-      }
-      if (actionView === "callback") {
-        return (
-          <div style={{ background: "#fff", borderRadius: 12, border: `1.5px solid ${BORDER}`, padding: 20 }}>
-            <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginBottom: 12 }}>📞 Request a callback</div>
-            <input placeholder="Your phone number" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
-            <input placeholder="Best time to call" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", marginTop: 8, boxSizing: "border-box" }} />
-            <button style={{ width: "100%", marginTop: 12, padding: "12px", borderRadius: 8, background: GREEN, color: "#fff", border: "none", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>
-              Request callback
-            </button>
-            <button onClick={() => setActionView("")} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 8, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>
-              ← Back
-            </button>
-          </div>
-        )
-      }
-      if (actionView === "order") {
-        return (
-          <div style={{ background: "#fff", borderRadius: 12, border: `1.5px solid ${BORDER}`, padding: 20 }}>
-            <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginBottom: 4 }}>🛒 Confirm order intent</div>
-            <div style={{ fontSize: 13, color: MUTED, marginBottom: 16 }}>We'll contact you to finalise artwork, sizes and payment.</div>
-            <div style={{ background: GREY_BG, borderRadius: 8, padding: 12, marginBottom: 16, fontSize: 13 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                <span style={{ color: MUTED }}>Tier</span><strong>{t.emoji} {t.name}</strong>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                <span style={{ color: MUTED }}>Qty</span><strong>{answers.qty} items</strong>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ color: MUTED }}>Total est.</span><strong style={{ color: NAVY }}>£{t.totalPrice.toFixed(2)}</strong>
-              </div>
-            </div>
-            <input placeholder="Full name" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box", marginBottom: 8 }} />
-            <input placeholder="Email" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
-            <button style={{ width: "100%", marginTop: 12, padding: "12px", borderRadius: 8, background: AMBER, color: "#fff", border: "none", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>
-              Confirm order intent
-            </button>
-            <button onClick={() => setActionView("")} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 8, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>
-              ← Back
-            </button>
-          </div>
-        )
-      }
+      const t = tierBuckets.find(b => b.tierId === selectedTier)!
+      const topProducts = t.products.slice(0, 5)
 
-      // selected tier breakdown
+      if (actionView === "email") return (
+        <div style={{ background: "#fff", borderRadius: 12, border: `1.5px solid ${BORDER}`, padding: 20 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginBottom: 12 }}>📧 Email your quote</div>
+          <input placeholder="Your email address" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box", marginBottom: 8 }} />
+          <input placeholder="Your name" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
+          <button style={{ width: "100%", marginTop: 12, padding: "12px", borderRadius: 8, background: NAVY, color: "#fff", border: "none", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>Send quote to my inbox</button>
+          <button onClick={() => setActionView("")} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 8, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>← Back</button>
+        </div>
+      )
+
+      if (actionView === "callback") return (
+        <div style={{ background: "#fff", borderRadius: 12, border: `1.5px solid ${BORDER}`, padding: 20 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginBottom: 12 }}>📞 Request a callback</div>
+          <input placeholder="Your phone number" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box", marginBottom: 8 }} />
+          <input placeholder="Best time to call" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
+          <button style={{ width: "100%", marginTop: 12, padding: "12px", borderRadius: 8, background: GREEN, color: "#fff", border: "none", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>Request callback</button>
+          <button onClick={() => setActionView("")} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 8, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>← Back</button>
+        </div>
+      )
+
+      if (actionView === "order") return (
+        <div style={{ background: "#fff", borderRadius: 12, border: `1.5px solid ${BORDER}`, padding: 20 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginBottom: 4 }}>🛒 Confirm order intent</div>
+          <div style={{ fontSize: 13, color: MUTED, marginBottom: 16 }}>We'll contact you to finalise artwork, sizes and payment.</div>
+          <div style={{ background: GREY_BG, borderRadius: 8, padding: 12, marginBottom: 16, fontSize: 13 }}>
+            {[
+              ["Tier", `${t.emoji} ${t.tierName}`],
+              ["Product", topProducts[0]?.product.name ?? "—"],
+              ["Qty", `${answers.qty} items`],
+              ["Unit price (decorated)", `£${t.unitPrice.toFixed(2)}`],
+              ["Setup fee", `£${t.setupFee.toFixed(2)}`],
+              ["Est. total", `£${t.totalPrice.toFixed(2)}`],
+            ].map(([l, v]) => (
+              <div key={l} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                <span style={{ color: MUTED }}>{l}</span>
+                <strong style={l === "Est. total" ? { color: NAVY } : {}}>{v}</strong>
+              </div>
+            ))}
+          </div>
+          <input placeholder="Full name" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box", marginBottom: 8 }} />
+          <input placeholder="Email" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
+          <button style={{ width: "100%", marginTop: 12, padding: "12px", borderRadius: 8, background: AMBER, color: "#fff", border: "none", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>Confirm order intent</button>
+          <button onClick={() => setActionView("")} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 8, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>← Back</button>
+        </div>
+      )
+
+      // Selected tier breakdown
       return (
         <div>
           <div style={{ background: "#fff", borderRadius: 12, border: `2px solid ${t.color}`, padding: 20, marginBottom: 12 }}>
@@ -396,20 +335,22 @@ export function ExpressQuoteWidget() {
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 24 }}>{t.emoji}</span>
                 <div>
-                  <div style={{ fontSize: 16, fontWeight: 800, color: INK }}>{t.name} Tier</div>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: INK }}>{t.tierName} Tier</div>
                   {t.badge && <span style={{ fontSize: 10, fontWeight: 700, background: t.color, color: "#fff", padding: "2px 7px", borderRadius: 4 }}>{t.badge}</span>}
                 </div>
               </div>
               <div style={{ textAlign: "right" }}>
                 <div style={{ fontSize: 24, fontWeight: 900, color: t.color }}>£{t.totalPrice.toFixed(2)}</div>
-                <div style={{ fontSize: 12, color: MUTED }}>total incl. setup</div>
+                <div style={{ fontSize: 12, color: MUTED }}>est. total for {answers.qty} items</div>
               </div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 16 }}>
+
+            {/* Pricing breakdown */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 14 }}>
               {[
-                { label: "Unit price", value: `£${t.unitPrice.toFixed(2)}` },
-                { label: "Setup fee", value: `£${t.setupFee}` },
-                { label: "Delivery", value: t.delivery },
+                { label: "Unit (decorated)", value: `£${t.unitPrice.toFixed(2)}` },
+                { label: "Setup fee",         value: `£${t.setupFee.toFixed(2)}` },
+                { label: "Delivery",           value: t.delivery },
               ].map(row => (
                 <div key={row.label} style={{ textAlign: "center", background: GREY_BG, borderRadius: 8, padding: "10px 6px" }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: INK }}>{row.value}</div>
@@ -417,44 +358,69 @@ export function ExpressQuoteWidget() {
                 </div>
               ))}
             </div>
+
+            {/* Top products in this tier */}
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: MUTED, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                Top picks in this tier ({t.products.length} products matched)
+              </div>
+              {topProducts.map(r => (
+                <div key={r.product.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: `1px solid ${BORDER}` }}>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: INK }}>{r.product.name}</div>
+                    <div style={{ fontSize: 11, color: MUTED }}>{r.product.brand} · {typeof r.product.fabric === "object" ? (r.product.fabric as { weight?: string }).weight ?? "" : r.product.fabric ?? ""}</div>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: t.color }}>£{r.totalOrderPrice.toFixed(2)}</div>
+                    <div style={{ fontSize: 11, color: MUTED }}>£{r.unitDecoratedPrice.toFixed(2)}/unit</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              <button onClick={() => setActionView("email")} style={{ flex: 1, minWidth: 120, padding: "10px 12px", borderRadius: 8, background: NAVY, color: "#fff", border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+              <button onClick={() => setActionView("email")} style={{ flex: 1, minWidth: 110, padding: "10px 12px", borderRadius: 8, background: NAVY, color: "#fff", border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
                 <Mail size={14} /> Email quote
               </button>
-              <button onClick={() => setActionView("callback")} style={{ flex: 1, minWidth: 120, padding: "10px 12px", borderRadius: 8, background: GREEN, color: "#fff", border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+              <button onClick={() => setActionView("callback")} style={{ flex: 1, minWidth: 110, padding: "10px 12px", borderRadius: 8, background: GREEN, color: "#fff", border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
                 <Phone size={14} /> Callback
               </button>
-              <button onClick={() => setActionView("order")} style={{ flex: 1, minWidth: 120, padding: "10px 12px", borderRadius: 8, background: AMBER, color: "#fff", border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+              <button onClick={() => setActionView("order")} style={{ flex: 1, minWidth: 110, padding: "10px 12px", borderRadius: 8, background: AMBER, color: "#fff", border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
                 <ShoppingCart size={14} /> Order now
               </button>
             </div>
           </div>
-          <button onClick={() => setSelectedTier(null)} style={{ fontSize: 13, color: MUTED, background: "transparent", border: "none", cursor: "pointer", fontFamily: "inherit", textDecoration: "underline" }}>
+          <button onClick={() => { setSelectedTier(null); setActionView("") }} style={{ fontSize: 13, color: MUTED, background: "transparent", border: "none", cursor: "pointer", fontFamily: "inherit", textDecoration: "underline" }}>
             ← View all tiers
           </button>
         </div>
       )
     }
 
-    // all tiers list
+    // All tiers overview
     return (
       <div>
-        <div style={{ fontSize: 14, color: MUTED, marginBottom: 12 }}>Showing pricing for <strong style={{ color: INK }}>{answers.qty} items</strong> — tap a tier to see full breakdown.</div>
-        {tierData.map(t => (
-          <button key={t.id} onClick={() => setSelectedTier(t.id)} style={{ width: "100%", marginBottom: 8, padding: "14px 16px", borderRadius: 12, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ fontSize: 13, color: MUTED, marginBottom: 12 }}>
+          Pricing for <strong style={{ color: INK }}>{answers.qty} items</strong> · <strong style={{ color: INK }}>{answers.decorationType}</strong> · <strong style={{ color: INK }}>{answers.category}</strong> — tap a tier to see products & breakdown.
+        </div>
+        {tierBuckets.map(t => (
+          <button key={t.tierId} onClick={() => setSelectedTier(t.tierId)}
+            style={{ width: "100%", marginBottom: 8, padding: "14px 16px", borderRadius: 12, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <span style={{ fontSize: 20 }}>{t.emoji}</span>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: INK }}>{t.name}</span>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: INK }}>{t.tierName}</span>
                   {t.badge && <span style={{ fontSize: 10, fontWeight: 700, background: t.color, color: "#fff", padding: "1px 6px", borderRadius: 4 }}>{t.badge}</span>}
                 </div>
-                <div style={{ fontSize: 12, color: MUTED }}>£{t.unitPrice.toFixed(2)}/unit · {t.delivery}</div>
+                <div style={{ fontSize: 12, color: MUTED }}>
+                  £{t.unitPrice.toFixed(2)}/unit · {t.products.length} products · {t.delivery}
+                </div>
               </div>
             </div>
             <div style={{ textAlign: "right" }}>
               <div style={{ fontSize: 17, fontWeight: 800, color: t.color }}>£{t.totalPrice.toFixed(2)}</div>
-              <div style={{ fontSize: 11, color: MUTED }}>total</div>
+              <div style={{ fontSize: 11, color: MUTED }}>est. total</div>
             </div>
           </button>
         ))}
@@ -462,13 +428,13 @@ export function ExpressQuoteWidget() {
     )
   }
 
-  // ─── Home screen ──────────────────────────────────────────────────
+  // ─── Home screen ────────────────────────────────────────────────
   function renderHome() {
     const modes = [
-      { v: "quote" as ViewMode, icon: <FileText size={18} />, label: "Get a quote", sub: "Five priced options in 2 min", color: NAVY },
-      { v: "faq" as ViewMode,   icon: <MessageSquare size={18} />, label: "Ask a question", sub: "Setup, delivery, minimums", color: "#7c3aed" },
-      { v: "chat" as ViewMode,  icon: <Headphones size={18} />, label: "Speak to a person", sub: "Live team — 9am to 5pm", color: GREEN },
-      { v: "advice" as ViewMode,icon: <Sparkles size={18} />, label: "Help me choose", sub: "Product advice", color: AMBER },
+      { v: "quote" as ViewMode,  icon: <FileText size={18} />,      label: "Get a quote",      sub: "5 priced tiers in 2 min",        color: NAVY },
+      { v: "faq" as ViewMode,    icon: <MessageSquare size={18} />, label: "Ask a question",   sub: "Setup, delivery, minimums",      color: "#7c3aed" },
+      { v: "chat" as ViewMode,   icon: <Headphones size={18} />,    label: "Speak to a person",sub: "Live team — 9am to 5pm",         color: GREEN },
+      { v: "advice" as ViewMode, icon: <Sparkles size={18} />,      label: "Help me choose",   sub: "Product & decoration advice",    color: AMBER },
     ]
     return (
       <div>
@@ -493,13 +459,26 @@ export function ExpressQuoteWidget() {
         </div>
         <div style={{ marginTop: 20, padding: 12, background: "#eff6ff", border: `1px solid ${NAVY_LIGHT}`, borderRadius: 10, fontSize: 12, color: "#1e40af", display: "flex", alignItems: "flex-start", gap: 8 }}>
           <Info size={14} style={{ marginTop: 1, flexShrink: 0 }} />
-          <div><strong>Demo mode.</strong> All pricing and products are illustrative. Production will use a tuned LLM over the C2O knowledge base.</div>
+          <div><strong>Live data.</strong> Pricing is calculated in real time from our product catalogue using your quantity, decoration type and logo position.</div>
         </div>
       </div>
     )
   }
 
-  // ─── Footer tab bar ───────────────────────────────────────────────
+  const showTextInput = view === "faq" || view === "chat" || view === "advice"
+
+  function handleTextSend() {
+    if (!textInput.trim()) return
+    push("user", textInput)
+    const q = textInput
+    setTextInput("")
+    setTimeout(() => {
+      if (view === "chat") push("human", "Thanks — let me check that for you.")
+      else if (view === "faq") push("morgan", `Thanks for your question about "${q}". Our minimum order is 10 items. Typical delivery is 5–7 working days. For further help contact team@c2o.co.uk.`)
+      else push("morgan", `Great question! Based on "${q}", I'd suggest our Everyday or Premium tier. Want me to run a full quote?`)
+    }, 600)
+  }
+
   const tabs = [
     { v: "quote" as ViewMode,  icon: <FileText size={14} />,      label: "Quote" },
     { v: "faq" as ViewMode,    icon: <MessageSquare size={14} />, label: "FAQ" },
@@ -507,31 +486,28 @@ export function ExpressQuoteWidget() {
     { v: "chat" as ViewMode,   icon: <Headphones size={14} />,    label: "Human" },
   ]
 
-  const showTextInput = view === "faq" || view === "chat" || view === "advice"
-
   return (
     <div style={{ height: "100vh", width: "100%", display: "flex", flexDirection: "column", fontFamily: "'Lato', 'Quicksand', Arial, sans-serif", background: GREY_BG }}>
 
-      {/* ── Top bar ─────────────────────────────────────────────── */}
-      <div style={{ background: NAVY_DARK, color: "#fff", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: `1px solid rgba(255,255,255,0.1)`, flexShrink: 0 }}>
+      {/* Top bar */}
+      <div style={{ background: NAVY_DARK, color: "#fff", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ fontSize: 16, fontWeight: 900, letterSpacing: "-0.3px", fontFamily: "'Quicksand', Lato, sans-serif" }}>C2O</div>
           <div style={{ width: 1, height: 16, background: "rgba(255,255,255,0.2)" }} />
           <div style={{ fontSize: 13, opacity: 0.85 }}>Customer Engine</div>
-          <div style={{ fontSize: 10, fontWeight: 700, background: GOLD, color: NAVY_DARK, padding: "2px 8px", borderRadius: 4, letterSpacing: "0.5px" }}>MVP DEMO</div>
+          <div style={{ fontSize: 10, fontWeight: 700, background: GOLD, color: NAVY_DARK, padding: "2px 8px", borderRadius: 4, letterSpacing: "0.5px" }}>MVP</div>
         </div>
-        <button onClick={() => { setView("home"); setMessages([]); setStep(0); setAnswers({ qty: 50 }); setSelectedTier(null); setActionView(""); setTextInput("") }}
+        <button onClick={() => { setView("home"); setMessages([]); setStep(0); setAnswers({ qty: 50 }); setSelectedTier(null); setActionView(""); setTextInput(""); setTierBuckets([]) }}
           style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "none", padding: "6px 12px", borderRadius: 6, fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit" }}>
-          <RefreshCw size={12} /> Reset demo
+          <RefreshCw size={12} /> Reset
         </button>
       </div>
 
-      {/* ── Sub-header ───────────────────────────────────────────── */}
+      {/* Sub-header */}
       <div style={{ padding: "10px 20px", borderBottom: `1px solid ${BORDER}`, background: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {view !== "home" && (
-            <button onClick={goBack}
-              style={{ background: "transparent", border: `1px solid ${BORDER}`, color: MUTED, width: 28, height: 28, borderRadius: 6, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <button onClick={goBack} style={{ background: "transparent", border: `1px solid ${BORDER}`, color: MUTED, width: 28, height: 28, borderRadius: 6, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <ArrowLeft size={14} />
             </button>
           )}
@@ -541,44 +517,41 @@ export function ExpressQuoteWidget() {
             <div style={{ fontSize: 11, color: MUTED, display: "flex", alignItems: "center", gap: 4 }}>
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e" }} />
               {view === "home"   && "Always on · 24/7"}
-              {view === "quote"  && `Express Quote · Step ${Math.min(step + 1, quoteSteps.length)} of ${quoteSteps.length}`}
+              {view === "quote"  && (step < quoteSteps.length ? `Express Quote · Step ${step + 1} of ${quoteSteps.length}` : "Quote ready")}
               {view === "faq"    && "Answering questions"}
               {view === "advice" && "Product advice"}
               {view === "chat"   && "Live chat — Sarah"}
-              {view === "order"  && "Order placed"}
             </div>
           </div>
         </div>
         {view !== "home" && (
-          <button onClick={() => setView("home")}
-            style={{ background: "transparent", border: "none", color: MUTED, cursor: "pointer", fontSize: 12, fontFamily: "inherit", display: "flex", alignItems: "center", gap: 4 }}>
+          <button onClick={() => setView("home")} style={{ background: "transparent", border: "none", color: MUTED, cursor: "pointer", fontSize: 12, fontFamily: "inherit", display: "flex", alignItems: "center", gap: 4 }}>
             <X size={14} /> Home
           </button>
         )}
       </div>
 
-      {/* ── Progress bar (quote mode) ─────────────────────────────── */}
+      {/* Progress bar */}
       {view === "quote" && step < quoteSteps.length && (
         <div style={{ height: 3, background: BORDER, flexShrink: 0 }}>
           <div style={{ height: "100%", width: `${((step + 1) / quoteSteps.length) * 100}%`, background: NAVY, transition: "width 0.3s" }} />
         </div>
       )}
 
-      {/* ── Scrollable content area ───────────────────────────────── */}
+      {/* Scrollable content */}
       <div ref={scrollRef} style={{ flex: 1, overflow: "auto", padding: "20px 24px" }}>
         {view === "home" ? renderHome() : (
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            {/* chat bubbles */}
             {messages.map(m => <Bubble key={m.id} role={m.role} text={m.text} />)}
 
-            {/* inline step options (quote only — no text input) */}
+            {/* quote step options — NO text input */}
             {view === "quote" && step < quoteSteps.length && (
-              <div style={{ marginTop: 8 }}>{renderQuoteStep()}</div>
+              <div style={{ marginTop: 8 }}>{renderStep()}</div>
             )}
 
-            {/* quote results */}
+            {/* engine-generated tier results */}
             {view === "quote" && step >= quoteSteps.length && (
-              <div style={{ marginTop: 8 }}>{renderQuoteResults()}</div>
+              <div style={{ marginTop: 8 }}>{renderTierResults()}</div>
             )}
 
             {/* FAQ chips */}
@@ -587,7 +560,7 @@ export function ExpressQuoteWidget() {
                 {FAQ_CHIPS.map(chip => (
                   <QuickReply key={chip} label={chip} onClick={() => {
                     push("user", chip)
-                    setTimeout(() => push("morgan", `Great question about "${chip}". Our team is available Mon–Fri 9am–5pm and will respond within 2 hours. For urgent queries call 0800 123 456.`), 500)
+                    setTimeout(() => push("morgan", `"${chip}": our minimum is 10 items, delivery typically 5–7 working days. Call us on 0800 000 000 for rush orders.`), 500)
                   }} />
                 ))}
               </div>
@@ -599,7 +572,7 @@ export function ExpressQuoteWidget() {
                 {ADVICE_CHIPS.map(chip => (
                   <QuickReply key={chip} label={chip} onClick={() => {
                     push("user", chip)
-                    setTimeout(() => push("morgan", `For "${chip}", I'd recommend our Everyday or Premium tier — great balance of quality and price. Shall I kick off a quote for you?`), 500)
+                    setTimeout(() => push("morgan", `For "${chip}" I'd recommend our Everyday or Premium tier. Shall I run a full quote?`), 500)
                   }} />
                 ))}
               </div>
@@ -608,45 +581,22 @@ export function ExpressQuoteWidget() {
         )}
       </div>
 
-      {/* ── Text input (faq / advice / chat only) ────────────────── */}
+      {/* Text input (faq / advice / chat only) */}
       {showTextInput && (
         <div style={{ padding: "14px 24px 0", background: "#fff", flexShrink: 0 }}>
           <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", gap: 8 }}>
-            <input
-              value={textInput}
-              onChange={e => setTextInput(e.target.value)}
-              onKeyDown={e => {
-                if (e.key !== "Enter" || !textInput.trim()) return
-                if (view === "faq") { handleFAQText(); return }
-                push("user", textInput)
-                setTextInput("")
-                setTimeout(() => {
-                  if (view === "chat") push("human", "Thanks — let me check that for you.")
-                  else push("morgan", `Great question! I'd suggest exploring our Everyday tier — it's our most popular. Want me to run a quick quote?`)
-                }, 600)
-              }}
+            <input value={textInput} onChange={e => setTextInput(e.target.value)}
+              onKeyDown={e => e.key === "Enter" && handleTextSend()}
               placeholder={view === "faq" ? "Type your own question…" : view === "chat" ? "Type your message…" : "Describe what you need…"}
-              style={{ flex: 1, padding: "11px 14px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none" }}
-            />
-            <button
-              onClick={() => {
-                if (!textInput.trim()) return
-                if (view === "faq") { handleFAQText(); return }
-                push("user", textInput)
-                setTextInput("")
-                setTimeout(() => {
-                  if (view === "chat") push("human", "Thanks — let me check that for you.")
-                  else push("morgan", `Great question! I'd suggest exploring our Everyday tier — it's our most popular. Want me to run a quick quote?`)
-                }, 600)
-              }}
-              style={{ padding: "11px 14px", borderRadius: 8, border: "none", background: NAVY, color: "#fff", cursor: "pointer", display: "flex", alignItems: "center" }}>
+              style={{ flex: 1, padding: "11px 14px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none" }} />
+            <button onClick={handleTextSend} style={{ padding: "11px 14px", borderRadius: 8, border: "none", background: NAVY, color: "#fff", cursor: "pointer", display: "flex", alignItems: "center" }}>
               <Send size={16} />
             </button>
           </div>
         </div>
       )}
 
-      {/* ── Bottom nav tabs ───────────────────────────────────────── */}
+      {/* Bottom tab bar */}
       <div style={{ padding: "12px 24px 16px", background: "#fff", borderTop: showTextInput ? "none" : `1px solid ${BORDER}`, flexShrink: 0 }}>
         <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap" }}>
           {tabs.map(c => {

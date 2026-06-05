@@ -1,0 +1,8370 @@
+[
+  {
+    "id": "prod-00001",
+    "category": "t-shirts",
+    "code": "61082",
+    "vendorProductId": "61082",
+    "name": "Fruit of the Loom Original T-Shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Budget",
+    "price": 3.09,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 3.09
+      },
+      {
+        "qty": 8,
+        "price": 2.99
+      },
+      {
+        "qty": 15,
+        "price": 2.73
+      },
+      {
+        "qty": 40,
+        "price": 2.58
+      },
+      {
+        "qty": 100,
+        "price": 2.48
+      },
+      {
+        "qty": 250,
+        "price": 2.31
+      },
+      {
+        "qty": 500,
+        "price": 2.31
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Fashion",
+      "Promotions",
+      "Stag Do"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Budget",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 4,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00002",
+    "category": "t-shirts",
+    "code": "61019",
+    "vendorProductId": "61019",
+    "name": "Fruit of the Loom Kids Original T-Shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Budget",
+    "price": 5.29,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 5.29
+      },
+      {
+        "qty": 8,
+        "price": 3.94
+      },
+      {
+        "qty": 15,
+        "price": 3.56
+      },
+      {
+        "qty": 40,
+        "price": 3.36
+      },
+      {
+        "qty": 100,
+        "price": 3.1
+      },
+      {
+        "qty": 250,
+        "price": 2.61
+      },
+      {
+        "qty": 500,
+        "price": 2.61
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Fashion",
+      "Promotions"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Various Colours",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00003",
+    "category": "t-shirts",
+    "code": "61420",
+    "vendorProductId": "61420",
+    "name": "Fruit of the Loom Lady Fit Original T-Shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Budget",
+    "price": 5.54,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 5.54
+      },
+      {
+        "qty": 8,
+        "price": 4.34
+      },
+      {
+        "qty": 15,
+        "price": 4.02
+      },
+      {
+        "qty": 40,
+        "price": 3.57
+      },
+      {
+        "qty": 100,
+        "price": 3.23
+      },
+      {
+        "qty": 250,
+        "price": 2.74
+      },
+      {
+        "qty": 500,
+        "price": 2.74
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Grey",
+      "Pink",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Fashion",
+      "Promotions",
+      "Hen Do"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Feminine Fit",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00004",
+    "category": "t-shirts",
+    "code": "61033",
+    "vendorProductId": "61033",
+    "name": "Fruit of the Loom Children's T-shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Budget",
+    "price": 8.17,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 8.17
+      },
+      {
+        "qty": 8,
+        "price": 4.14
+      },
+      {
+        "qty": 15,
+        "price": 3.72
+      },
+      {
+        "qty": 40,
+        "price": 3.51
+      },
+      {
+        "qty": 100,
+        "price": 3.29
+      },
+      {
+        "qty": 250,
+        "price": 2.75
+      },
+      {
+        "qty": 500,
+        "price": 2.75
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "50. DNU-BI-Front-Canvas-Children",
+      "51. DNU-BI-Top-Back-Canvas-Child"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Fashion",
+      "Promotions"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Kids",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 20,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00005",
+    "category": "t-shirts",
+    "code": "61036",
+    "vendorProductId": "61036",
+    "name": "Fruit Of The Loom Men's Valueweight T-Shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Everyday",
+    "price": 6.26,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 6.26
+      },
+      {
+        "qty": 8,
+        "price": 4.97
+      },
+      {
+        "qty": 15,
+        "price": 4.48
+      },
+      {
+        "qty": 40,
+        "price": 4.23
+      },
+      {
+        "qty": 100,
+        "price": 3.98
+      },
+      {
+        "qty": 250,
+        "price": 3.35
+      },
+      {
+        "qty": 500,
+        "price": 3.35
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "23. Custom see SPO",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Fashion",
+      "Promotions",
+      "Stag Do"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Top Value",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 20,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00006",
+    "category": "t-shirts",
+    "code": "61372",
+    "vendorProductId": "61372",
+    "name": "Fruit of the Loom Lady Fit Value T-Shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Everyday",
+    "price": 6.43,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 6.43
+      },
+      {
+        "qty": 8,
+        "price": 5.81
+      },
+      {
+        "qty": 15,
+        "price": 5.24
+      },
+      {
+        "qty": 40,
+        "price": 4.49
+      },
+      {
+        "qty": 100,
+        "price": 4.36
+      },
+      {
+        "qty": 250,
+        "price": 3.62
+      },
+      {
+        "qty": 500,
+        "price": 3.62
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Fashion",
+      "Promotions",
+      "Hen Do"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Feminine Fit",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 55,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00007",
+    "category": "t-shirts",
+    "code": "61033",
+    "vendorProductId": "61033",
+    "name": "Fruit of the Loom Toddlers T-shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Everyday",
+    "price": 5.74,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 5.74
+      },
+      {
+        "qty": 8,
+        "price": 4.32
+      },
+      {
+        "qty": 15,
+        "price": 3.72
+      },
+      {
+        "qty": 40,
+        "price": 3.29
+      },
+      {
+        "qty": 100,
+        "price": 2.88
+      },
+      {
+        "qty": 250,
+        "price": 2.45
+      },
+      {
+        "qty": 500,
+        "price": 2.45
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest"
+    ],
+    "colours": [
+      "Blue",
+      "Navy",
+      "Pink",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Fashion",
+      "Promotions"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Various Colours",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 57,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00008",
+    "category": "t-shirts",
+    "code": "JC001",
+    "vendorProductId": "JC001",
+    "name": "AWDis Cool T-Shirt",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 10.66,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 10.66
+      },
+      {
+        "qty": 8,
+        "price": 8.74
+      },
+      {
+        "qty": 15,
+        "price": 8.22
+      },
+      {
+        "qty": 40,
+        "price": 7.65
+      },
+      {
+        "qty": 100,
+        "price": 6.13
+      },
+      {
+        "qty": 250,
+        "price": 4.79
+      },
+      {
+        "qty": 500,
+        "price": 4.79
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Cream",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Sportswear",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Outdoors",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Sports / Fitness,Leisure Tourism & Travel",
+    "feature": "Quick Dry,Set in Sleeves",
+    "featureText": "SPORTSWEAR",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 17,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00009",
+    "category": "t-shirts",
+    "code": "JC005",
+    "vendorProductId": "JC005",
+    "name": "AWDis Girlie Cool T-Shirt",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 10.66,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 10.66
+      },
+      {
+        "qty": 8,
+        "price": 8.59
+      },
+      {
+        "qty": 15,
+        "price": 8.22
+      },
+      {
+        "qty": 40,
+        "price": 7.05
+      },
+      {
+        "qty": 100,
+        "price": 6.02
+      },
+      {
+        "qty": 250,
+        "price": 5.0
+      },
+      {
+        "qty": 500,
+        "price": 5.0
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Sportswear",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Outdoors",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Sports / Fitness,Leisure Tourism & Travel",
+    "feature": "Quick Dry,Set in Sleeves",
+    "featureText": "UPF Protection",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 58,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00010",
+    "category": "t-shirts",
+    "code": "JC01J",
+    "vendorProductId": "JC01J",
+    "name": "AWDis Kids Just Cool Wicking T-Shirt",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 8.39,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 8.39
+      },
+      {
+        "qty": 8,
+        "price": 7.13
+      },
+      {
+        "qty": 15,
+        "price": 6.12
+      },
+      {
+        "qty": 40,
+        "price": 5.68
+      },
+      {
+        "qty": 100,
+        "price": 4.87
+      },
+      {
+        "qty": 250,
+        "price": 4.07
+      },
+      {
+        "qty": 500,
+        "price": 4.07
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Outdoors"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Quick Dry,Set in Sleeves",
+    "featureText": "Quick Drying",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 58,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00011",
+    "category": "t-shirts",
+    "code": "64000",
+    "vendorProductId": "64000",
+    "name": "Gildan Men's Ring Spun, SoftStyle T-Shirt",
+    "brand": "Gildan",
+    "tier": "Everyday",
+    "price": 7.81,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 7.81
+      },
+      {
+        "qty": 8,
+        "price": 5.9
+      },
+      {
+        "qty": 15,
+        "price": 5.3
+      },
+      {
+        "qty": 40,
+        "price": 4.96
+      },
+      {
+        "qty": 100,
+        "price": 4.65
+      },
+      {
+        "qty": 250,
+        "price": 4.0
+      },
+      {
+        "qty": 500,
+        "price": 4.0
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "65. Shoulder Blades",
+      "76. Back Bottom Left",
+      "77. Back Bottom Right"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Stag Do"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Bestseller",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Combed,Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 1,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00012",
+    "category": "t-shirts",
+    "code": "64000L",
+    "vendorProductId": "64000L",
+    "name": "Gildan SoftStyle Ladies Fitted Ringspun T-Shirt",
+    "brand": "Gildan",
+    "tier": "Everyday",
+    "price": 7.77,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 7.77
+      },
+      {
+        "qty": 8,
+        "price": 6.07
+      },
+      {
+        "qty": 15,
+        "price": 5.41
+      },
+      {
+        "qty": 40,
+        "price": 5.17
+      },
+      {
+        "qty": 100,
+        "price": 4.32
+      },
+      {
+        "qty": 250,
+        "price": 3.63
+      },
+      {
+        "qty": 500,
+        "price": 3.63
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Hen Do"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Feminine Fit",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 45,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00013",
+    "category": "t-shirts",
+    "code": "64000B",
+    "vendorProductId": "64000B",
+    "name": "Gildan SoftStyle Youth Ringspun T-Shirt",
+    "brand": "Gildan",
+    "tier": "Everyday",
+    "price": 6.52,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 6.52
+      },
+      {
+        "qty": 8,
+        "price": 4.83
+      },
+      {
+        "qty": 15,
+        "price": 4.27
+      },
+      {
+        "qty": 40,
+        "price": 4.22
+      },
+      {
+        "qty": 100,
+        "price": 3.5
+      },
+      {
+        "qty": 250,
+        "price": 2.98
+      },
+      {
+        "qty": 500,
+        "price": 2.98
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "gender": "Kids",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Merchandise",
+      "Fashion",
+      "Promotions"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "TEARAWAY LABEL",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00014",
+    "category": "t-shirts",
+    "code": "TR020",
+    "vendorProductId": "TR020",
+    "name": "TriDri Women's Performance T-Shirt",
+    "brand": "TriDri",
+    "tier": "Premium",
+    "price": 9.49,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 9.49
+      },
+      {
+        "qty": 8,
+        "price": 8.33
+      },
+      {
+        "qty": 15,
+        "price": 7.39
+      },
+      {
+        "qty": 40,
+        "price": 6.52
+      },
+      {
+        "qty": 100,
+        "price": 5.72
+      },
+      {
+        "qty": 250,
+        "price": 4.87
+      },
+      {
+        "qty": 500,
+        "price": 4.87
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "18. Inside Back Label",
+      "23. Custom see SPO",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Sportswear",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Sports / Fitness,Leisure Tourism & Travel",
+    "feature": "Quick Dry",
+    "featureText": "Lightweight",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 17,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00015",
+    "category": "t-shirts",
+    "code": "TR010",
+    "vendorProductId": "TR010",
+    "name": "TriDri Performance T-Shirt",
+    "brand": "TriDri",
+    "tier": "Premium",
+    "price": 9.49,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 9.49
+      },
+      {
+        "qty": 8,
+        "price": 8.33
+      },
+      {
+        "qty": 15,
+        "price": 7.39
+      },
+      {
+        "qty": 40,
+        "price": 6.52
+      },
+      {
+        "qty": 100,
+        "price": 5.72
+      },
+      {
+        "qty": 250,
+        "price": 4.87
+      },
+      {
+        "qty": 500,
+        "price": 4.87
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "23. Custom see SPO",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Sportswear",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Outdoors",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Sports / Fitness,Leisure Tourism & Travel",
+    "feature": "Quick Dry",
+    "featureText": "Sportswear",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 17,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00016",
+    "category": "t-shirts",
+    "code": "UC301",
+    "vendorProductId": "UC301",
+    "name": "Uneek T-Shirt Classic",
+    "brand": "Uneek",
+    "tier": "Premium",
+    "price": 6.77,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 6.77
+      },
+      {
+        "qty": 8,
+        "price": 5.63
+      },
+      {
+        "qty": 15,
+        "price": 5.12
+      },
+      {
+        "qty": 40,
+        "price": 4.36
+      },
+      {
+        "qty": 100,
+        "price": 4.21
+      },
+      {
+        "qty": 250,
+        "price": 3.59
+      },
+      {
+        "qty": 500,
+        "price": 3.59
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL",
+      "6XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Fashion",
+      "Promotions",
+      "Stag Do",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Crew Neck",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 109,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00017",
+    "category": "t-shirts",
+    "code": "5000",
+    "vendorProductId": "5000",
+    "name": "Gildan Heavy Cotton Adult T-Shirt",
+    "brand": "Gildan",
+    "tier": "Premium",
+    "price": 8.28,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 8.28
+      },
+      {
+        "qty": 8,
+        "price": 6.57
+      },
+      {
+        "qty": 15,
+        "price": 5.16
+      },
+      {
+        "qty": 40,
+        "price": 4.81
+      },
+      {
+        "qty": 100,
+        "price": 4.53
+      },
+      {
+        "qty": 250,
+        "price": 3.8
+      },
+      {
+        "qty": 500,
+        "price": 3.8
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "65. Shoulder Blades",
+      "76. Back Bottom Left",
+      "77. Back Bottom Right"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Stag Do"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "DURABLE",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 10,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00018",
+    "category": "t-shirts",
+    "code": "5000B",
+    "vendorProductId": "5000B",
+    "name": "Gildan Children's Heavy Cotton T-Shirt",
+    "brand": "Gildan",
+    "tier": "Premium",
+    "price": 6.09,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 6.09
+      },
+      {
+        "qty": 8,
+        "price": 4.44
+      },
+      {
+        "qty": 15,
+        "price": 4.08
+      },
+      {
+        "qty": 40,
+        "price": 3.9
+      },
+      {
+        "qty": 100,
+        "price": 3.41
+      },
+      {
+        "qty": 250,
+        "price": 2.89
+      },
+      {
+        "qty": 500,
+        "price": 2.89
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Merchandise",
+      "Fashion",
+      "Promotions"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "TEARAWAY LABEL",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 32,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00019",
+    "category": "t-shirts",
+    "code": "61044",
+    "vendorProductId": "61044",
+    "name": "Fruit of the Loom Premium Heavyweight T-shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Premium",
+    "price": 7.03,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 7.03
+      },
+      {
+        "qty": 8,
+        "price": 6.08
+      },
+      {
+        "qty": 15,
+        "price": 5.63
+      },
+      {
+        "qty": 40,
+        "price": 5.41
+      },
+      {
+        "qty": 100,
+        "price": 4.42
+      },
+      {
+        "qty": 250,
+        "price": 3.77
+      },
+      {
+        "qty": 500,
+        "price": 3.77
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Charities",
+      "Gifts",
+      "Fashion",
+      "Promotions"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": null,
+    "featureText": "Heavyweight",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 25,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00020",
+    "category": "t-shirts",
+    "code": "STTU169",
+    "vendorProductId": "STTU169",
+    "name": "Stanley/Stella Unisex Creator 2.0 Iconic T-Shirt",
+    "brand": "Stanley/Stella",
+    "tier": "Retail",
+    "price": 10.42,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 10.42
+      },
+      {
+        "qty": 8,
+        "price": 9.34
+      },
+      {
+        "qty": 15,
+        "price": 8.4
+      },
+      {
+        "qty": 40,
+        "price": 7.48
+      },
+      {
+        "qty": 100,
+        "price": 6.61
+      },
+      {
+        "qty": 250,
+        "price": 5.66
+      },
+      {
+        "qty": 500,
+        "price": 5.66
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "23. Custom see SPO",
+      "65. Shoulder Blades",
+      "76. Back Bottom Left",
+      "77. Back Bottom Right"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Cream",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XXS",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Fashion",
+      "Promotions"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Sustainable,Set in Sleeves",
+    "featureText": "ORGANIC",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton,Organic Cotton",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 5,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00021",
+    "category": "t-shirts",
+    "code": "STTK184",
+    "vendorProductId": "STTK184",
+    "name": "Stanley/Stella Kids Mini Creator 2.0 T-Shirt",
+    "brand": "Stanley/Stella",
+    "tier": "Retail",
+    "price": 7.41,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 7.41
+      },
+      {
+        "qty": 8,
+        "price": 6.57
+      },
+      {
+        "qty": 15,
+        "price": 6.29
+      },
+      {
+        "qty": 40,
+        "price": 5.62
+      },
+      {
+        "qty": 100,
+        "price": 4.98
+      },
+      {
+        "qty": 250,
+        "price": 4.28
+      },
+      {
+        "qty": 500,
+        "price": 4.28
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "23. Custom see SPO"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Cream",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Fashion",
+      "Promotions"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Sustainable",
+    "featureText": "Organic",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton,Organic Cotton",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Combed,Fabric Detail - Ringspun,Fabric Detail - Washed"
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00022",
+    "category": "t-shirts",
+    "code": "TJ7020",
+    "vendorProductId": "TJ7020",
+    "name": "Tee Jays Men's CoolDry Tee",
+    "brand": "Tee Jays",
+    "tier": "Retail",
+    "price": 30.94,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 30.94
+      },
+      {
+        "qty": 8,
+        "price": 28.11
+      },
+      {
+        "qty": 15,
+        "price": 26.58
+      },
+      {
+        "qty": 40,
+        "price": 23.72
+      },
+      {
+        "qty": 100,
+        "price": 21.01
+      },
+      {
+        "qty": 250,
+        "price": 18.03
+      },
+      {
+        "qty": 500,
+        "price": 18.03
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Mens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Sportswear",
+      "Fashion",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Sports / Fitness,Leisure Tourism & Travel",
+    "feature": "Quick Dry,Breathable",
+    "featureText": "Moisture Management",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00023",
+    "category": "t-shirts",
+    "code": "TJ7021",
+    "vendorProductId": "TJ7021",
+    "name": "Tee Jays Ladies' CoolDry Tee",
+    "brand": "Tee Jays",
+    "tier": "Retail",
+    "price": 28.64,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 28.64
+      },
+      {
+        "qty": 8,
+        "price": 26.02
+      },
+      {
+        "qty": 15,
+        "price": 24.61
+      },
+      {
+        "qty": 40,
+        "price": 23.05
+      },
+      {
+        "qty": 100,
+        "price": 21.26
+      },
+      {
+        "qty": 250,
+        "price": 18.22
+      },
+      {
+        "qty": 500,
+        "price": 18.22
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Round Neck",
+    "purpose": [
+      "Sportswear",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Sports / Fitness,Leisure Tourism & Travel",
+    "feature": "Quick Dry",
+    "featureText": "Quick Drying",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "T-Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00024",
+    "category": "hoodies",
+    "code": "18500",
+    "vendorProductId": "18500",
+    "name": "Gildan Adult Hooded Sweatshirt",
+    "brand": "Gildan",
+    "tier": "Everyday",
+    "price": 21.25,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 21.25
+      },
+      {
+        "qty": 8,
+        "price": 19.48
+      },
+      {
+        "qty": 15,
+        "price": 17.54
+      },
+      {
+        "qty": 40,
+        "price": 15.94
+      },
+      {
+        "qty": 100,
+        "price": 14.02
+      },
+      {
+        "qty": 250,
+        "price": 11.76
+      },
+      {
+        "qty": 500,
+        "price": 11.76
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "36. SLEEVE-Cuff-Left",
+      "37. SLEEVE-Cuff-Right",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Hospitality",
+      "Charities",
+      "Merchandise",
+      "Promotions",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform",
+      "Teamwear",
+      "Hen Do",
+      "Leavers Hoodies"
+    ],
+    "style": null,
+    "sector": "Hospitality,Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "MULTIPLE COLOURS",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 6,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00025",
+    "category": "hoodies",
+    "code": "62037",
+    "vendorProductId": "62037",
+    "name": "Fruit Of The Loom Premium 70/30 Children's Hooded Sweatshirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Everyday",
+    "price": 20.18,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 20.18
+      },
+      {
+        "qty": 8,
+        "price": 18.5
+      },
+      {
+        "qty": 15,
+        "price": 16.65
+      },
+      {
+        "qty": 40,
+        "price": 15.13
+      },
+      {
+        "qty": 100,
+        "price": 13.32
+      },
+      {
+        "qty": 250,
+        "price": 11.18
+      },
+      {
+        "qty": 500,
+        "price": 11.18
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Red",
+      "White"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Charities",
+      "Promotions",
+      "Schoolwear",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "Kids",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00026",
+    "category": "hoodies",
+    "code": "62038",
+    "vendorProductId": "62038",
+    "name": "Fruit of the Loom Lady Fit Hooded Sweatshirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Everyday",
+    "price": 21.9,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 21.9
+      },
+      {
+        "qty": 8,
+        "price": 20.08
+      },
+      {
+        "qty": 15,
+        "price": 18.07
+      },
+      {
+        "qty": 40,
+        "price": 16.43
+      },
+      {
+        "qty": 100,
+        "price": 14.45
+      },
+      {
+        "qty": 250,
+        "price": 12.13
+      },
+      {
+        "qty": 500,
+        "price": 12.13
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Hospitality",
+      "Charities",
+      "Promotions",
+      "Tradeshows",
+      "Uniform",
+      "Outdoors",
+      "Teamwear",
+      "Hen Do",
+      "Leavers Hoodies"
+    ],
+    "style": null,
+    "sector": "Hospitality,Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "Feminine Fit",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00027",
+    "category": "hoodies",
+    "code": "62043",
+    "vendorProductId": "62043",
+    "name": "Fruit of the Loom Kids Hooded Sweat",
+    "brand": "Fruit of the Loom",
+    "tier": "Everyday",
+    "price": 17.79,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 17.79
+      },
+      {
+        "qty": 8,
+        "price": 16.31
+      },
+      {
+        "qty": 15,
+        "price": 14.69
+      },
+      {
+        "qty": 40,
+        "price": 13.35
+      },
+      {
+        "qty": 100,
+        "price": 11.74
+      },
+      {
+        "qty": 250,
+        "price": 9.86
+      },
+      {
+        "qty": 500,
+        "price": 9.86
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Charities",
+      "Promotions",
+      "Schoolwear",
+      "Outdoors",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": null,
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 801,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00028",
+    "category": "hoodies",
+    "code": "62140",
+    "vendorProductId": "62140",
+    "name": "Fruit Of The Loom Men's Lightweight Hooded Sweat",
+    "brand": "Fruit of the Loom",
+    "tier": "Everyday",
+    "price": 19.33,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 19.33
+      },
+      {
+        "qty": 8,
+        "price": 17.72
+      },
+      {
+        "qty": 15,
+        "price": 15.95
+      },
+      {
+        "qty": 40,
+        "price": 14.51
+      },
+      {
+        "qty": 100,
+        "price": 12.76
+      },
+      {
+        "qty": 250,
+        "price": 10.7
+      },
+      {
+        "qty": 500,
+        "price": 10.7
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Hospitality",
+      "Charities",
+      "Promotions",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform",
+      "Teamwear",
+      "Leavers Hoodies"
+    ],
+    "style": null,
+    "sector": "Hospitality,Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Raglan Sleeves",
+    "featureText": "Lightweight",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 35,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00029",
+    "category": "hoodies",
+    "code": "62152",
+    "vendorProductId": "62152",
+    "name": "Fruit of the Loom Premium Hooded Sweatshirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Everyday",
+    "price": 29.27,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 29.27
+      },
+      {
+        "qty": 8,
+        "price": 26.96
+      },
+      {
+        "qty": 15,
+        "price": 24.39
+      },
+      {
+        "qty": 40,
+        "price": 22.27
+      },
+      {
+        "qty": 100,
+        "price": 19.7
+      },
+      {
+        "qty": 250,
+        "price": 16.61
+      },
+      {
+        "qty": 500,
+        "price": 16.61
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Hospitality",
+      "Charities",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Hospitality,Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "Ultra soft",
+    "tags": [
+      "Best Sellers",
+      "Product Of The Month"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 6,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00030",
+    "category": "hoodies",
+    "code": "62208",
+    "vendorProductId": "62208",
+    "name": "Fruit of the Loom Hooded Sweatshirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Everyday",
+    "price": 20.53,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 20.53
+      },
+      {
+        "qty": 8,
+        "price": 18.82
+      },
+      {
+        "qty": 15,
+        "price": 16.93
+      },
+      {
+        "qty": 40,
+        "price": 15.39
+      },
+      {
+        "qty": 100,
+        "price": 13.55
+      },
+      {
+        "qty": 250,
+        "price": 11.37
+      },
+      {
+        "qty": 500,
+        "price": 11.37
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Hospitality",
+      "Charities",
+      "Promotions",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform",
+      "Teamwear",
+      "Leavers Hoodies"
+    ],
+    "style": null,
+    "sector": "Hospitality,Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "Top Value",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 39,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00031",
+    "category": "hoodies",
+    "code": "18500B",
+    "vendorProductId": "18500B",
+    "name": "Gildan Childrens Hooded Sweatshirt",
+    "brand": "Gildan",
+    "tier": "Everyday",
+    "price": 21.75,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 21.75
+      },
+      {
+        "qty": 8,
+        "price": 19.94
+      },
+      {
+        "qty": 15,
+        "price": 17.95
+      },
+      {
+        "qty": 40,
+        "price": 16.31
+      },
+      {
+        "qty": 100,
+        "price": 14.35
+      },
+      {
+        "qty": 250,
+        "price": 12.05
+      },
+      {
+        "qty": 500,
+        "price": 12.05
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Merchandise",
+      "Promotions",
+      "Schoolwear",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "TEARAWAY LABEL",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 60,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00032",
+    "category": "hoodies",
+    "code": "JH001",
+    "vendorProductId": "JH001",
+    "name": "AWDis College Hoodie",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 22.07,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 22.07
+      },
+      {
+        "qty": 8,
+        "price": 20.23
+      },
+      {
+        "qty": 15,
+        "price": 18.2
+      },
+      {
+        "qty": 40,
+        "price": 16.55
+      },
+      {
+        "qty": 100,
+        "price": 14.57
+      },
+      {
+        "qty": 250,
+        "price": 12.22
+      },
+      {
+        "qty": 500,
+        "price": 12.22
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "23. Custom see SPO",
+      "36. SLEEVE-Cuff-Left",
+      "37. SLEEVE-Cuff-Right",
+      "42. HEM-Bottom Left",
+      "43. HEM-Bottom Right",
+      "65. Shoulder Blades",
+      "76. Back Bottom Left",
+      "77. Back Bottom Right"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Cream",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Gifts",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform",
+      "Teamwear",
+      "Hen Do",
+      "Leavers Hoodies"
+    ],
+    "style": null,
+    "sector": "Hospitality,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "TOP VALUE",
+    "tags": [
+      "Best Sellers",
+      "Homepage Rail"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 4,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00033",
+    "category": "hoodies",
+    "code": "JH001B",
+    "vendorProductId": "JH001B",
+    "name": "AWDis Kids Hoodie",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 18.31,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 18.31
+      },
+      {
+        "qty": 8,
+        "price": 16.77
+      },
+      {
+        "qty": 15,
+        "price": 15.1
+      },
+      {
+        "qty": 40,
+        "price": 13.72
+      },
+      {
+        "qty": 100,
+        "price": 12.08
+      },
+      {
+        "qty": 250,
+        "price": 10.13
+      },
+      {
+        "qty": 500,
+        "price": 10.13
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "42. HEM-Bottom Left",
+      "43. HEM-Bottom Right",
+      "52. DNU-BI-Front-Canvas-Children",
+      "53. DNU-BI-Back-Canvas-Childrenâ€™",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Cream",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Charities",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Schoolwear",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "KIDS",
+    "tags": [
+      "Best Sellers",
+      "Homepage Rail"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 10,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00034",
+    "category": "hoodies",
+    "code": "JH01F",
+    "vendorProductId": "JH01F",
+    "name": "AWDis Girlie College Hoodie",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 22.07,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 22.07
+      },
+      {
+        "qty": 8,
+        "price": 20.23
+      },
+      {
+        "qty": 15,
+        "price": 18.2
+      },
+      {
+        "qty": 40,
+        "price": 16.55
+      },
+      {
+        "qty": 100,
+        "price": 14.57
+      },
+      {
+        "qty": 250,
+        "price": 12.22
+      },
+      {
+        "qty": 500,
+        "price": 12.22
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Cream",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Tradeshows",
+      "Beauty",
+      "Uniform",
+      "Teamwear",
+      "Hen Do",
+      "Leavers Hoodies"
+    ],
+    "style": null,
+    "sector": "Hospitality,Beauty,Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "Various Colours",
+    "tags": [
+      "Homepage Rail"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00035",
+    "category": "hoodies",
+    "code": "JH050",
+    "vendorProductId": "JH050",
+    "name": "AWDis Zoodie",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 28.38,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 28.38
+      },
+      {
+        "qty": 8,
+        "price": 26.14
+      },
+      {
+        "qty": 15,
+        "price": 23.65
+      },
+      {
+        "qty": 40,
+        "price": 21.59
+      },
+      {
+        "qty": 100,
+        "price": 19.1
+      },
+      {
+        "qty": 250,
+        "price": 16.11
+      },
+      {
+        "qty": 500,
+        "price": 16.11
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Merchandise",
+      "Fashion",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform",
+      "Teamwear",
+      "Hen Do"
+    ],
+    "style": null,
+    "sector": "Hospitality,Leisure Tourism & Travel",
+    "feature": "Side Pockets,Set in Sleeves",
+    "featureText": "Multiple colours",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 14,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00036",
+    "category": "hoodies",
+    "code": "JH050B",
+    "vendorProductId": "JH050B",
+    "name": "AWDis Just Hoods Kids Zoodie",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 23.82,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 23.82
+      },
+      {
+        "qty": 8,
+        "price": 21.83
+      },
+      {
+        "qty": 15,
+        "price": 19.66
+      },
+      {
+        "qty": 40,
+        "price": 17.86
+      },
+      {
+        "qty": 100,
+        "price": 15.72
+      },
+      {
+        "qty": 250,
+        "price": 13.19
+      },
+      {
+        "qty": 500,
+        "price": 13.19
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "18. Inside Back Label"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Charities",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Side Pockets,Set in Sleeves",
+    "featureText": "Versatile",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00037",
+    "category": "hoodies",
+    "code": "JH50F",
+    "vendorProductId": "JH50F",
+    "name": "AWDIs Women's Zoodie",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 28.38,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 28.38
+      },
+      {
+        "qty": 8,
+        "price": 26.14
+      },
+      {
+        "qty": 15,
+        "price": 23.65
+      },
+      {
+        "qty": 40,
+        "price": 21.59
+      },
+      {
+        "qty": 100,
+        "price": 19.1
+      },
+      {
+        "qty": 250,
+        "price": 16.11
+      },
+      {
+        "qty": 500,
+        "price": 16.11
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Purple"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Merchandise",
+      "Fashion",
+      "Tradeshows",
+      "Beauty",
+      "Healthcare",
+      "Uniform",
+      "Outdoors",
+      "Teamwear",
+      "Hen Do"
+    ],
+    "style": null,
+    "sector": "Hospitality,Healthcare,Beauty,Leisure Tourism & Travel",
+    "feature": "Side Pockets,Set in Sleeves",
+    "featureText": "TEARAWAY LABEL",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00038",
+    "category": "hoodies",
+    "code": "UC502",
+    "vendorProductId": "UC502",
+    "name": "Uneek Hoodie Classic",
+    "brand": "Uneek",
+    "tier": "Everyday",
+    "price": 21.81,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 21.81
+      },
+      {
+        "qty": 8,
+        "price": 20.0
+      },
+      {
+        "qty": 15,
+        "price": 18.0
+      },
+      {
+        "qty": 40,
+        "price": 16.36
+      },
+      {
+        "qty": 100,
+        "price": 14.39
+      },
+      {
+        "qty": 250,
+        "price": 12.08
+      },
+      {
+        "qty": 500,
+        "price": 12.08
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Promotions",
+      "Tradeshows",
+      "Security",
+      "Stag Do",
+      "Uniform",
+      "Outdoors",
+      "Teamwear",
+      "Leavers Hoodies"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "Various Colours",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 90,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00039",
+    "category": "hoodies",
+    "code": "265F",
+    "vendorProductId": "265F",
+    "name": "Russell Ladies Authentic Hooded Sweatshirt",
+    "brand": "Russell",
+    "tier": "Premium",
+    "price": 33.37,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 33.37
+      },
+      {
+        "qty": 8,
+        "price": 30.86
+      },
+      {
+        "qty": 15,
+        "price": 28.05
+      },
+      {
+        "qty": 40,
+        "price": 25.71
+      },
+      {
+        "qty": 100,
+        "price": 22.86
+      },
+      {
+        "qty": 250,
+        "price": 19.38
+      },
+      {
+        "qty": 500,
+        "price": 19.38
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Tradeshows",
+      "Security",
+      "Uniform",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "Luxurious",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Combed,Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00040",
+    "category": "hoodies",
+    "code": "265M",
+    "vendorProductId": "265M",
+    "name": "Russell Authentic Hooded Sweatshirt",
+    "brand": "Russell",
+    "tier": "Premium",
+    "price": 33.37,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 33.37
+      },
+      {
+        "qty": 8,
+        "price": 30.86
+      },
+      {
+        "qty": 15,
+        "price": 28.05
+      },
+      {
+        "qty": 40,
+        "price": 25.71
+      },
+      {
+        "qty": 100,
+        "price": 22.86
+      },
+      {
+        "qty": 250,
+        "price": 19.38
+      },
+      {
+        "qty": 500,
+        "price": 19.38
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Tradeshows",
+      "Security",
+      "Uniform",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "Premium",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Combed,Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 8,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00041",
+    "category": "hoodies",
+    "code": "AM001",
+    "vendorProductId": "AM001",
+    "name": "Anthem Men's Organic/Vegan Hoodie",
+    "brand": "Anthem",
+    "tier": "Retail",
+    "price": 39.79,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 39.79
+      },
+      {
+        "qty": 8,
+        "price": 37.07
+      },
+      {
+        "qty": 15,
+        "price": 33.98
+      },
+      {
+        "qty": 40,
+        "price": 31.37
+      },
+      {
+        "qty": 100,
+        "price": 28.13
+      },
+      {
+        "qty": 250,
+        "price": 24.05
+      },
+      {
+        "qty": 500,
+        "price": 24.05
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "23. Custom see SPO",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Cream",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Hospitality",
+      "Gifts",
+      "Merchandise",
+      "Fashion",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform",
+      "Outdoors",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Hospitality",
+    "feature": "Sustainable,Kangaroo Pocket,Set in Sleeves",
+    "featureText": "SUSTAINABLE",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix,Organic Cotton,Recycled Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 5,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00042",
+    "category": "hoodies",
+    "code": "AM002",
+    "vendorProductId": "AM002",
+    "name": "Anthem Men's Vegan/Organic Zoodie",
+    "brand": "Anthem",
+    "tier": "Retail",
+    "price": 40.39,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 40.39
+      },
+      {
+        "qty": 8,
+        "price": 37.64
+      },
+      {
+        "qty": 15,
+        "price": 34.5
+      },
+      {
+        "qty": 40,
+        "price": 31.85
+      },
+      {
+        "qty": 100,
+        "price": 28.56
+      },
+      {
+        "qty": 250,
+        "price": 24.42
+      },
+      {
+        "qty": 500,
+        "price": 24.42
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "18. Inside Back Label",
+      "23. Custom see SPO",
+      "65. Shoulder Blades",
+      "76. Back Bottom Left"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Grey",
+      "Navy",
+      "Red"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Gifts",
+      "Merchandise",
+      "Fashion",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform",
+      "Outdoors",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Hospitality",
+    "feature": "Sustainable,Side Pockets,Set in Sleeves",
+    "featureText": "Zoodie",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix,Organic Cotton,Recycled Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 8,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00043",
+    "category": "hoodies",
+    "code": "JH101",
+    "vendorProductId": "JH101",
+    "name": "AWDis Graduate Heavyweight Hoodie",
+    "brand": "AWDis",
+    "tier": "Retail",
+    "price": 28.38,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 28.38
+      },
+      {
+        "qty": 8,
+        "price": 26.14
+      },
+      {
+        "qty": 15,
+        "price": 23.65
+      },
+      {
+        "qty": 40,
+        "price": 21.59
+      },
+      {
+        "qty": 100,
+        "price": 19.1
+      },
+      {
+        "qty": 250,
+        "price": 16.11
+      },
+      {
+        "qty": 500,
+        "price": 16.11
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "17. Top Chest",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Grey",
+      "Navy",
+      "White"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Pullover",
+    "purpose": [
+      "Hospitality",
+      "Charities",
+      "Merchandise",
+      "Fashion",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform",
+      "Outdoors",
+      "Teamwear",
+      "Hen Do"
+    ],
+    "style": null,
+    "sector": "Hospitality,Leisure Tourism & Travel",
+    "feature": "Kangaroo Pocket,Set in Sleeves",
+    "featureText": "Heavyweight",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Heavyweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Hoodies",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00044",
+    "category": "polo-shirts",
+    "code": "JC040",
+    "vendorProductId": "JC040",
+    "name": "AWDis Cool Polo Shirt",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 13.1,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 13.1
+      },
+      {
+        "qty": 8,
+        "price": 11.08
+      },
+      {
+        "qty": 15,
+        "price": 10.45
+      },
+      {
+        "qty": 40,
+        "price": 9.68
+      },
+      {
+        "qty": 100,
+        "price": 8.45
+      },
+      {
+        "qty": 250,
+        "price": 7.17
+      },
+      {
+        "qty": 500,
+        "price": 7.17
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Sportswear",
+      "Golf",
+      "Tennis",
+      "Outdoors",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Sports / Fitness",
+    "feature": "Quick Dry,3 Button Placket",
+    "featureText": "Quick Drying",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 4,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00045",
+    "category": "polo-shirts",
+    "code": "JC045",
+    "vendorProductId": "JC045",
+    "name": "AWDis Girlie Cool Polo Shirt",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 11.05,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 11.05
+      },
+      {
+        "qty": 8,
+        "price": 9.79
+      },
+      {
+        "qty": 15,
+        "price": 9.38
+      },
+      {
+        "qty": 40,
+        "price": 8.38
+      },
+      {
+        "qty": 100,
+        "price": 7.44
+      },
+      {
+        "qty": 250,
+        "price": 6.39
+      },
+      {
+        "qty": 500,
+        "price": 6.39
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Navy",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Sportswear",
+      "Golf",
+      "Tennis",
+      "Outdoors",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Sports / Fitness",
+    "feature": "Quick Dry,3 Button Placket",
+    "featureText": "Quick Drying",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00046",
+    "category": "polo-shirts",
+    "code": "JC40J",
+    "vendorProductId": "JC40J",
+    "name": "AWDis Kids Just Cool Wicking Polo Shirt",
+    "brand": "AWDis",
+    "tier": "Everyday",
+    "price": 8.66,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 8.66
+      },
+      {
+        "qty": 8,
+        "price": 7.91
+      },
+      {
+        "qty": 15,
+        "price": 7.2
+      },
+      {
+        "qty": 40,
+        "price": 6.43
+      },
+      {
+        "qty": 100,
+        "price": 5.7
+      },
+      {
+        "qty": 250,
+        "price": 4.9
+      },
+      {
+        "qty": 500,
+        "price": 4.9
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "18. Inside Back Label"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Navy",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Sportswear",
+      "Golf",
+      "Tennis",
+      "Gifts",
+      "Schoolwear",
+      "Uniform",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Sports / Fitness,Education",
+    "feature": "Quick Dry,2 Button Placket",
+    "featureText": "UPF Protection",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00047",
+    "category": "polo-shirts",
+    "code": "UX1",
+    "vendorProductId": "UX1",
+    "name": "Uneek UX Polo",
+    "brand": "Uneek",
+    "tier": "Everyday",
+    "price": 8.04,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 8.04
+      },
+      {
+        "qty": 8,
+        "price": 6.99
+      },
+      {
+        "qty": 15,
+        "price": 6.76
+      },
+      {
+        "qty": 40,
+        "price": 6.26
+      },
+      {
+        "qty": 100,
+        "price": 5.47
+      },
+      {
+        "qty": 250,
+        "price": 4.66
+      },
+      {
+        "qty": 500,
+        "price": 4.66
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL",
+      "6XL"
+    ],
+    "gender": "Mens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Tradeshows",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Cleaning,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "3 Button Placket",
+    "featureText": "Slim",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00048",
+    "category": "polo-shirts",
+    "code": "539B",
+    "vendorProductId": "539B",
+    "name": "Russell Kids Pique Polo Shirt",
+    "brand": "Russell",
+    "tier": "Premium",
+    "price": 13.03,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 13.03
+      },
+      {
+        "qty": 8,
+        "price": 12.12
+      },
+      {
+        "qty": 15,
+        "price": 11.01
+      },
+      {
+        "qty": 40,
+        "price": 9.87
+      },
+      {
+        "qty": 100,
+        "price": 8.97
+      },
+      {
+        "qty": 250,
+        "price": 8.0
+      },
+      {
+        "qty": 500,
+        "price": 8.0
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Schoolwear",
+      "Uniform",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Education,Leisure Tourism & Travel",
+    "feature": "2 Button Placket",
+    "featureText": "Various Colours",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 20,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00049",
+    "category": "polo-shirts",
+    "code": "539F",
+    "vendorProductId": "539F",
+    "name": "Russell Ladies Pique Polo",
+    "brand": "Russell",
+    "tier": "Premium",
+    "price": 18.52,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 18.52
+      },
+      {
+        "qty": 8,
+        "price": 16.51
+      },
+      {
+        "qty": 15,
+        "price": 15.58
+      },
+      {
+        "qty": 40,
+        "price": 14.43
+      },
+      {
+        "qty": 100,
+        "price": 12.64
+      },
+      {
+        "qty": 250,
+        "price": 10.75
+      },
+      {
+        "qty": 500,
+        "price": 10.75
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Promotions",
+      "Tradeshows",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Cleaning,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "2 Button Placket",
+    "featureText": "ROBUST",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 20,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00050",
+    "category": "polo-shirts",
+    "code": "539M",
+    "vendorProductId": "539M",
+    "name": "Russell Pique Polo Shirt",
+    "brand": "Russell",
+    "tier": "Premium",
+    "price": 18.52,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 18.52
+      },
+      {
+        "qty": 8,
+        "price": 16.51
+      },
+      {
+        "qty": 15,
+        "price": 15.58
+      },
+      {
+        "qty": 40,
+        "price": 14.43
+      },
+      {
+        "qty": 100,
+        "price": 12.64
+      },
+      {
+        "qty": 250,
+        "price": 10.75
+      },
+      {
+        "qty": 500,
+        "price": 10.75
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL",
+      "6XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Promotions",
+      "Tradeshows",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Cleaning,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "2 Button Placket",
+    "featureText": "Quality",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 7,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00051",
+    "category": "polo-shirts",
+    "code": "63030",
+    "vendorProductId": "63030",
+    "name": "Fruit of the Loom Lady Fit Premium Pique Polo Shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Premium",
+    "price": 13.31,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 13.31
+      },
+      {
+        "qty": 8,
+        "price": 11.31
+      },
+      {
+        "qty": 15,
+        "price": 10.17
+      },
+      {
+        "qty": 40,
+        "price": 9.41
+      },
+      {
+        "qty": 100,
+        "price": 8.24
+      },
+      {
+        "qty": 250,
+        "price": 7.0
+      },
+      {
+        "qty": 500,
+        "price": 7.0
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Fashion",
+      "Promotions",
+      "Tradeshows",
+      "Uniform",
+      "Hen Do"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Cleaning,Childcare,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Breathable,2 Button Placket",
+    "featureText": "LADIES",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 19,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00052",
+    "category": "polo-shirts",
+    "code": "63218",
+    "vendorProductId": "63218",
+    "name": "Fruit Of The Loom Premium 100% Cotton Pique Polo",
+    "brand": "Fruit of the Loom",
+    "tier": "Premium",
+    "price": 13.25,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 13.25
+      },
+      {
+        "qty": 8,
+        "price": 11.26
+      },
+      {
+        "qty": 15,
+        "price": 10.13
+      },
+      {
+        "qty": 40,
+        "price": 9.37
+      },
+      {
+        "qty": 100,
+        "price": 8.25
+      },
+      {
+        "qty": 250,
+        "price": 6.91
+      },
+      {
+        "qty": 500,
+        "price": 6.91
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Fashion",
+      "Promotions",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Cleaning,Childcare,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Breathable,3 Button Placket",
+    "featureText": "BESTSELLER",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 1,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00053",
+    "category": "polo-shirts",
+    "code": "63212",
+    "vendorProductId": "63212",
+    "name": "Fruit Of The Loom Lady-Fit 65/35 Polo",
+    "brand": "Fruit of the Loom",
+    "tier": "Premium",
+    "price": 10.67,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 10.67
+      },
+      {
+        "qty": 8,
+        "price": 9.01
+      },
+      {
+        "qty": 15,
+        "price": 8.51
+      },
+      {
+        "qty": 40,
+        "price": 7.52
+      },
+      {
+        "qty": 100,
+        "price": 6.61
+      },
+      {
+        "qty": 250,
+        "price": 5.62
+      },
+      {
+        "qty": 500,
+        "price": 5.62
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Grey",
+      "Navy",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Merchandise",
+      "Fashion",
+      "Promotions",
+      "Tradeshows",
+      "Uniform",
+      "Hen Do"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Cleaning,Childcare,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "2 Button Placket",
+    "featureText": "Various Colours",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 9,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00054",
+    "category": "polo-shirts",
+    "code": "63402",
+    "vendorProductId": "63402",
+    "name": "Fruit of the Loom Mens Polycotton Polo Shirt",
+    "brand": "Fruit of the Loom",
+    "tier": "Premium",
+    "price": 11.46,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 11.46
+      },
+      {
+        "qty": 8,
+        "price": 9.7
+      },
+      {
+        "qty": 15,
+        "price": 9.07
+      },
+      {
+        "qty": 40,
+        "price": 8.39
+      },
+      {
+        "qty": 100,
+        "price": 7.74
+      },
+      {
+        "qty": 250,
+        "price": 6.45
+      },
+      {
+        "qty": 500,
+        "price": 6.45
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Fashion",
+      "Promotions",
+      "Tradeshows",
+      "Stag Do",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Cleaning,Childcare,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "3 Button Placket",
+    "featureText": "Best Seller",
+    "tags": [],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 7,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00055",
+    "category": "polo-shirts",
+    "code": "AQ010",
+    "vendorProductId": "AQ010",
+    "name": "Asquith & Fox Men's Classic Polo Shirt",
+    "brand": "Asquith & Fox",
+    "tier": "Premium",
+    "price": 16.37,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 16.37
+      },
+      {
+        "qty": 8,
+        "price": 14.25
+      },
+      {
+        "qty": 15,
+        "price": 13.47
+      },
+      {
+        "qty": 40,
+        "price": 12.28
+      },
+      {
+        "qty": 100,
+        "price": 10.67
+      },
+      {
+        "qty": 250,
+        "price": 9.02
+      },
+      {
+        "qty": 500,
+        "price": 9.02
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "18. Inside Back Label",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Fashion",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Breathable,2 Button Placket",
+    "featureText": "QUALITY",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": "Fabric Detail - Combed,Fabric Detail - Ringspun"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 4,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00056",
+    "category": "polo-shirts",
+    "code": "RX01F",
+    "vendorProductId": "RX01F",
+    "name": "Pro RTX Women's Polo",
+    "brand": "RTX",
+    "tier": "Premium",
+    "price": 9.79,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 9.79
+      },
+      {
+        "qty": 8,
+        "price": 8.61
+      },
+      {
+        "qty": 15,
+        "price": 8.14
+      },
+      {
+        "qty": 40,
+        "price": 7.43
+      },
+      {
+        "qty": 100,
+        "price": 6.49
+      },
+      {
+        "qty": 250,
+        "price": 5.51
+      },
+      {
+        "qty": 500,
+        "price": 5.51
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Purple",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Promotions",
+      "Tradeshows",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Healthcare,Cleaning,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "2 Button Placket",
+    "featureText": "Durable",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00057",
+    "category": "polo-shirts",
+    "code": "RX101",
+    "vendorProductId": "RX101",
+    "name": "Pro RTX Polo Shirt",
+    "brand": "RTX",
+    "tier": "Premium",
+    "price": 10.59,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 10.59
+      },
+      {
+        "qty": 8,
+        "price": 9.47
+      },
+      {
+        "qty": 15,
+        "price": 9.01
+      },
+      {
+        "qty": 40,
+        "price": 8.37
+      },
+      {
+        "qty": 100,
+        "price": 7.17
+      },
+      {
+        "qty": 250,
+        "price": 5.98
+      },
+      {
+        "qty": 500,
+        "price": 5.98
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Brown",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL",
+      "6XL",
+      "7XL",
+      "8XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Promotions",
+      "Tradeshows",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Cleaning,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "3 Button Placket",
+    "featureText": "DURABLE",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 5,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00058",
+    "category": "polo-shirts",
+    "code": "TRS101",
+    "vendorProductId": "TRS101",
+    "name": "Regatta Men's Pro 50/50 Pique Polo Shirt",
+    "brand": "Regatta",
+    "tier": "Premium",
+    "price": 9.59,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 9.59
+      },
+      {
+        "qty": 8,
+        "price": 8.41
+      },
+      {
+        "qty": 15,
+        "price": 7.93
+      },
+      {
+        "qty": 40,
+        "price": 6.94
+      },
+      {
+        "qty": 100,
+        "price": 6.04
+      },
+      {
+        "qty": 250,
+        "price": 5.1
+      },
+      {
+        "qty": 500,
+        "price": 5.1
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "23. Custom see SPO",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red",
+      "White"
+    ],
+    "sizes": [
+      "XXS",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL",
+      "6XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Promotions",
+      "Tradeshows",
+      "Healthcare",
+      "Security",
+      "Uniform",
+      "Teamwear"
+    ],
+    "style": null,
+    "sector": "Construction,Hospitality,Healthcare,Security,Cleaning,Childcare,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "2 Button Placket",
+    "featureText": "2XS â€“ 6XL",
+    "tags": [],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 5,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00059",
+    "category": "polo-shirts",
+    "code": "UC101",
+    "vendorProductId": "UC101",
+    "name": "Uneek Polo Shirt Classic Pique",
+    "brand": "Uneek",
+    "tier": "Premium",
+    "price": 10.02,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 10.02
+      },
+      {
+        "qty": 8,
+        "price": 9.16
+      },
+      {
+        "qty": 15,
+        "price": 8.6
+      },
+      {
+        "qty": 40,
+        "price": 8.02
+      },
+      {
+        "qty": 100,
+        "price": 6.74
+      },
+      {
+        "qty": 250,
+        "price": 5.64
+      },
+      {
+        "qty": 500,
+        "price": 5.64
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Orange",
+      "Pink",
+      "Purple",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL",
+      "6XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Tradeshows",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Cleaning,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "3 Button Placket",
+    "featureText": "Various Colours",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "Poly/Cotton Mix",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 106,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00060",
+    "category": "polo-shirts",
+    "code": "UC122",
+    "vendorProductId": "UC122",
+    "name": "Uneek Polo Shirt Jersey",
+    "brand": "Uneek",
+    "tier": "Premium",
+    "price": 9.95,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 9.95
+      },
+      {
+        "qty": 8,
+        "price": 9.0
+      },
+      {
+        "qty": 15,
+        "price": 7.94
+      },
+      {
+        "qty": 40,
+        "price": 7.24
+      },
+      {
+        "qty": 100,
+        "price": 6.22
+      },
+      {
+        "qty": 250,
+        "price": 5.32
+      },
+      {
+        "qty": 500,
+        "price": 5.32
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "59. Left-Collar-Tip",
+      "60. Right-Collar-Tip",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Navy",
+      "Pink",
+      "Red",
+      "White",
+      "Yellow"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Workwear",
+      "Tradeshows",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Cleaning,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "3 Button Placket",
+    "featureText": "BUDGET",
+    "tags": [
+      "Best Sellers"
+    ],
+    "fabric": {
+      "type": "100% Cotton",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 2,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00061",
+    "category": "polo-shirts",
+    "code": "TJ7200",
+    "vendorProductId": "TJ7200",
+    "name": "Tee Jays Men's Luxury Sport Polo",
+    "brand": "Tee Jays",
+    "tier": "Retail",
+    "price": 33.12,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 33.12
+      },
+      {
+        "qty": 8,
+        "price": 30.51
+      },
+      {
+        "qty": 15,
+        "price": 28.83
+      },
+      {
+        "qty": 40,
+        "price": 25.68
+      },
+      {
+        "qty": 100,
+        "price": 22.72
+      },
+      {
+        "qty": 250,
+        "price": 19.48
+      },
+      {
+        "qty": 500,
+        "price": 19.48
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Grey",
+      "Navy",
+      "White"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Mens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Fashion",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Quick Dry,3 Button Placket",
+    "featureText": "Moisture Management",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 994,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00062",
+    "category": "polo-shirts",
+    "code": "TJ7201",
+    "vendorProductId": "TJ7201",
+    "name": "Tee Jays Ladies' Luxury Sport Polo",
+    "brand": "Tee Jays",
+    "tier": "Retail",
+    "price": 33.11,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 33.11
+      },
+      {
+        "qty": 8,
+        "price": 30.5
+      },
+      {
+        "qty": 15,
+        "price": 28.82
+      },
+      {
+        "qty": 40,
+        "price": 25.67
+      },
+      {
+        "qty": 100,
+        "price": 22.71
+      },
+      {
+        "qty": 250,
+        "price": 19.48
+      },
+      {
+        "qty": 500,
+        "price": 19.48
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "2. Bottom Right",
+      "3. Right Chest",
+      "4. Centre Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Grey",
+      "Navy",
+      "White"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Short Sleeve",
+    "neckType": "Button Neck",
+    "purpose": [
+      "Fashion",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Quick Dry,3 Button Placket",
+    "featureText": "Quick Drying",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Lightweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 99,
+    "active": true,
+    "sheet": "Polo Shirts",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00063",
+    "category": "jackets",
+    "code": "R231M",
+    "vendorProductId": "R231M",
+    "name": "Result Core Printable Softshell Jacket",
+    "brand": "Result",
+    "tier": "Everyday",
+    "price": 25.48,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 25.48
+      },
+      {
+        "qty": 8,
+        "price": 23.47
+      },
+      {
+        "qty": 15,
+        "price": 21.23
+      },
+      {
+        "qty": 40,
+        "price": 19.38
+      },
+      {
+        "qty": 100,
+        "price": 17.16
+      },
+      {
+        "qty": 250,
+        "price": 14.46
+      },
+      {
+        "qty": 500,
+        "price": 14.46
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "12. Bottom Back"
+    ],
+    "colours": [
+      "Multi"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Tradeshows",
+      "Healthcare",
+      "Security",
+      "Stag Do",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": "Softshell Jackets",
+    "sector": "Construction,Hospitality,Healthcare,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Water Repellent,Windproof,Zipped Pockets,Breathable",
+    "featureText": "PRINTABLE",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 800,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00064",
+    "category": "jackets",
+    "code": "R231F",
+    "vendorProductId": "R231F",
+    "name": "Result Core Women's Core Printable Softshell Jacket",
+    "brand": "Result",
+    "tier": "Everyday",
+    "price": 29.44,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 29.44
+      },
+      {
+        "qty": 8,
+        "price": 27.12
+      },
+      {
+        "qty": 15,
+        "price": 24.53
+      },
+      {
+        "qty": 40,
+        "price": 22.4
+      },
+      {
+        "qty": 100,
+        "price": 19.82
+      },
+      {
+        "qty": 250,
+        "price": 16.71
+      },
+      {
+        "qty": 500,
+        "price": 16.71
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "23. Custom see SPO",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Multi"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gender": "Womens",
+    "fit": "Slim",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Merchandise",
+      "Fashion",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": "Waterproof Jackets",
+    "sector": "Warehouse,Distribution,Transport,Leisure Tourism & Travel",
+    "feature": "Waterproof,Windproof,Zipped Pockets,Breathable",
+    "featureText": "Comfortable",
+    "tags": [],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Mediumweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00065",
+    "category": "jackets",
+    "code": "TRA628",
+    "vendorProductId": "TRA628",
+    "name": "Regatta Ablaze Printable Softshell",
+    "brand": "Regatta",
+    "tier": "Everyday",
+    "price": 22.6,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 22.6
+      },
+      {
+        "qty": 8,
+        "price": 20.71
+      },
+      {
+        "qty": 15,
+        "price": 18.65
+      },
+      {
+        "qty": 40,
+        "price": 16.94
+      },
+      {
+        "qty": 100,
+        "price": 14.92
+      },
+      {
+        "qty": 250,
+        "price": 12.51
+      },
+      {
+        "qty": 500,
+        "price": 12.51
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Multi",
+      "Navy"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Charities",
+      "Tradeshows",
+      "Security",
+      "Stag Do",
+      "Uniform"
+    ],
+    "style": "Softshell Jackets",
+    "sector": "Construction,Hospitality,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Zipped Pockets",
+    "featureText": "Printable",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 23,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00066",
+    "category": "jackets",
+    "code": "UC804",
+    "vendorProductId": "UC804",
+    "name": "Uneek Hi Vis Bomber Jacket",
+    "brand": "Uneek",
+    "tier": "Everyday",
+    "price": 32.19,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 32.19
+      },
+      {
+        "qty": 8,
+        "price": 29.78
+      },
+      {
+        "qty": 15,
+        "price": 27.07
+      },
+      {
+        "qty": 40,
+        "price": 24.82
+      },
+      {
+        "qty": 100,
+        "price": 22.07
+      },
+      {
+        "qty": 250,
+        "price": 18.7
+      },
+      {
+        "qty": 500,
+        "price": 18.7
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "23. Custom see SPO",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Orange",
+      "Yellow"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": "Bomber Jackets",
+    "sector": "Construction,Warehouse,Distribution,Transport",
+    "feature": "Waterproof,HiVis,Hood",
+    "featureText": "Multiple Pockets",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": "Finish - PU"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00067",
+    "category": "jackets",
+    "code": "TRF532",
+    "vendorProductId": "TRF532",
+    "name": "Regatta Thor III Full Zip Fleece Jacket",
+    "brand": "Regatta",
+    "tier": "Premium",
+    "price": 23.85,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 23.85
+      },
+      {
+        "qty": 8,
+        "price": 21.86
+      },
+      {
+        "qty": 15,
+        "price": 19.68
+      },
+      {
+        "qty": 40,
+        "price": 17.88
+      },
+      {
+        "qty": 100,
+        "price": 15.74
+      },
+      {
+        "qty": 250,
+        "price": 13.2
+      },
+      {
+        "qty": 500,
+        "price": 13.2
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Tradeshows",
+      "Security",
+      "Stag Do",
+      "Uniform"
+    ],
+    "style": null,
+    "sector": "Construction,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Quick Dry,Zipped Pockets",
+    "featureText": "Best Seller",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 10,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": false,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00068",
+    "category": "jackets",
+    "code": "TRF541",
+    "vendorProductId": "TRF541",
+    "name": "Regatta Ladies Thor III Fleece",
+    "brand": "Regatta",
+    "tier": "Premium",
+    "price": 23.85,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 23.85
+      },
+      {
+        "qty": 8,
+        "price": 21.86
+      },
+      {
+        "qty": 15,
+        "price": 19.68
+      },
+      {
+        "qty": 40,
+        "price": 17.88
+      },
+      {
+        "qty": 100,
+        "price": 15.74
+      },
+      {
+        "qty": 250,
+        "price": 13.2
+      },
+      {
+        "qty": 500,
+        "price": 13.2
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Grey",
+      "Navy",
+      "Pink",
+      "Red"
+    ],
+    "sizes": [],
+    "gender": "Womens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Charities",
+      "Tradeshows",
+      "Security",
+      "Uniform",
+      "Hen Do"
+    ],
+    "style": null,
+    "sector": "Construction,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Quick Dry,Zipped Pockets",
+    "featureText": "Ladies",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 40,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": false,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00069",
+    "category": "jackets",
+    "code": "TRW297",
+    "vendorProductId": "TRW297",
+    "name": "Regatta Dover Jacket",
+    "brand": "Regatta",
+    "tier": "Premium",
+    "price": 35.1,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 35.1
+      },
+      {
+        "qty": 8,
+        "price": 32.47
+      },
+      {
+        "qty": 15,
+        "price": 29.51
+      },
+      {
+        "qty": 40,
+        "price": 27.06
+      },
+      {
+        "qty": 100,
+        "price": 24.05
+      },
+      {
+        "qty": 250,
+        "price": 20.39
+      },
+      {
+        "qty": 500,
+        "price": 20.39
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Blue",
+      "Green",
+      "Multi",
+      "Navy",
+      "Red"
+    ],
+    "sizes": [
+      "XXS",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Charities",
+      "Gifts",
+      "Security",
+      "Stag Do",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": "Bomber Jackets,Waterproof Jackets",
+    "sector": "Construction,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Waterproof,Windproof,Hood,Zipped Pockets",
+    "featureText": "BEST SELLER",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Mediumweight",
+      "finish": "Finish - Hydrafort,Waterproof - 5000mm"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 15,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00070",
+    "category": "jackets",
+    "code": "UC612",
+    "vendorProductId": "UC612",
+    "name": "Uneek Classic Full Zip Soft Shell Jacket",
+    "brand": "Uneek",
+    "tier": "Premium",
+    "price": 31.91,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 31.91
+      },
+      {
+        "qty": 8,
+        "price": 29.51
+      },
+      {
+        "qty": 15,
+        "price": 26.83
+      },
+      {
+        "qty": 40,
+        "price": 24.6
+      },
+      {
+        "qty": 100,
+        "price": 21.86
+      },
+      {
+        "qty": 250,
+        "price": 18.54
+      },
+      {
+        "qty": 500,
+        "price": 18.54
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Navy",
+      "Red"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL",
+      "6XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Slim",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Charities",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": "Softshell Jackets,Waterproof Jackets",
+    "sector": "Construction,Healthcare,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Waterproof,Windproof,Zipped Pockets,Breathable",
+    "featureText": "Waterproof",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": "Finish - Hydrophilic"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 998,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": false,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00071",
+    "category": "jackets",
+    "code": "TRA600",
+    "vendorProductId": "TRA600",
+    "name": "Regatta Honestly Made Recycled Printable Softshell Jacket",
+    "brand": "Regatta",
+    "tier": "Premium",
+    "price": 38.39,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 38.39
+      },
+      {
+        "qty": 8,
+        "price": 35.78
+      },
+      {
+        "qty": 15,
+        "price": 32.8
+      },
+      {
+        "qty": 40,
+        "price": 30.27
+      },
+      {
+        "qty": 100,
+        "price": 27.15
+      },
+      {
+        "qty": 250,
+        "price": 23.21
+      },
+      {
+        "qty": 500,
+        "price": 23.21
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Grey",
+      "Navy"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Gifts",
+      "Tradeshows",
+      "Security",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": "Softshell Jackets",
+    "sector": "Construction,Hospitality,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "Sustainable,Quick Dry,Water Repellent,Windproof,Zipped Pockets",
+    "featureText": "SUSTAINABLE",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester,Recycled Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 38,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00072",
+    "category": "jackets",
+    "code": "TRW418",
+    "vendorProductId": "TRW418",
+    "name": "Regatta Kids Dover Jacket",
+    "brand": "Regatta",
+    "tier": "Premium",
+    "price": 36.17,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 36.17
+      },
+      {
+        "qty": 8,
+        "price": 33.46
+      },
+      {
+        "qty": 15,
+        "price": 30.41
+      },
+      {
+        "qty": 40,
+        "price": 27.88
+      },
+      {
+        "qty": 100,
+        "price": 24.79
+      },
+      {
+        "qty": 250,
+        "price": 21.01
+      },
+      {
+        "qty": 500,
+        "price": 21.01
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Multi"
+    ],
+    "sizes": [],
+    "gender": "Kids",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Gifts"
+    ],
+    "style": "Bomber Jackets,Waterproof Jackets",
+    "sector": "Leisure Tourism & Travel",
+    "feature": "Waterproof,Windproof,Hood,Zipped Pockets",
+    "featureText": "Kids",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Mediumweight",
+      "finish": "Finish - Hydrafort"
+    },
+    "taxClass": "Childrens Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00073",
+    "category": "jackets",
+    "code": "140M",
+    "vendorProductId": "140M",
+    "name": "Russell Men's Softshell Jacket",
+    "brand": "Russell",
+    "tier": "Retail",
+    "price": 65.32,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 65.32
+      },
+      {
+        "qty": 8,
+        "price": 61.25
+      },
+      {
+        "qty": 15,
+        "price": 56.53
+      },
+      {
+        "qty": 40,
+        "price": 52.49
+      },
+      {
+        "qty": 100,
+        "price": 47.41
+      },
+      {
+        "qty": 250,
+        "price": 40.86
+      },
+      {
+        "qty": 500,
+        "price": 40.86
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "23. Custom see SPO",
+      "45. HEM Sleeve Right",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Mens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Gifts",
+      "Tradeshows",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": "Softshell Jackets",
+    "sector": "Construction,Hospitality,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "Water Repellent,Windproof,Zipped Pockets",
+    "featureText": "Bestseller",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 5,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": false,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00074",
+    "category": "jackets",
+    "code": "140F",
+    "vendorProductId": "140F",
+    "name": "Russell Ladies Soft Shell Jacket",
+    "brand": "Russell",
+    "tier": "Retail",
+    "price": 65.32,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 65.32
+      },
+      {
+        "qty": 8,
+        "price": 61.25
+      },
+      {
+        "qty": 15,
+        "price": 56.53
+      },
+      {
+        "qty": 40,
+        "price": 52.49
+      },
+      {
+        "qty": 100,
+        "price": 47.41
+      },
+      {
+        "qty": 250,
+        "price": 40.86
+      },
+      {
+        "qty": 500,
+        "price": 40.86
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "23. Custom see SPO",
+      "45. HEM Sleeve Right",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Green",
+      "Grey",
+      "Navy",
+      "Red"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL"
+    ],
+    "gender": "Womens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Gifts",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": "Softshell Jackets,Waterproof Jackets",
+    "sector": "Construction,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "Water Repellent,Windproof,Zipped Pockets",
+    "featureText": "Ladies",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 24,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": false,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00075",
+    "category": "jackets",
+    "code": "TRA642",
+    "vendorProductId": "TRA642",
+    "name": "Regatta Uproar Softshell",
+    "brand": "Regatta",
+    "tier": "Retail",
+    "price": 38.29,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 38.29
+      },
+      {
+        "qty": 8,
+        "price": 35.42
+      },
+      {
+        "qty": 15,
+        "price": 32.2
+      },
+      {
+        "qty": 40,
+        "price": 29.51
+      },
+      {
+        "qty": 100,
+        "price": 26.24
+      },
+      {
+        "qty": 250,
+        "price": 22.24
+      },
+      {
+        "qty": 500,
+        "price": 22.24
+      }
+    ],
+    "nextDay": true,
+    "availableWith": [
+      "Embroidery"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Black",
+      "Blue",
+      "Grey",
+      "Multi",
+      "Navy"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "4XL",
+      "5XL"
+    ],
+    "gender": "Mens",
+    "fit": null,
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Gifts",
+      "Tradeshows",
+      "Security",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": "Softshell Jackets",
+    "sector": "Construction,Hospitality,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Quick Dry,Water Repellent,Windproof,Zipped Pockets",
+    "featureText": "Trending",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 25,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": false,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00076",
+    "category": "jackets",
+    "code": "TRA645",
+    "vendorProductId": "TRA645",
+    "name": "Regatta Jacket Softshell Ladies Uproar",
+    "brand": "Regatta",
+    "tier": "Retail",
+    "price": 38.29,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 38.29
+      },
+      {
+        "qty": 8,
+        "price": 35.42
+      },
+      {
+        "qty": 15,
+        "price": 32.2
+      },
+      {
+        "qty": 40,
+        "price": 29.51
+      },
+      {
+        "qty": 100,
+        "price": 26.24
+      },
+      {
+        "qty": 250,
+        "price": 22.24
+      },
+      {
+        "qty": 500,
+        "price": 22.24
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "3. Right Chest",
+      "5. Left Chest",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back"
+    ],
+    "colours": [
+      "Blue",
+      "Grey",
+      "Multi",
+      "Navy"
+    ],
+    "sizes": [],
+    "gender": "Womens",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Hospitality",
+      "Gifts",
+      "Tradeshows",
+      "Security",
+      "Uniform",
+      "Outdoors",
+      "Hen Do"
+    ],
+    "style": "Softshell Jackets",
+    "sector": "Construction,Hospitality,Healthcare,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing,Leisure Tourism & Travel",
+    "feature": "Quick Dry,Water Repellent,Windproof,Zipped Pockets",
+    "featureText": "Windproof",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Heavyweight",
+      "finish": null
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": false,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  },
+  {
+    "id": "prod-00077",
+    "category": "jackets",
+    "code": "TRW461",
+    "vendorProductId": "TRW461",
+    "name": "Regatta Jacket Standout Ardmore",
+    "brand": "Regatta",
+    "tier": "Retail",
+    "price": 44.15,
+    "priceBreaks": [
+      {
+        "qty": 1,
+        "price": 44.15
+      },
+      {
+        "qty": 8,
+        "price": 41.15
+      },
+      {
+        "qty": 15,
+        "price": 37.72
+      },
+      {
+        "qty": 40,
+        "price": 34.82
+      },
+      {
+        "qty": 100,
+        "price": 31.22
+      },
+      {
+        "qty": 250,
+        "price": 26.69
+      },
+      {
+        "qty": 500,
+        "price": 26.69
+      }
+    ],
+    "nextDay": false,
+    "availableWith": [
+      "Embroidery",
+      "Printing"
+    ],
+    "availablePositions": [
+      "1. Right Sleeve",
+      "2. Bottom Right",
+      "3. Right Chest",
+      "5. Left Chest",
+      "6. Bottom Left",
+      "7. Left Sleeve",
+      "8. Centre Back",
+      "9. Top Back",
+      "12. Bottom Back",
+      "65. Shoulder Blades"
+    ],
+    "colours": [
+      "Multi",
+      "Red"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL"
+    ],
+    "gender": "Unisex",
+    "fit": "Regular",
+    "sleeveLength": "Long Sleeve",
+    "neckType": "Full Zip",
+    "purpose": [
+      "Workwear",
+      "Gifts",
+      "Security",
+      "Uniform",
+      "Outdoors"
+    ],
+    "style": null,
+    "sector": "Construction,Security,Cleaning,Childcare,Education,Warehouse,Distribution,Transport,Manufacturing",
+    "feature": "Waterproof,Windproof,Hood,Zipped Pockets",
+    "featureText": "Windproof",
+    "tags": [
+      "Outerwear"
+    ],
+    "fabric": {
+      "type": "100% Polyester",
+      "weight": "Mediumweight",
+      "finish": "Finish - Hydrafort,Waterproof - 5000mm"
+    },
+    "taxClass": "Taxable Goods",
+    "sortOrder": 999,
+    "active": true,
+    "sheet": "Jackets",
+    "supportsPrint": true,
+    "supportsEmbroidery": true,
+    "printMarkupPercent": 20,
+    "embroideryMarkupPercent": 30,
+    "printSetupFee": 25,
+    "embroiderySetupFee": 35
+  }
+]
