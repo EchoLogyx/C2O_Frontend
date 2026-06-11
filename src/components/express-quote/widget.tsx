@@ -10,11 +10,38 @@ import {
   GREEN, AMBER, USE_CASES, PRIORITIES, DECORATION_TYPES, LOGO_POSITIONS,
   LOGO_STATUS, DEADLINE_OPTIONS, FAQ_CHIPS, ADVICE_CHIPS,
 } from "./data"
-import type { ViewMode, Message, QuoteAnswers } from "./types"
+import type { ViewMode, Message, QuoteAnswers, ProductInfo } from "./types"
 import { runQuoteEngine, getCategories, getProductsForCategory } from "@/lib/quoteEngine"
 import type { TierBucket } from "@/lib/quoteEngine"
 
 // ─── Morgan Avatar ─────────────────────────────────────────────────
+
+// Extend Window for elxBot chatbot API
+declare global {
+  interface Window {
+    elxBot?: {
+      createConversation: (opts: {
+        sessionId?: string
+        onEvent: (event: unknown) => void
+      }) => { send: (msg: string) => void; disconnect: () => void }
+    }
+  }
+}
+
+// ─── Session cookie helpers (browser-session-scoped, no expiry) ──
+function getSessionId(): string | undefined {
+  if (typeof document === "undefined") return undefined
+  const m = document.cookie.match(/(?:^|;\s*)c2o_session_id=([^;]*)/)
+  return m ? decodeURIComponent(m[1]) : undefined
+}
+function setSessionId(id: string) {
+  if (typeof document === "undefined") return
+  document.cookie = `c2o_session_id=${encodeURIComponent(id)}; path=/; SameSite=Lax`
+}
+function clearSessionId() {
+  if (typeof document === "undefined") return
+  document.cookie = "c2o_session_id=; path=/; SameSite=Lax; max-age=0"
+}
 function MorganAvatar({ size = 40 }: { size?: number }) {
   return (
     <div style={{
@@ -56,46 +83,104 @@ function QuickReply({ label, onClick }: { label: string; onClick: () => void }) 
   )
 }
 
+// ─── Product Card ──────────────────────────────────────────────────
+function ProductCard({ product }: { product: ProductInfo }) {
+  const tagList = product.tags ? product.tags.split(",").map(t => t.trim()).filter(Boolean) : []
+  return (
+    <div style={{
+      background: "#fff", borderRadius: 12, border: `1.5px solid ${BORDER}`,
+      overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+    }}>
+      {product.image_url && (
+        <img src={product.image_url} alt={product.name}
+          style={{ width: "100%", height: 160, objectFit: "cover", display: "block", background: GREY_BG }} />
+      )}
+      <div style={{ padding: "12px 14px" }}>
+        <div style={{ fontSize: 12, color: MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 2 }}>
+          {product.category} · {product.sku}
+        </div>
+        <div style={{ fontSize: 15, fontWeight: 700, color: INK, fontFamily: "'Quicksand', Lato, sans-serif", marginBottom: 4 }}>
+          {product.name}
+        </div>
+        <div style={{ fontSize: 13, color: MUTED, lineHeight: 1.5, marginBottom: 8, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          {product.description}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+          <div>
+            <span style={{ fontSize: 18, fontWeight: 800, color: NAVY }}>£{product.price.toFixed(2)}</span>
+            <span style={{ fontSize: 12, color: MUTED }}> /unit</span>
+          </div>
+          <a href={product.url || "#"} target="_blank" rel="noopener" style={{
+            padding: "7px 14px", borderRadius: 8, background: NAVY, color: "#fff",
+            fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "inherit",
+          }}>
+            View →
+          </a>
+        </div>
+        {tagList.length > 0 && (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 8 }}>
+            {tagList.slice(0, 4).map(t => (
+              <span key={t} style={{
+                fontSize: 10, padding: "2px 7px", borderRadius: 4,
+                background: GREY_BG, color: MUTED, fontWeight: 500,
+              }}>{t}</span>
+            ))}
+            {tagList.length > 4 && (
+              <span style={{ fontSize: 10, padding: "2px 7px", borderRadius: 4, color: MUTED }}>
+                +{tagList.length - 4}
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 // ─── Widget ────────────────────────────────────────────────────────
 export function ExpressQuoteWidget() {
-  const [view, setView]             = useState<ViewMode>("home")
-  const [messages, setMessages]     = useState<Message[]>([])
-  const [answers, setAnswers]       = useState<QuoteAnswers>({ qty: 50 })
-  const [step, setStep]             = useState(0)
-  const [textInput, setTextInput]   = useState("")
+  const [view, setView] = useState<ViewMode>("home")
+  const [messages, setMessages] = useState<Message[]>([])
+  const [answers, setAnswers] = useState<QuoteAnswers>({ qty: 50 })
+  const [step, setStep] = useState(0)
+  const [textInput, setTextInput] = useState("")
   const [tierBuckets, setTierBuckets] = useState<TierBucket[]>([])
   const [selectedTier, setSelectedTier] = useState<string | null>(null)
-  const [actionView, setActionView]     = useState<"" | "email" | "callback" | "order">("")
+  const [actionView, setActionView] = useState<"" | "email" | "callback" | "order">("")
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight
   }, [messages, step, tierBuckets])
 
-  const push = useCallback((role: Message["role"], text: string) => {
-    setMessages(prev => [...prev, { id: `${Date.now()}-${Math.random()}`, role, text }])
+  const push = useCallback((role: Message["role"], text: string, products?: ProductInfo[]) => {
+    setMessages(prev => [...prev, { id: `${Date.now()}-${Math.random()}`, role, text, ...(products ? { products } : {}) }])
   }, [])
 
   // ─── 8 quote steps ──────────────────────────────────────────────
   const quoteSteps = [
-    { key: "purpose",       question: "What's the main purpose of this order?" },
-    { key: "qty",           question: "How many items do you need?" },
-    { key: "priority",      question: "What matters most to you?" },
-    { key: "category",      question: "What type of garment are you looking for?" },
-    { key: "decorationType",question: "How would you like your logo applied?" },
-    { key: "logoPosition",  question: "Where should the logo go?" },
-    { key: "logoStatus",    question: "What's the status of your logo/artwork?" },
-    { key: "deadline",      question: "When do you need the order?" },
+    { key: "purpose", question: "What's the main purpose of this order?" },
+    { key: "qty", question: "How many items do you need?" },
+    { key: "priority", question: "What matters most to you?" },
+    { key: "category", question: "What type of garment are you looking for?" },
+    { key: "decorationType", question: "How would you like your logo applied?" },
+    { key: "logoPosition", question: "Where should the logo go?" },
+    { key: "logoStatus", question: "What's the status of your logo/artwork?" },
+    { key: "deadline", question: "When do you need the order?" },
   ]
 
-  function startCapability(v: ViewMode) {
+  async function startCapability(v: ViewMode) {
     setView(v); setMessages([]); setStep(0)
     setAnswers({ qty: 50 }); setSelectedTier(null)
     setActionView(""); setTextInput(""); setTierBuckets([])
-    if (v === "quote")  push("morgan", "Great! Let's get you an instant quote — I'll ask 8 quick questions.")
-    if (v === "faq")    push("morgan", "Hi! Pick a topic or type your own question below.")
+    if (v === "quote") push("morgan", "Great! Let's get you an instant quote — I'll ask 8 quick questions.")
+    if (v === "faq") push("morgan", "Hi! Pick a topic or type your own question below.")
     if (v === "advice") push("morgan", "I'll help you find the perfect product. Pick a scenario or describe what you need.")
-    if (v === "chat")   push("morgan", "Connecting you to our team… You're through to Sarah 👋 How can I help?")
+    if (v === "chat") push("morgan", "Connecting you to our team… You're through to Sarah 👋 How can I help?")
+    // Lazy-create chatbot conversation (only for faq/advice/chat)
+    if (v === "faq" || v === "advice" || v === "chat") {
+      await ensureConversation()
+    }
   }
 
   function handleQuoteAnswer(key: string, value: string | number, displayLabel?: string) {
@@ -113,14 +198,14 @@ export function ExpressQuoteWidget() {
         push("morgan", "Calculating your personalised quote from our live product catalogue…")
         setTimeout(() => {
           const input = {
-            purpose:        updated.purpose ?? "",
-            qty:            updated.qty ?? 50,
-            priority:       (updated.priority ?? "Balance") as "Speed" | "Balance" | "Quality",
-            category:       updated.category ?? "t-shirts",
+            purpose: updated.purpose ?? "",
+            qty: updated.qty ?? 50,
+            priority: (updated.priority ?? "Balance") as "Speed" | "Balance" | "Quality",
+            category: updated.category ?? "t-shirts",
             decorationType: (updated.decorationType ?? "Printing") as "Printing" | "Embroidery",
-            logoPosition:   updated.logoPosition ?? "5. Left Chest",
-            logoStatus:     updated.logoStatus ?? "",
-            deadline:       updated.deadline ?? "flexible",
+            logoPosition: updated.logoPosition ?? "5. Left Chest",
+            logoStatus: updated.logoStatus ?? "",
+            deadline: updated.deadline ?? "flexible",
           }
           const buckets = runQuoteEngine(input)
           setTierBuckets(buckets)
@@ -349,8 +434,8 @@ export function ExpressQuoteWidget() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 14 }}>
               {[
                 { label: "Unit (decorated)", value: `£${t.unitPrice.toFixed(2)}` },
-                { label: "Setup fee",         value: `£${t.setupFee.toFixed(2)}` },
-                { label: "Delivery",           value: t.delivery },
+                { label: "Setup fee", value: `£${t.setupFee.toFixed(2)}` },
+                { label: "Delivery", value: t.delivery },
               ].map(row => (
                 <div key={row.label} style={{ textAlign: "center", background: GREY_BG, borderRadius: 8, padding: "10px 6px" }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: INK }}>{row.value}</div>
@@ -431,10 +516,10 @@ export function ExpressQuoteWidget() {
   // ─── Home screen ────────────────────────────────────────────────
   function renderHome() {
     const modes = [
-      { v: "quote" as ViewMode,  icon: <FileText size={18} />,      label: "Get a quote",      sub: "5 priced tiers in 2 min",        color: NAVY },
-      { v: "faq" as ViewMode,    icon: <MessageSquare size={18} />, label: "Ask a question",   sub: "Setup, delivery, minimums",      color: "#7c3aed" },
-      { v: "chat" as ViewMode,   icon: <Headphones size={18} />,    label: "Speak to a person",sub: "Live team — 9am to 5pm",         color: GREEN },
-      { v: "advice" as ViewMode, icon: <Sparkles size={18} />,      label: "Help me choose",   sub: "Product & decoration advice",    color: AMBER },
+      { v: "quote" as ViewMode, icon: <FileText size={18} />, label: "Get a quote", sub: "5 priced tiers in 2 min", color: NAVY },
+      { v: "faq" as ViewMode, icon: <MessageSquare size={18} />, label: "Ask a question", sub: "Setup, delivery, minimums", color: "#7c3aed" },
+      { v: "chat" as ViewMode, icon: <Headphones size={18} />, label: "Speak to a person", sub: "Live team — 9am to 5pm", color: GREEN },
+      { v: "advice" as ViewMode, icon: <Sparkles size={18} />, label: "Help me choose", sub: "Product & decoration advice", color: AMBER },
     ]
     return (
       <div>
@@ -465,25 +550,153 @@ export function ExpressQuoteWidget() {
     )
   }
 
+  const conversationRef = useRef<ReturnType<NonNullable<Window["elxBot"]>["createConversation"]> | null>(null)
+
   const showTextInput = view === "faq" || view === "chat" || view === "advice"
 
-  function handleTextSend() {
+  // ─── Lazily create conversation (only when user needs chat) ──
+  async function ensureConversation(): Promise<boolean> {
+    if (conversationRef.current) return true
+
+    if (typeof window === "undefined") return false
+    if (!window.elxBot?.createConversation) {
+      for (let i = 0; i < 50; i++) {
+        await new Promise<void>(r => setTimeout(r, 200))
+        if (window.elxBot?.createConversation) break
+      }
+      if (!window.elxBot?.createConversation) {
+        console.error("[elxBot] script not loaded after waiting")
+        return false
+      }
+    }
+
+    // Pass existing session cookie if available, otherwise let backend create a new session
+    const existingSessionId = getSessionId()
+
+    const conv = window.elxBot.createConversation({
+      ...(existingSessionId ? { sessionId: existingSessionId } : {}),
+      onEvent(event) {
+        const ev = event as Record<string, unknown> | undefined
+        if (!ev?.type) return
+
+        switch (ev.type) {
+          case "session_info": {
+            const payload = ev.payload as Record<string, unknown> | undefined
+            const newId = payload?.sessionId as string | undefined
+            if (newId) setSessionId(newId)
+            break
+          }
+
+          case "history": {
+            const items = Array.isArray(ev.payload) ? ev.payload : []
+            if (items.length === 0) break // no history, keep local greeting
+
+            const historyMessages: Message[] = []
+            for (const item of items) {
+              const m = item as Record<string, unknown>
+              if (m.user_type !== "ai") continue
+              const chatData = m.chat_data as Record<string, unknown> | undefined
+              const aiResponse = chatData?.ai_response as Record<string, unknown> | undefined
+              const text = aiResponse?.ai_message ?? m.message ?? JSON.stringify(m)
+              const rawProducts = aiResponse?.product_info as unknown[] | undefined
+              const products: ProductInfo[] | undefined = rawProducts?.length
+                ? (rawProducts as Record<string, unknown>[]).map(p => ({
+                    id: String(p.id ?? ""),
+                    name: String(p.name ?? ""),
+                    description: String(p.description ?? ""),
+                    price: Number(p.price ?? 0),
+                    sku: String(p.sku ?? ""),
+                    image_url: String(p.image_url ?? ""),
+                    category: String(p.category ?? ""),
+                    tags: String(p.tags ?? ""),
+                    currency: String(p.currency ?? "GBP"),
+                    available: Boolean(p.available ?? true),
+                    url: String(p.url ?? ""),
+                  }))
+                : undefined
+              historyMessages.push({
+                id: `${Date.now()}-${Math.random()}`,
+                role: "morgan",
+                text: String(text),
+                ...(products ? { products } : {}),
+              })
+            }
+            setMessages(historyMessages)
+            break
+          }
+
+          case "message": {
+            const payload = ev.payload as Record<string, unknown> | undefined
+            if (!payload || payload.user_type !== "ai") break
+
+            if (payload.session_id && typeof payload.session_id === "string" && !getSessionId()) {
+              setSessionId(payload.session_id)
+            }
+
+            const chatData = payload.chat_data as Record<string, unknown> | undefined
+            const aiResponse = chatData?.ai_response as Record<string, unknown> | undefined
+            const text = aiResponse?.ai_message ?? payload.message ?? JSON.stringify(payload)
+            const rawProducts = aiResponse?.product_info as unknown[] | undefined
+            const products: ProductInfo[] | undefined = rawProducts?.length
+              ? (rawProducts as Record<string, unknown>[]).map(p => ({
+                  id: String(p.id ?? ""),
+                  name: String(p.name ?? ""),
+                  description: String(p.description ?? ""),
+                  price: Number(p.price ?? 0),
+                  sku: String(p.sku ?? ""),
+                  image_url: String(p.image_url ?? ""),
+                  category: String(p.category ?? ""),
+                  tags: String(p.tags ?? ""),
+                  currency: String(p.currency ?? "GBP"),
+                  available: Boolean(p.available ?? true),
+                  url: String(p.url ?? ""),
+                }))
+              : undefined
+
+            push("morgan", String(text), products)
+            break
+          }
+
+          case "error": {
+            const payload = ev.payload as Record<string, unknown> | undefined
+            console.error("[elxBot] error", payload?.code ?? "", payload?.message ?? "")
+            break
+          }
+
+          case "session_ended": {
+            console.log("[elxBot] Conversation Ended")
+            break
+          }
+        }
+      },
+    })
+
+    conversationRef.current = conv
+    return true
+  }
+
+  // ─── Cleanup on unmount ──
+  useEffect(() => {
+    return () => {
+      conversationRef.current?.disconnect()
+      conversationRef.current = null
+    }
+  }, [])
+
+  async function handleTextSend() {
     if (!textInput.trim()) return
-    push("user", textInput)
-    const q = textInput
+    if (!(await ensureConversation())) return
+    const msg = textInput
+    push("user", msg)
     setTextInput("")
-    setTimeout(() => {
-      if (view === "chat") push("human", "Thanks — let me check that for you.")
-      else if (view === "faq") push("morgan", `Thanks for your question about "${q}". Our minimum order is 10 items. Typical delivery is 5–7 working days. For further help contact team@c2o.co.uk.`)
-      else push("morgan", `Great question! Based on "${q}", I'd suggest our Everyday or Premium tier. Want me to run a full quote?`)
-    }, 600)
+    conversationRef.current?.send(msg)
   }
 
   const tabs = [
-    { v: "quote" as ViewMode,  icon: <FileText size={14} />,      label: "Quote" },
-    { v: "faq" as ViewMode,    icon: <MessageSquare size={14} />, label: "FAQ" },
-    { v: "advice" as ViewMode, icon: <Sparkles size={14} />,      label: "Advice" },
-    { v: "chat" as ViewMode,   icon: <Headphones size={14} />,    label: "Human" },
+    { v: "quote" as ViewMode, icon: <FileText size={14} />, label: "Quote" },
+    { v: "faq" as ViewMode, icon: <MessageSquare size={14} />, label: "FAQ" },
+    { v: "advice" as ViewMode, icon: <Sparkles size={14} />, label: "Advice" },
+    { v: "chat" as ViewMode, icon: <Headphones size={14} />, label: "Human" },
   ]
 
   return (
@@ -497,7 +710,11 @@ export function ExpressQuoteWidget() {
           <div style={{ fontSize: 13, opacity: 0.85 }}>Customer Engine</div>
           <div style={{ fontSize: 10, fontWeight: 700, background: GOLD, color: NAVY_DARK, padding: "2px 8px", borderRadius: 4, letterSpacing: "0.5px" }}>MVP</div>
         </div>
-        <button onClick={() => { setView("home"); setMessages([]); setStep(0); setAnswers({ qty: 50 }); setSelectedTier(null); setActionView(""); setTextInput(""); setTierBuckets([]) }}
+        <button onClick={() => {
+          setView("home"); setMessages([]); setStep(0); setAnswers({ qty: 50 })
+          setSelectedTier(null); setActionView(""); setTextInput(""); setTierBuckets([])
+          conversationRef.current?.disconnect(); conversationRef.current = null; clearSessionId()
+        }}
           style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "none", padding: "6px 12px", borderRadius: 6, fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit" }}>
           <RefreshCw size={12} /> Reset
         </button>
@@ -516,11 +733,11 @@ export function ExpressQuoteWidget() {
             <div style={{ fontSize: 13, fontWeight: 700, color: INK, lineHeight: 1.2, fontFamily: "'Quicksand', Lato, sans-serif" }}>Morgan</div>
             <div style={{ fontSize: 11, color: MUTED, display: "flex", alignItems: "center", gap: 4 }}>
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e" }} />
-              {view === "home"   && "Always on · 24/7"}
-              {view === "quote"  && (step < quoteSteps.length ? `Express Quote · Step ${step + 1} of ${quoteSteps.length}` : "Quote ready")}
-              {view === "faq"    && "Answering questions"}
+              {view === "home" && "Always on · 24/7"}
+              {view === "quote" && (step < quoteSteps.length ? `Express Quote · Step ${step + 1} of ${quoteSteps.length}` : "Quote ready")}
+              {view === "faq" && "Answering questions"}
               {view === "advice" && "Product advice"}
-              {view === "chat"   && "Live chat — Sarah"}
+              {view === "chat" && "Live chat — Sarah"}
             </div>
           </div>
         </div>
@@ -542,7 +759,20 @@ export function ExpressQuoteWidget() {
       <div ref={scrollRef} style={{ flex: 1, overflow: "auto", padding: "20px 24px" }}>
         {view === "home" ? renderHome() : (
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            {messages.map(m => <Bubble key={m.id} role={m.role} text={m.text} />)}
+            {messages.map(m => (
+              <div key={m.id}>
+                <Bubble role={m.role} text={m.text} />
+                {m.products && m.products.length > 0 && (
+                  <div style={{
+                    display: "flex", flexDirection: "column", gap: 10,
+                    marginBottom: 12, marginLeft: m.role === "user" ? "auto" : 0,
+                    maxWidth: "85%", paddingLeft: m.role === "user" ? 0 : 36,
+                  }}>
+                    {m.products.map(p => <ProductCard key={p.id} product={p} />)}
+                  </div>
+                )}
+              </div>
+            ))}
 
             {/* quote step options — NO text input */}
             {view === "quote" && step < quoteSteps.length && (

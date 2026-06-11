@@ -1,9 +1,24 @@
 export type ViewMode = 'home' | 'quote' | 'faq' | 'advice' | 'chat' | 'order'
 
+export interface ProductInfo {
+  id: string
+  name: string
+  description: string
+  price: number
+  sku: string
+  image_url: string
+  category: string
+  tags: string
+  currency: string
+  available: boolean
+  url: string
+}
+
 export interface Message {
   id: string
   role: 'morgan' | 'user' | 'human'
   text: string
+  products?: ProductInfo[]
 }
 
 export interface QuoteAnswers {
