@@ -55,11 +55,20 @@ function MorganAvatar({ size = 40 }: { size?: number }) {
 }
 
 // ─── Bubble ────────────────────────────────────────────────────────
-function Bubble({ role, text }: { role: Message["role"]; text: string }) {
+function Bubble({ role, text, senderIcon }: { role: Message["role"]; text: string; senderIcon?: string }) {
   const isUser = role === "user"
   return (
     <div style={{ display: "flex", justifyContent: isUser ? "flex-end" : "flex-start", marginBottom: 10 }}>
-      {!isUser && <div style={{ marginRight: 8, marginTop: 2 }}><MorganAvatar size={28} /></div>}
+      {!isUser && (
+        <div style={{ marginRight: 8, marginTop: 2, flexShrink: 0 }}>
+          {senderIcon ? (
+            <img src={senderIcon} alt="avatar"
+              style={{ width: 28, height: 28, borderRadius: "50%", objectFit: "cover", background: GREY_BG }} />
+          ) : (
+            <MorganAvatar size={28} />
+          )}
+        </div>
+      )}
       <div style={{
         maxWidth: "75%", padding: "10px 14px",
         borderRadius: isUser ? "18px 18px 4px 18px" : "4px 18px 18px 18px",
@@ -147,14 +156,15 @@ export function ExpressQuoteWidget() {
   const [tierBuckets, setTierBuckets] = useState<TierBucket[]>([])
   const [selectedTier, setSelectedTier] = useState<string | null>(null)
   const [actionView, setActionView] = useState<"" | "email" | "callback" | "order">("")
+  const [isTyping, setIsTyping] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight
   }, [messages, step, tierBuckets])
 
-  const push = useCallback((role: Message["role"], text: string, products?: ProductInfo[]) => {
-    setMessages(prev => [...prev, { id: `${Date.now()}-${Math.random()}`, role, text, ...(products ? { products } : {}) }])
+  const push = useCallback((role: Message["role"], text: string, products?: ProductInfo[], senderIcon?: string) => {
+    setMessages(prev => [...prev, { id: `${Date.now()}-${Math.random()}`, role, text, ...(products ? { products } : {}), ...(senderIcon ? { senderIcon } : {}) }])
   }, [])
 
   // ─── 8 quote steps ──────────────────────────────────────────────
@@ -594,13 +604,18 @@ export function ExpressQuoteWidget() {
             const historyMessages: Message[] = []
             for (const item of items) {
               const m = item as Record<string, unknown>
-              if (m.user_type !== "ai") continue
+              const userType = m.user_type as string | undefined
               const chatData = m.chat_data as Record<string, unknown> | undefined
-              const aiResponse = chatData?.ai_response as Record<string, unknown> | undefined
-              const text = aiResponse?.ai_message ?? m.message ?? JSON.stringify(m)
-              const rawProducts = aiResponse?.product_info as unknown[] | undefined
-              const products: ProductInfo[] | undefined = rawProducts?.length
-                ? (rawProducts as Record<string, unknown>[]).map(p => ({
+              let text = ""
+              let products: ProductInfo[] | undefined
+              const isLeft = userType === "ai" || userType === "client"
+
+              if (userType === "ai") {
+                const aiResponse = chatData?.ai_response as Record<string, unknown> | undefined
+                text = String(aiResponse?.ai_message ?? m.message ?? JSON.stringify(m))
+                const rawProducts = aiResponse?.product_info as unknown[] | undefined
+                if (rawProducts?.length) {
+                  products = (rawProducts as Record<string, unknown>[]).map(p => ({
                     id: String(p.id ?? ""),
                     name: String(p.name ?? ""),
                     description: String(p.description ?? ""),
@@ -613,12 +628,18 @@ export function ExpressQuoteWidget() {
                     available: Boolean(p.available ?? true),
                     url: String(p.url ?? ""),
                   }))
-                : undefined
+                }
+              } else {
+                // user or client — text lives in chat_data.msg
+                text = String(chatData?.msg ?? m.message ?? m.text ?? "")
+              }
+
               historyMessages.push({
                 id: `${Date.now()}-${Math.random()}`,
-                role: "morgan",
+                role: isLeft ? "morgan" : "user",
                 text: String(text),
-                ...(products ? { products } : {}),
+                ...(isLeft && products ? { products } : {}),
+                ...(userType === "client" && m.sender_icon ? { senderIcon: String(m.sender_icon) } : {}),
               })
             }
             setMessages(historyMessages)
@@ -626,6 +647,7 @@ export function ExpressQuoteWidget() {
           }
 
           case "message": {
+            setIsTyping(false)
             const payload = ev.payload as Record<string, unknown> | undefined
             if (!payload || payload.user_type !== "ai") break
 
@@ -658,6 +680,7 @@ export function ExpressQuoteWidget() {
           }
 
           case "error": {
+            setIsTyping(false)
             const payload = ev.payload as Record<string, unknown> | undefined
             console.error("[elxBot] error", payload?.code ?? "", payload?.message ?? "")
             break
@@ -689,6 +712,7 @@ export function ExpressQuoteWidget() {
     const msg = textInput
     push("user", msg)
     setTextInput("")
+    setIsTyping(true)
     conversationRef.current?.send(msg)
   }
 
@@ -701,6 +725,7 @@ export function ExpressQuoteWidget() {
 
   return (
     <div style={{ height: "100vh", width: "100%", display: "flex", flexDirection: "column", fontFamily: "'Lato', 'Quicksand', Arial, sans-serif", background: GREY_BG }}>
+      <style>{`@keyframes typingDot{0%,60%,100%{opacity:0.3}30%{opacity:1}}`}</style>
 
       {/* Top bar */}
       <div style={{ background: NAVY_DARK, color: "#fff", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
@@ -761,7 +786,7 @@ export function ExpressQuoteWidget() {
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             {messages.map(m => (
               <div key={m.id}>
-                <Bubble role={m.role} text={m.text} />
+                <Bubble role={m.role} text={m.text} senderIcon={m.senderIcon} />
                 {m.products && m.products.length > 0 && (
                   <div style={{
                     display: "flex", flexDirection: "column", gap: 10,
@@ -773,6 +798,32 @@ export function ExpressQuoteWidget() {
                 )}
               </div>
             ))}
+
+            {/* ── Typing indicator ── */}
+            {isTyping && (
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                <MorganAvatar size={28} />
+                <div style={{
+                  padding: "10px 16px", borderRadius: "4px 18px 18px 18px",
+                  background: "#fff", border: `1px solid ${BORDER}`,
+                  fontSize: 14, color: MUTED,
+                  display: "flex", alignItems: "center", gap: 4,
+                }}>
+                  <span style={{
+                    display: "inline-block", width: 6, height: 6, borderRadius: "50%",
+                    background: MUTED, animation: "typingDot 1.2s infinite",
+                  }} />
+                  <span style={{
+                    display: "inline-block", width: 6, height: 6, borderRadius: "50%",
+                    background: MUTED, animation: "typingDot 1.2s infinite 0.2s",
+                  }} />
+                  <span style={{
+                    display: "inline-block", width: 6, height: 6, borderRadius: "50%",
+                    background: MUTED, animation: "typingDot 1.2s infinite 0.4s",
+                  }} />
+                </div>
+              </div>
+            )}
 
             {/* quote step options — NO text input */}
             {view === "quote" && step < quoteSteps.length && (

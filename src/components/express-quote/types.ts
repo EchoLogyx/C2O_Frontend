@@ -19,6 +19,7 @@ export interface Message {
   role: 'morgan' | 'user' | 'human'
   text: string
   products?: ProductInfo[]
+  senderIcon?: string
 }
 
 export interface QuoteAnswers {
