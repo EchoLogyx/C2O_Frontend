@@ -3,16 +3,18 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import {
   FileText, MessageSquare, Headphones, Sparkles, Send, ArrowLeft, X,
-  RefreshCw, Info, Phone, Mail, ShoppingCart, Minus, Plus,
+  RefreshCw, Info, Phone, Mail, ShoppingCart,
 } from "lucide-react"
 import {
   NAVY, NAVY_DARK, NAVY_LIGHT, GOLD, INK, MUTED, BORDER, GREY_BG,
-  GREEN, AMBER, USE_CASES, PRIORITIES, DECORATION_TYPES, LOGO_POSITIONS,
-  LOGO_STATUS, DEADLINE_OPTIONS, FAQ_CHIPS, ADVICE_CHIPS,
+  GREEN, AMBER, USE_CASES, DECORATION_TYPES,
+  SPEED_OPTIONS, GENDER_OPTIONS, FABRIC_OPTIONS, WEIGHT_OPTIONS, FIT_OPTIONS,
+  FAQ_CHIPS, ADVICE_CHIPS, SERVICE_PRICING, PURPOSE_MAP,
+  LOGO_POSITIONS, LOGO_STATUS,
 } from "./data"
 import type { ViewMode, Message, QuoteAnswers, ProductInfo } from "./types"
-import { runQuoteEngine, getCategories, getProductsForCategory } from "@/lib/quoteEngine"
-import type { TierBucket } from "@/lib/quoteEngine"
+import { runQuoteEngine, getCategories, getProductsForCategory, countMatchingProducts, optionAvailable } from "@/lib/quoteEngine"
+import type { TierBucket, QuoteInput, ProductQuoteResult } from "@/lib/quoteEngine"
 
 // ─── Morgan Avatar ─────────────────────────────────────────────────
 
@@ -150,11 +152,12 @@ function ProductCard({ product }: { product: ProductInfo }) {
 export function ExpressQuoteWidget() {
   const [view, setView] = useState<ViewMode>("home")
   const [messages, setMessages] = useState<Message[]>([])
-  const [answers, setAnswers] = useState<QuoteAnswers>({ qty: 50 })
+  const [answers, setAnswers] = useState<QuoteAnswers>({ qty: 25 })
   const [step, setStep] = useState(0)
   const [textInput, setTextInput] = useState("")
   const [tierBuckets, setTierBuckets] = useState<TierBucket[]>([])
   const [selectedTier, setSelectedTier] = useState<string | null>(null)
+  const [selectedProduct, setSelectedProduct] = useState<ProductQuoteResult | null>(null)
   const [actionView, setActionView] = useState<"" | "email" | "callback" | "order">("")
   const [isTyping, setIsTyping] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -163,31 +166,43 @@ export function ExpressQuoteWidget() {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight
   }, [messages, step, tierBuckets])
 
+  // Look up the applicable unit price for a decoration type at a given qty
+  function decoUnitPrice(decoType: "printing" | "embroidery", qty: number): number {
+    const breaks = SERVICE_PRICING[decoType]
+    let price = breaks[breaks.length - 1].price
+    for (const b of breaks) {
+      if (qty >= b.qty) price = b.price
+    }
+    return price
+  }
+
   const push = useCallback((role: Message["role"], text: string, products?: ProductInfo[], senderIcon?: string) => {
     setMessages(prev => [...prev, { id: `${Date.now()}-${Math.random()}`, role, text, ...(products ? { products } : {}), ...(senderIcon ? { senderIcon } : {}) }])
   }, [])
 
-  // ─── 8 quote steps ──────────────────────────────────────────────
+  // ─── Quote steps (cascading facet filters) ────────────────────
   const quoteSteps = [
+    { key: "speed",   question: "When do you need this?" },
     { key: "purpose", question: "What's the main purpose of this order?" },
-    { key: "qty", question: "How many items do you need?" },
-    { key: "priority", question: "What matters most to you?" },
-    { key: "category", question: "What type of garment are you looking for?" },
-    { key: "decorationType", question: "How would you like your logo applied?" },
-    { key: "logoPosition", question: "Where should the logo go?" },
-    { key: "logoStatus", question: "What's the status of your logo/artwork?" },
-    { key: "deadline", question: "When do you need the order?" },
+    { key: "category", question: "What type of garment?" },
+    { key: "gender",  question: "Who's it for?" },
+    { key: "fabric",  question: "What fabric do you prefer?" },
+    { key: "weight",  question: "What fabric weight?" },
+    { key: "fit",     question: "What fit?" },
+    { key: "qty",     question: "How many items do you need?" },
+    { key: "decorationType", question: "Any decoration needed?" },
+    { key: "logoPosition", question: "Where would you like the logo?" },
+    { key: "logoStatus", question: "Is this a new logo, or one we already have on file?" },
   ]
 
   async function startCapability(v: ViewMode) {
     setView(v); setMessages([]); setStep(0)
-    setAnswers({ qty: 50 }); setSelectedTier(null)
+    setAnswers({ qty: 25 }); setSelectedTier(null); setSelectedProduct(null)
     setActionView(""); setTextInput(""); setTierBuckets([])
-    if (v === "quote") push("morgan", "Great! Let's get you an instant quote — I'll ask 8 quick questions.")
+    if (v === "quote") push("morgan", "Great! Let's find the right products for you. I'll ask a few quick questions.")
     if (v === "faq") push("morgan", "Hi! Pick a topic or type your own question below.")
     if (v === "advice") push("morgan", "I'll help you find the perfect product. Pick a scenario or describe what you need.")
     if (v === "chat") push("morgan", "Connecting you to our team… You're through to Sarah 👋 How can I help?")
-    // Lazy-create chatbot conversation (only for faq/advice/chat)
     if (v === "faq" || v === "advice" || v === "chat") {
       await ensureConversation()
     }
@@ -204,22 +219,27 @@ export function ExpressQuoteWidget() {
         push("morgan", quoteSteps[nextStep].question)
         setStep(nextStep)
       } else {
-        // run engine
-        push("morgan", "Calculating your personalised quote from our live product catalogue…")
+        // All questions done — run engine
+        push("morgan", "Calculating results from our product catalogue…")
         setTimeout(() => {
+          const decoTypeVal = updated.decorationType === "None" ? undefined : updated.decorationType
           const input = {
-            purpose: updated.purpose ?? "",
-            qty: updated.qty ?? 50,
-            priority: (updated.priority ?? "Balance") as "Speed" | "Balance" | "Quality",
-            category: updated.category ?? "t-shirts",
-            decorationType: (updated.decorationType ?? "Printing") as "Printing" | "Embroidery",
-            logoPosition: updated.logoPosition ?? "5. Left Chest",
-            logoStatus: updated.logoStatus ?? "",
-            deadline: updated.deadline ?? "flexible",
+            speed: updated.speed,
+            purpose: updated.purpose,
+            category: updated.category,
+            gender: updated.gender,
+            fabric: updated.fabric,
+            weight: updated.weight,
+            fit: updated.fit,
+            qty: updated.qty ?? 25,
+            decorationType: decoTypeVal as "Printing" | "Embroidery" | undefined,
+            priority: "Balanced" as const,
           }
           const buckets = runQuoteEngine(input)
-          setTierBuckets(buckets)
-          push("morgan", `Here are ${buckets.length} pricing tiers for ${input.qty} × ${input.decorationType} on ${input.category}. Tap any tier to see the full breakdown.`)
+          setTierBuckets(buckets); setSelectedProduct(null)
+
+          const hasDeco = input.decorationType ? ` with ${input.decorationType}` : ""
+          push("morgan", `Here are your results for ${input.category || "all garments"}${hasDeco}. We found ${buckets.reduce((s, b) => s + b.products.length, 0)} matching products across ${buckets.length} tiers.`)
           setStep(nextStep)
         }, 400)
       }
@@ -227,10 +247,10 @@ export function ExpressQuoteWidget() {
   }
 
   function goBack() {
-    if (view === "quote" && step > 0 && step <= quoteSteps.length) {
+    if (view === "quote" && step > 0 && step < quoteSteps.length) {
       setStep(s => s - 1)
       setMessages(m => m.slice(0, -2))
-      if (step >= quoteSteps.length) { setTierBuckets([]); setSelectedTier(null) }
+      if (step >= quoteSteps.length) { setTierBuckets([]); setSelectedTier(null); setSelectedProduct(null) }
     } else {
       setView("home")
     }
@@ -241,69 +261,73 @@ export function ExpressQuoteWidget() {
     const current = quoteSteps[step]
     if (!current) return null
 
+    // Build current filters so far (excluding current step) to check option availability
+    const decoSafe = answers.decorationType === "None" ? undefined : answers.decorationType
+    const currentFilters: QuoteInput = {
+      ...answers as Omit<QuoteAnswers, "decorationType">,
+      decorationType: decoSafe,
+      qty: answers.qty ?? 25,
+    }
+
     switch (current.key) {
+      case "speed":
+        return (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {SPEED_OPTIONS.map(s => {
+              const avail = optionAvailable(currentFilters, "speed", s.id)
+              return (
+                <button key={s.id} onClick={() => avail && handleQuoteAnswer("speed", s.id)}
+                  disabled={!avail}
+                  style={{
+                    padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
+                    background: "#fff", color: INK,
+                    cursor: avail ? "pointer" : "not-allowed",
+                    fontSize: 13, fontWeight: 500, fontFamily: "inherit", opacity: avail ? 1 : 0.4,
+                  }}>
+                  {s.label}
+                </button>
+              )
+            })}
+          </div>
+        )
+
       case "purpose":
         return (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
-            {USE_CASES.map(u => (
-              <button key={u.id} onClick={() => handleQuoteAnswer("purpose", u.label)}
-                style={{ padding: "12px 10px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
-                <span style={{ fontSize: 20 }}>{u.emoji}</span>
-                <div style={{ fontSize: 13, fontWeight: 600, color: INK, marginTop: 4 }}>{u.label}</div>
-              </button>
-            ))}
-          </div>
-        )
-
-      case "qty":
-        return (
-          <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "8px 0" }}>
-            <button onClick={() => setAnswers(a => ({ ...a, qty: Math.max(1, (a.qty ?? 50) - 10) }))}
-              style={{ width: 38, height: 38, borderRadius: 8, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Minus size={16} />
-            </button>
-            <div style={{ fontSize: 28, fontWeight: 800, color: NAVY, minWidth: 70, textAlign: "center" }}>
-              {answers.qty}
-            </div>
-            <button onClick={() => setAnswers(a => ({ ...a, qty: Math.min(1000, (a.qty ?? 50) + 10) }))}
-              style={{ width: 38, height: 38, borderRadius: 8, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Plus size={16} />
-            </button>
-            <button onClick={() => handleQuoteAnswer("qty", answers.qty ?? 50)}
-              style={{ padding: "10px 20px", borderRadius: 8, background: NAVY, color: "#fff", border: "none", cursor: "pointer", fontSize: 14, fontWeight: 600, fontFamily: "inherit" }}>
-              Confirm →
-            </button>
-          </div>
-        )
-
-      case "priority":
-        return (
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {PRIORITIES.map(p => (
-              <button key={p.id} onClick={() => handleQuoteAnswer("priority", p.id, p.label)}
-                style={{ padding: "12px 16px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 12 }}>
-                <span style={{ fontSize: 22 }}>{p.emoji}</span>
-                <div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: INK }}>{p.label}</div>
-                  <div style={{ fontSize: 12, color: MUTED }}>{p.desc}</div>
-                </div>
-              </button>
-            ))}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {USE_CASES.map(u => {
+              const avail = optionAvailable(currentFilters, "purpose", u.id)
+              return (
+                <button key={u.id} onClick={() => avail && handleQuoteAnswer("purpose", u.id)}
+                  disabled={!avail}
+                  style={{
+                    padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
+                    background: "#fff", color: INK,
+                    cursor: avail ? "pointer" : "not-allowed",
+                    fontSize: 13, fontWeight: 500, fontFamily: "inherit", opacity: avail ? 1 : 0.4,
+                  }}>
+                  {u.label}
+                </button>
+              )
+            })}
           </div>
         )
 
       case "category": {
         const cats = getCategories()
         return (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {cats.map(c => {
-              const count = getProductsForCategory(c.id).length
+              const avail = optionAvailable(currentFilters, "category", c.id)
               return (
-                <button key={c.id} onClick={() => handleQuoteAnswer("category", c.id, c.label)}
-                  style={{ padding: "14px 12px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
-                  <span style={{ fontSize: 28 }}>{c.emoji}</span>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: INK, marginTop: 6 }}>{c.label}</div>
-                  <div style={{ fontSize: 11, color: MUTED }}>{count} products</div>
+                <button key={c.id} onClick={() => avail && handleQuoteAnswer("category", c.id, c.label)}
+                  disabled={!avail}
+                  style={{
+                    padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
+                    background: "#fff", color: INK,
+                    cursor: avail ? "pointer" : "not-allowed",
+                    fontSize: 13, fontWeight: 500, fontFamily: "inherit", opacity: avail ? 1 : 0.4,
+                  }}>
+                  {c.label}
                 </button>
               )
             })}
@@ -311,51 +335,177 @@ export function ExpressQuoteWidget() {
         )
       }
 
-      case "decorationType":
+      case "gender":
         return (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
-            {DECORATION_TYPES.map(d => (
-              <button key={d.id} onClick={() => handleQuoteAnswer("decorationType", d.id, d.label)}
-                style={{ padding: "14px 12px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
-                <span style={{ fontSize: 24 }}>{d.emoji}</span>
-                <div style={{ fontSize: 13, fontWeight: 700, color: INK, marginTop: 6 }}>{d.label}</div>
-                <div style={{ fontSize: 11, color: MUTED }}>{d.desc}</div>
-                <div style={{ fontSize: 11, color: NAVY, fontWeight: 600, marginTop: 4 }}>{d.setupNote}</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {GENDER_OPTIONS.map(g => {
+              const avail = optionAvailable(currentFilters, "gender", g.id)
+              return (
+                <button key={g.id} onClick={() => avail && handleQuoteAnswer("gender", g.id)}
+                  disabled={!avail}
+                  style={{
+                    padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
+                    background: "#fff", color: INK,
+                    cursor: avail ? "pointer" : "not-allowed",
+                    fontSize: 13, fontWeight: 500, fontFamily: "inherit", opacity: avail ? 1 : 0.4,
+                  }}>
+                  {g.label}
+                </button>
+              )
+            })}
+          </div>
+        )
+
+      case "fabric":
+        return (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {FABRIC_OPTIONS.map(f => {
+              const avail = optionAvailable(currentFilters, "fabric", f.id)
+              return (
+                <button key={f.id} onClick={() => avail && handleQuoteAnswer("fabric", f.id)}
+                  disabled={!avail}
+                  style={{
+                    padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
+                    background: "#fff", color: INK,
+                    cursor: avail ? "pointer" : "not-allowed",
+                    fontSize: 13, fontWeight: 500, fontFamily: "inherit", opacity: avail ? 1 : 0.4,
+                  }}>
+                  {f.label}
+                </button>
+              )
+            })}
+          </div>
+        )
+
+      case "weight":
+        return (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {WEIGHT_OPTIONS.map(w => {
+              const avail = optionAvailable(currentFilters, "weight", w.id)
+              return (
+                <button key={w.id} onClick={() => avail && handleQuoteAnswer("weight", w.id)}
+                  disabled={!avail}
+                  style={{
+                    padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
+                    background: "#fff", color: INK,
+                    cursor: avail ? "pointer" : "not-allowed",
+                    fontSize: 13, fontWeight: 500, fontFamily: "inherit", opacity: avail ? 1 : 0.4,
+                  }}>
+                  {w.label}
+                </button>
+              )
+            })}
+          </div>
+        )
+
+      case "fit":
+        return (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {FIT_OPTIONS.map(f => {
+              const avail = optionAvailable(currentFilters, "fit", f.id)
+              return (
+                <button key={f.id} onClick={() => avail && handleQuoteAnswer("fit", f.id)}
+                  disabled={!avail}
+                  style={{
+                    padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
+                    background: "#fff", color: INK,
+                    cursor: avail ? "pointer" : "not-allowed",
+                    fontSize: 13, fontWeight: 500, fontFamily: "inherit", opacity: avail ? 1 : 0.4,
+                  }}>
+                  {f.label}
+                </button>
+              )
+            })}
+          </div>
+        )
+
+      case "qty":
+        const quickQtys = [1, 5, 10, 25, 50, 100, 250, 500]
+        const currentQty = answers.qty ?? 10
+        return (
+          <div style={{ background: "#fff", border: `1.5px solid ${BORDER}`, borderRadius: 12, padding: 16, maxWidth: 380 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center" }}>
+              <button onClick={() => setAnswers(a => ({ ...a, qty: Math.max(1, (a.qty ?? 10) - 1) }))}
+                style={{ width: 40, height: 40, borderRadius: 8, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", fontSize: 20, fontWeight: 600, color: NAVY, fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                −
               </button>
-            ))}
+              <input type="number" min={1} max={10000}
+                value={currentQty}
+                onChange={e => setAnswers(a => ({ ...a, qty: Math.max(1, Number(e.target.value) || 1) }))}
+                style={{
+                  width: 100, padding: "10px 12px", borderRadius: 8,
+                  border: `1.5px solid ${BORDER}`, fontSize: 20, fontWeight: 700,
+                  color: INK, textAlign: "center", fontFamily: "inherit", outline: "none",
+                }} />
+              <button onClick={() => setAnswers(a => ({ ...a, qty: Math.min(10000, (a.qty ?? 10) + 1) }))}
+                style={{ width: 40, height: 40, borderRadius: 8, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", fontSize: 20, fontWeight: 600, color: NAVY, fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                +
+              </button>
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center", marginTop: 12 }}>
+              {quickQtys.map(q => {
+                const isActive = currentQty === q
+                return (
+                  <button key={q} onClick={() => setAnswers(a => ({ ...a, qty: q }))}
+                    style={{
+                      padding: "4px 10px", borderRadius: 14,
+                      border: `1px solid ${isActive ? NAVY : BORDER}`,
+                      background: isActive ? NAVY : "#fff",
+                      color: isActive ? "#fff" : MUTED,
+                      fontSize: 11, fontWeight: 500, cursor: "pointer", fontFamily: "inherit",
+                    }}>
+                    {q}
+                  </button>
+                )
+              })}
+            </div>
+            <button onClick={() => handleQuoteAnswer("qty", currentQty)}
+              style={{ width: "100%", marginTop: 12, padding: "10px 16px", borderRadius: 8, border: "none", background: NAVY, color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>
+              Continue with {currentQty} →
+            </button>
+          </div>
+        )
+
+      case "decorationType":
+        const printPrice = decoUnitPrice("printing", answers.qty ?? 25)
+        const embPrice = decoUnitPrice("embroidery", answers.qty ?? 25)
+        return (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            <button onClick={() => handleQuoteAnswer("decorationType", "Printing")}
+              style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
+              {DECORATION_TYPES[0].label} — £{printPrice.toFixed(2)}/unit
+            </button>
+            <button onClick={() => handleQuoteAnswer("decorationType", "Embroidery")}
+              style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
+              {DECORATION_TYPES[1].label} — £{embPrice.toFixed(2)}/unit
+            </button>
+            <button onClick={() => handleQuoteAnswer("decorationType", "None")}
+              style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
+              None — Plain garments only
+            </button>
           </div>
         )
 
       case "logoPosition":
         return (
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {LOGO_POSITIONS.map(p => (
-              <QuickReply key={p.id} label={p.label} onClick={() => handleQuoteAnswer("logoPosition", p.id, p.label)} />
+            {LOGO_POSITIONS.map(lp => (
+              <button key={lp.id} onClick={() => handleQuoteAnswer("logoPosition", lp.id, lp.label)}
+                style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
+                {lp.label}
+              </button>
             ))}
           </div>
         )
 
       case "logoStatus":
         return (
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {LOGO_STATUS.map(ls => (
-              <button key={ls.id} onClick={() => handleQuoteAnswer("logoStatus", ls.label)}
-                style={{ padding: "12px 16px", borderRadius: 10, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 12 }}>
-                <span style={{ fontSize: 22 }}>{ls.emoji}</span>
-                <div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: INK }}>{ls.label}</div>
-                  <div style={{ fontSize: 12, color: MUTED }}>{ls.desc}</div>
-                </div>
-              </button>
-            ))}
-          </div>
-        )
-
-      case "deadline":
-        return (
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {DEADLINE_OPTIONS.map(d => (
-              <QuickReply key={d.id} label={d.label} onClick={() => handleQuoteAnswer("deadline", d.id, d.label)} />
+            {LOGO_STATUS.map(ls => (
+              <button key={ls.id} onClick={() => handleQuoteAnswer("logoStatus", ls.id, ls.label)}
+                style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
+                {ls.label}
+              </button>
             ))}
           </div>
         )
@@ -364,17 +514,23 @@ export function ExpressQuoteWidget() {
     }
   }
 
-  // ─── Tier results ───────────────────────────────────────────────
+  // ─── Product results ──────────────────────────────────────────────
   function renderTierResults() {
     if (tierBuckets.length === 0) return (
       <div style={{ padding: 20, textAlign: "center", color: MUTED, fontSize: 14 }}>
-        No products found matching all your criteria. Try a different position or decoration type.
+        No products found matching your criteria. Try changing some options.
       </div>
     )
 
-    if (selectedTier) {
-      const t = tierBuckets.find(b => b.tierId === selectedTier)!
-      const topProducts = t.products.slice(0, 5)
+    // Flatten all products across all tiers
+    const allProducts = tierBuckets.flatMap(t =>
+      t.products.map(r => ({ ...r, tier: t }))
+    )
+
+    // ── Action overlay (email / callback / order) ────────────────
+    if (actionView && selectedProduct) {
+      const t = tierBuckets.find(b => b.products.some(p => p.product.id === selectedProduct.product.id))!
+      const hasDeco = answers.decorationType && answers.decorationType !== "None"
 
       if (actionView === "email") return (
         <div style={{ background: "#fff", borderRadius: 12, border: `1.5px solid ${BORDER}`, padding: 20 }}>
@@ -402,12 +558,12 @@ export function ExpressQuoteWidget() {
           <div style={{ fontSize: 13, color: MUTED, marginBottom: 16 }}>We'll contact you to finalise artwork, sizes and payment.</div>
           <div style={{ background: GREY_BG, borderRadius: 8, padding: 12, marginBottom: 16, fontSize: 13 }}>
             {[
-              ["Tier", `${t.emoji} ${t.tierName}`],
-              ["Product", topProducts[0]?.product.name ?? "—"],
+              ["Tier", t.tierName],
+              ["Product", selectedProduct.product.name],
               ["Qty", `${answers.qty} items`],
-              ["Unit price (decorated)", `£${t.unitPrice.toFixed(2)}`],
-              ["Setup fee", `£${t.setupFee.toFixed(2)}`],
-              ["Est. total", `£${t.totalPrice.toFixed(2)}`],
+              ["Unit price (garment)", `£${selectedProduct.unitPrice.toFixed(2)}`],
+              ...(hasDeco ? [["Decoration/unit", `£${selectedProduct.decorationCostPerUnit.toFixed(2)}`]] : []),
+              ["Est. total", `£${selectedProduct.totalPrice.toFixed(2)}`],
             ].map(([l, v]) => (
               <div key={l} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
                 <span style={{ color: MUTED }}>{l}</span>
@@ -421,31 +577,82 @@ export function ExpressQuoteWidget() {
           <button onClick={() => setActionView("")} style={{ width: "100%", marginTop: 8, padding: "10px", borderRadius: 8, background: "transparent", color: MUTED, border: `1px solid ${BORDER}`, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>← Back</button>
         </div>
       )
+    }
 
-      // Selected tier breakdown
-      return (
-        <div>
-          <div style={{ background: "#fff", borderRadius: 12, border: `2px solid ${t.color}`, padding: 20, marginBottom: 12 }}>
+    // ── All products (grouped by tier) + detail panel at bottom ──
+    const selTier = selectedProduct
+      ? tierBuckets.find(b => b.products.some(p => p.product.id === selectedProduct.product.id))
+      : null
+
+    return (
+      <div>
+        <div style={{ fontSize: 13, color: MUTED, marginBottom: 12 }}>
+          {allProducts.length} product{allProducts.length !== 1 ? "s" : ""} found for <strong style={{ color: INK }}>{answers.qty} items</strong>
+          {answers.decorationType && answers.decorationType !== "None"
+            ? <> · <strong style={{ color: INK }}>{answers.decorationType}</strong></>
+            : <> · <strong style={{ color: INK }}>Plain (no decoration)</strong></>
+          }
+          {answers.category ? <> · <strong style={{ color: INK }}>{answers.category}</strong></> : null}
+        </div>
+
+        {tierBuckets.map(t => (
+          <div key={t.tierId} style={{ marginBottom: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: INK }}>{t.tierName} Tier</span>
+              {t.badge && <span style={{ fontSize: 10, fontWeight: 700, background: t.color, color: "#fff", padding: "2px 7px", borderRadius: 4 }}>{t.badge}</span>}
+              <span style={{ fontSize: 12, color: MUTED }}>· {t.products.length} product{t.products.length !== 1 ? "s" : ""}</span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {t.products.map(r => {
+                const isSelected = selectedProduct?.product.id === r.product.id
+                return (
+                  <button key={r.product.id} onClick={() => { setSelectedProduct(isSelected ? null : r); setActionView("") }}
+                    style={{
+                      width: "100%", padding: "12px 14px", borderRadius: 10,
+                      border: `1.5px solid ${isSelected ? t.color : BORDER}`,
+                      background: isSelected ? `${t.color}10` : "#fff",
+                      cursor: "pointer", textAlign: "left", fontFamily: "inherit",
+                      display: "flex", alignItems: "center", justifyContent: "space-between",
+                    }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: INK }}>{r.product.name}</div>
+                      <div style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>
+                        {r.product.brand} · £{r.unitPrice.toFixed(2)}/unit
+                      </div>
+                    </div>
+                    <div style={{ textAlign: "right", marginLeft: 12, flexShrink: 0 }}>
+                      <div style={{ fontSize: 15, fontWeight: 800, color: t.color }}>£{r.totalPrice.toFixed(2)}</div>
+                      <div style={{ fontSize: 10, color: MUTED }}>est. total</div>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        ))}
+
+        {/* ── Product detail panel (when a product is selected) ── */}
+        {selectedProduct && selTier && (
+          <div style={{ background: "#fff", borderRadius: 12, border: `2px solid ${selTier.color}`, padding: 20, marginTop: 8, marginBottom: 12 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 24 }}>{t.emoji}</span>
                 <div>
-                  <div style={{ fontSize: 16, fontWeight: 800, color: INK }}>{t.tierName} Tier</div>
-                  {t.badge && <span style={{ fontSize: 10, fontWeight: 700, background: t.color, color: "#fff", padding: "2px 7px", borderRadius: 4 }}>{t.badge}</span>}
+                  <div style={{ fontSize: 13, color: MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 2 }}>{selTier.tierName} Tier</div>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: INK }}>{selectedProduct.product.name}</div>
                 </div>
               </div>
               <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 24, fontWeight: 900, color: t.color }}>£{t.totalPrice.toFixed(2)}</div>
+                <div style={{ fontSize: 24, fontWeight: 900, color: selTier.color }}>£{selectedProduct.totalPrice.toFixed(2)}</div>
                 <div style={{ fontSize: 12, color: MUTED }}>est. total for {answers.qty} items</div>
               </div>
             </div>
 
             {/* Pricing breakdown */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: answers.decorationType && answers.decorationType !== "None" ? "repeat(4,1fr)" : "repeat(3,1fr)", gap: 8, marginBottom: 14 }}>
               {[
-                { label: "Unit (decorated)", value: `£${t.unitPrice.toFixed(2)}` },
-                { label: "Setup fee", value: `£${t.setupFee.toFixed(2)}` },
-                { label: "Delivery", value: t.delivery },
+                { label: "Unit (garment)", value: `£${selectedProduct.unitPrice.toFixed(2)}` },
+                ...(answers.decorationType && answers.decorationType !== "None" ? [{ label: "Decoration/unit", value: `£${selectedProduct.decorationCostPerUnit.toFixed(2)}` }] : []),
+                { label: "Delivery", value: selTier.delivery },
               ].map(row => (
                 <div key={row.label} style={{ textAlign: "center", background: GREY_BG, borderRadius: 8, padding: "10px 6px" }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: INK }}>{row.value}</div>
@@ -454,25 +661,21 @@ export function ExpressQuoteWidget() {
               ))}
             </div>
 
-            {/* Top products in this tier */}
-            <div style={{ marginBottom: 14 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: MUTED, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.04em" }}>
-                Top picks in this tier ({t.products.length} products matched)
+            {/* Product info */}
+            {selectedProduct.product.featureText && (
+              <div style={{ fontSize: 13, color: MUTED, lineHeight: 1.5, marginBottom: 14, padding: "10px 12px", background: GREY_BG, borderRadius: 8 }}>
+                {selectedProduct.product.featureText}
               </div>
-              {topProducts.map(r => (
-                <div key={r.product.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: `1px solid ${BORDER}` }}>
-                  <div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: INK }}>{r.product.name}</div>
-                    <div style={{ fontSize: 11, color: MUTED }}>{r.product.brand} · {typeof r.product.fabric === "object" ? (r.product.fabric as { weight?: string }).weight ?? "" : r.product.fabric ?? ""}</div>
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: t.color }}>£{r.totalOrderPrice.toFixed(2)}</div>
-                    <div style={{ fontSize: 11, color: MUTED }}>£{r.unitDecoratedPrice.toFixed(2)}/unit</div>
-                  </div>
-                </div>
-              ))}
+            )}
+
+            {/* Brand & specs */}
+            <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 14, fontSize: 12, color: MUTED }}>
+              <span><strong style={{ color: INK }}>Brand:</strong> {selectedProduct.product.brand}</span>
+              {selectedProduct.product.colours && <span><strong style={{ color: INK }}>Colours:</strong> {selectedProduct.product.colours.join(", ")}</span>}
+              {selectedProduct.product.sizes && <span><strong style={{ color: INK }}>Sizes:</strong> {selectedProduct.product.sizes.join(", ")}</span>}
             </div>
 
+            {/* Action buttons */}
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <button onClick={() => setActionView("email")} style={{ flex: 1, minWidth: 110, padding: "10px 12px", borderRadius: 8, background: NAVY, color: "#fff", border: "none", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
                 <Mail size={14} /> Email quote
@@ -485,40 +688,7 @@ export function ExpressQuoteWidget() {
               </button>
             </div>
           </div>
-          <button onClick={() => { setSelectedTier(null); setActionView("") }} style={{ fontSize: 13, color: MUTED, background: "transparent", border: "none", cursor: "pointer", fontFamily: "inherit", textDecoration: "underline" }}>
-            ← View all tiers
-          </button>
-        </div>
-      )
-    }
-
-    // All tiers overview
-    return (
-      <div>
-        <div style={{ fontSize: 13, color: MUTED, marginBottom: 12 }}>
-          Pricing for <strong style={{ color: INK }}>{answers.qty} items</strong> · <strong style={{ color: INK }}>{answers.decorationType}</strong> · <strong style={{ color: INK }}>{answers.category}</strong> — tap a tier to see products & breakdown.
-        </div>
-        {tierBuckets.map(t => (
-          <button key={t.tierId} onClick={() => setSelectedTier(t.tierId)}
-            style={{ width: "100%", marginBottom: 8, padding: "14px 16px", borderRadius: 12, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: 20 }}>{t.emoji}</span>
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: INK }}>{t.tierName}</span>
-                  {t.badge && <span style={{ fontSize: 10, fontWeight: 700, background: t.color, color: "#fff", padding: "1px 6px", borderRadius: 4 }}>{t.badge}</span>}
-                </div>
-                <div style={{ fontSize: 12, color: MUTED }}>
-                  £{t.unitPrice.toFixed(2)}/unit · {t.products.length} products · {t.delivery}
-                </div>
-              </div>
-            </div>
-            <div style={{ textAlign: "right" }}>
-              <div style={{ fontSize: 17, fontWeight: 800, color: t.color }}>£{t.totalPrice.toFixed(2)}</div>
-              <div style={{ fontSize: 11, color: MUTED }}>est. total</div>
-            </div>
-          </button>
-        ))}
+        )}
       </div>
     )
   }
@@ -554,7 +724,7 @@ export function ExpressQuoteWidget() {
         </div>
         <div style={{ marginTop: 20, padding: 12, background: "#eff6ff", border: `1px solid ${NAVY_LIGHT}`, borderRadius: 10, fontSize: 12, color: "#1e40af", display: "flex", alignItems: "flex-start", gap: 8 }}>
           <Info size={14} style={{ marginTop: 1, flexShrink: 0 }} />
-          <div><strong>Live data.</strong> Pricing is calculated in real time from our product catalogue using your quantity, decoration type and logo position.</div>
+          <div><strong>Live data.</strong> Pricing is calculated in real time from our product catalogue using your quantity and decoration preferences.</div>
         </div>
       </div>
     )
@@ -737,7 +907,7 @@ export function ExpressQuoteWidget() {
         </div>
         <button onClick={() => {
           setView("home"); setMessages([]); setStep(0); setAnswers({ qty: 50 })
-          setSelectedTier(null); setActionView(""); setTextInput(""); setTierBuckets([])
+          setSelectedTier(null); setSelectedProduct(null); setActionView(""); setTextInput(""); setTierBuckets([])
           conversationRef.current?.disconnect(); conversationRef.current = null; clearSessionId()
         }}
           style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "none", padding: "6px 12px", borderRadius: 6, fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit" }}>

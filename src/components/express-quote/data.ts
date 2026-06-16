@@ -10,55 +10,92 @@ export const GREY_BG    = '#f8fafc'
 export const GREEN      = '#16a34a'
 export const AMBER      = '#d97706'
 
-// ─── UI-only constants (products/tiers sourced from allProductsData.json via engine) ──
+// ─── Purpose → tag/sector mapping (from HTML) ───────────────────
+export const PURPOSE_MAP: Record<string, { tags: string[]; sector?: string[] }> = {
+  "Company Uniforms":     { tags: ["Uniform","Workwear","Hospitality","Security","Healthcare"] },
+  "Sports & Teamwear":    { tags: ["Teamwear","Sportswear","Golf","Tennis"] },
+  "Events & Promotions":  { tags: ["Promotions","Tradeshows","Stag Do","Hen Do"] },
+  "Charity & Fundraising":{ tags: ["Charities"] },
+  "School & Education":   { tags: ["Schoolwear","Leavers Hoodies"], sector: ["Education"] },
+  "Retail & Merchandise": { tags: ["Merchandise","Fashion","Gifts"] },
+}
+
+// ─── UI-only constants ───────────────────────────────────────────
+export const SPEED_OPTIONS = [
+  { id: 'Within 2 days', label: 'Within 2 days' },
+  { id: 'Within 5 days', label: 'Within 5 days' },
+  { id: 'Not urgent',    label: "I'm flexible" },
+]
 
 export const USE_CASES = [
-  { id: 'uniforms',  label: 'Company Uniforms',      emoji: '🏢' },
-  { id: 'sports',    label: 'Sports & Teamwear',     emoji: '⚽' },
-  { id: 'events',    label: 'Events & Promotions',   emoji: '🎉' },
-  { id: 'charity',   label: 'Charity & Fundraising', emoji: '❤️' },
-  { id: 'schools',   label: 'Schools & Education',   emoji: '🎓' },
-  { id: 'retail',    label: 'Retail & Merchandise',  emoji: '🛍️' },
+  { id: 'Company Uniforms',      label: 'Company Uniforms' },
+  { id: 'Sports & Teamwear',     label: 'Sports & Teamwear' },
+  { id: 'Events & Promotions',   label: 'Events & Promotions' },
+  { id: 'Charity & Fundraising', label: 'Charity & Fundraising' },
+  { id: 'School & Education',    label: 'School & Education' },
+  { id: 'Retail & Merchandise',  label: 'Retail & Merchandise' },
+]
+
+export const GENDER_OPTIONS = [
+  { id: 'Mens',   label: 'Mens' },
+  { id: 'Womens', label: 'Womens' },
+  { id: 'Kids',   label: 'Kids' },
+  { id: 'Unisex', label: 'Unisex' },
+]
+
+export const FABRIC_OPTIONS = [
+  { id: 'Cotton',       label: 'Cotton' },
+  { id: 'Polyester',    label: 'Polyester' },
+  { id: 'Poly-cotton',  label: 'Poly-Cotton Mix' },
+]
+
+export const WEIGHT_OPTIONS = [
+  { id: 'Lightweight',  label: 'Lightweight' },
+  { id: 'Mediumweight', label: 'Mediumweight' },
+  { id: 'Heavyweight',  label: 'Heavyweight' },
+]
+
+export const FIT_OPTIONS = [
+  { id: 'Regular', label: 'Regular' },
+  { id: 'Slim',    label: 'Slim Fit' },
 ]
 
 export const PRIORITIES = [
-  { id: 'Speed',   label: 'Speed',   emoji: '⚡', desc: 'Need it fast — next day available' },
-  { id: 'Balance', label: 'Balance', emoji: '⚖️', desc: 'Best value for money' },
-  { id: 'Quality', label: 'Quality', emoji: '💎', desc: 'Premium finish & durability' },
+  { id: 'Lowest price', label: 'Lowest price', desc: 'Cheapest options first' },
+  { id: 'Balanced',     label: 'Balanced',     desc: 'Best value for money' },
+  { id: 'Best quality', label: 'Best quality', desc: 'Top-tier premium products' },
 ]
 
 export const DECORATION_TYPES = [
-  { id: 'Embroidery', label: 'Embroidery',   emoji: '🧵', desc: 'Textured premium finish (+30%)', setupNote: '£35 setup' },
-  { id: 'Printing',   label: 'Screen Print', emoji: '🖨️', desc: 'Vivid flat colour (+20%)',       setupNote: '£25 setup' },
+  { id: 'Printing',   label: 'Screen Print', desc: 'Vivid flat colour' },
+  { id: 'Embroidery', label: 'Embroidery',   desc: 'Textured premium finish' },
 ]
 
-// Positions match actual availablePositions keys in allProductsData.json
-export const LOGO_POSITIONS = [
-  { id: '5. Left Chest',   label: 'Left Chest' },
-  { id: '4. Centre Chest', label: 'Centre Chest' },
-  { id: '3. Right Chest',  label: 'Right Chest' },
-  { id: '8. Centre Back',  label: 'Centre Back' },
-  { id: '9. Top Back',     label: 'Top Back' },
-  { id: '7. Left Sleeve',  label: 'Left Sleeve' },
-  { id: '1. Right Sleeve', label: 'Right Sleeve' },
-]
-
-export const LOGO_STATUS = [
-  { id: 'ready',   label: 'Ready to go',     emoji: '✅', desc: 'I have print-ready files' },
-  { id: 'design',  label: 'Need design help', emoji: '🎨', desc: 'I need artwork support' },
-  { id: 'explore', label: 'Just exploring',   emoji: '🔍', desc: 'Still early stage' },
-]
-
-export const DEADLINE_OPTIONS = [
-  { id: 'asap',     label: 'ASAP (next day)' },
-  { id: 'week2',    label: 'Within 2 weeks' },
-  { id: 'month',    label: 'Within a month' },
-  { id: 'flexible', label: "I'm flexible" },
-]
+// Service pricing (from Services rows in spreadsheet)
+export const SERVICE_PRICING = {
+  origination:  [{ qty: 1, price: 0 }],
+  printing:     [{ qty: 1, price: 5.99 }, { qty: 10, price: 4.75 }, { qty: 35, price: 3.50 }, { qty: 100, price: 2.99 }, { qty: 250, price: 2.25 }, { qty: 500, price: 2.25 }],
+  embroidery:   [{ qty: 1, price: 6.99 }, { qty: 10, price: 5.49 }, { qty: 35, price: 4.25 }, { qty: 100, price: 3.75 }, { qty: 250, price: 2.75 }, { qty: 500, price: 2.75 }],
+} as const
 
 export const FAQ_CHIPS = [
   'Minimum orders', 'Delivery times', 'Logo file formats',
   'Colour matching', 'Returns policy', 'Rush orders',
+]
+
+export const LOGO_POSITIONS = [
+  { id: 'left-chest',   label: 'Left Chest' },
+  { id: 'right-chest',  label: 'Right Chest' },
+  { id: 'centre-chest', label: 'Centre Chest' },
+  { id: 'full-front',   label: 'Full Front' },
+  { id: 'left-sleeve',  label: 'Left Sleeve' },
+  { id: 'back-centre',  label: 'Back (Centre)' },
+  { id: 'back-top',     label: 'Back (Top)' },
+]
+
+export const LOGO_STATUS = [
+  { id: 'new-artwork',     label: 'New logo',      desc: 'I have artwork ready' },
+  { id: 'existing-logo',   label: 'Existing logo', desc: 'Use our current artwork' },
 ]
 
 export const ADVICE_CHIPS = [

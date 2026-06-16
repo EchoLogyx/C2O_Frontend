@@ -23,12 +23,16 @@ export interface Message {
 }
 
 export interface QuoteAnswers {
-  purpose?: string
+  speed?: string          // "Within 2 days" | "Within 5 days" | "Not urgent"
+  purpose?: string        // maps to PURPOSE_MAP
+  category?: string       // "t-shirts" | "polo-shirts" | "hoodies" | "jackets"
+  gender?: string         // "Mens" | "Womens" | "Kids" | "Unisex"
+  fabric?: string         // "Cotton" | "Polyester" | "Poly-cotton"
+  weight?: string         // "Lightweight" | "Mediumweight" | "Heavyweight"
+  fit?: string            // "Regular" | "Slim"
   qty?: number
-  priority?: 'Speed' | 'Balance' | 'Quality'
-  category?: string        // "t-shirts" | "polo-shirts" | "hoodies" | "jackets"
-  decorationType?: 'Printing' | 'Embroidery'
-  logoPosition?: string    // matches availablePositions key e.g. "5. Left Chest"
+  decorationType?: 'Printing' | 'Embroidery' | 'None'
+  priority?: 'Lowest price' | 'Balanced' | 'Best quality'
+  logoPosition?: string
   logoStatus?: string
-  deadline?: string        // "asap" | "week2" | "month" | "flexible"
 }
