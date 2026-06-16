@@ -101,31 +101,30 @@ function ProductCard({ product }: { product: ProductInfo }) {
     <div style={{
       background: "#fff", borderRadius: 12, border: `1.5px solid ${BORDER}`,
       overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+      display: "flex", flexDirection: "row",
+      padding: "2px"
     }}>
       {product.image_url && (
         <img src={product.image_url} alt={product.name}
-          style={{ width: "100%", height: 160, objectFit: "cover", display: "block", background: GREY_BG }} />
+          style={{ width: 140, minHeight: 140, objectFit: "cover", display: "block", background: GREY_BG, flexShrink: 0 }} />
       )}
-      <div style={{ padding: "12px 14px" }}>
-        <div style={{ fontSize: 12, color: MUTED, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 2 }}>
-          {product.category} · {product.sku}
-        </div>
+      <div style={{ padding: "12px 14px", flex: 1, minWidth: 0 }}>
         <div style={{ fontSize: 15, fontWeight: 700, color: INK, fontFamily: "'Quicksand', Lato, sans-serif", marginBottom: 4 }}>
           {product.name}
         </div>
-        <div style={{ fontSize: 13, color: MUTED, lineHeight: 1.5, marginBottom: 8, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+        <div style={{ fontSize: 13, color: MUTED, lineHeight: 1.5, marginBottom: 8, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
           {product.description}
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
           <div>
-            <span style={{ fontSize: 18, fontWeight: 800, color: NAVY }}>£{product.price.toFixed(2)}</span>
+            <span style={{ fontSize: 18, fontWeight: 800, color: NAVY }}>{product.price}</span>
             <span style={{ fontSize: 12, color: MUTED }}> /unit</span>
           </div>
           <a href={product.url || "#"} target="_blank" rel="noopener" style={{
             padding: "7px 14px", borderRadius: 8, background: NAVY, color: "#fff",
-            fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "inherit",
+            fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "inherit", whiteSpace: "nowrap",
           }}>
-            View →
+            View
           </a>
         </div>
         {tagList.length > 0 && (
@@ -196,6 +195,11 @@ export function ExpressQuoteWidget() {
   ]
 
   async function startCapability(v: ViewMode) {
+    // Cache messages if leaving a conversation-based view
+    if (view === "faq" || view === "advice" || view === "chat") {
+      chatMessagesRef.current = messages
+    }
+
     setView(v); setMessages([]); setStep(0)
     setAnswers({ qty: 25 }); setSelectedTier(null); setSelectedProduct(null)
     setActionView(""); setTextInput(""); setTierBuckets([])
@@ -203,10 +207,15 @@ export function ExpressQuoteWidget() {
       push("morgan", "Great! Let's find the right products for you. I'll ask a few quick questions.")
       push("morgan", quoteSteps[0].question)
     }
-    if (v === "faq") push("morgan", "Hi! Pick a topic or type your own question below.")
-    if (v === "advice") push("morgan", "I'll help you find the perfect product. Pick a scenario or describe what you need.")
-    if (v === "chat") push("morgan", "Connecting you to our team… You're through to Sarah 👋 How can I help?")
     if (v === "faq" || v === "advice" || v === "chat") {
+      // Restore cached messages if conversation already exists
+      if (conversationRef.current && chatMessagesRef.current.length > 0) {
+        setMessages(chatMessagesRef.current)
+      } else {
+        if (v === "faq") push("morgan", "Hi! Pick a topic or type your own question below.")
+        if (v === "advice") push("morgan", "I'll help you find the perfect product. Pick a scenario or describe what you need.")
+        if (v === "chat") push("morgan", "Connecting you to our team… You're through to Sarah 👋 How can I help?")
+      }
       await ensureConversation()
     }
   }
@@ -791,6 +800,7 @@ export function ExpressQuoteWidget() {
   }
 
   const conversationRef = useRef<ReturnType<NonNullable<Window["elxBot"]>["createConversation"]> | null>(null)
+  const chatMessagesRef = useRef<Message[]>([])
 
   const showTextInput = view === "faq" || view === "chat" || view === "advice"
 
@@ -849,7 +859,7 @@ export function ExpressQuoteWidget() {
                     id: String(p.id ?? ""),
                     name: String(p.name ?? ""),
                     description: String(p.description ?? ""),
-                    price: Number(p.price ?? 0),
+                    price: p.price ?? 0,
                     sku: String(p.sku ?? ""),
                     image_url: String(p.image_url ?? ""),
                     category: String(p.category ?? ""),
@@ -877,9 +887,10 @@ export function ExpressQuoteWidget() {
           }
 
           case "message": {
-            setIsTyping(false)
             const payload = ev.payload as Record<string, unknown> | undefined
             if (!payload || payload.user_type !== "ai") break
+
+            setIsTyping(false)
 
             if (payload.session_id && typeof payload.session_id === "string" && !getSessionId()) {
               setSessionId(payload.session_id)
@@ -894,7 +905,7 @@ export function ExpressQuoteWidget() {
                   id: String(p.id ?? ""),
                   name: String(p.name ?? ""),
                   description: String(p.description ?? ""),
-                  price: Number(p.price ?? 0),
+                  price: p.price ?? 0,
                   sku: String(p.sku ?? ""),
                   image_url: String(p.image_url ?? ""),
                   category: String(p.category ?? ""),
@@ -968,6 +979,7 @@ export function ExpressQuoteWidget() {
         <button onClick={() => {
           setView("home"); setMessages([]); setStep(0); setAnswers({ qty: 50 })
           setSelectedTier(null); setSelectedProduct(null); setActionView(""); setTextInput(""); setTierBuckets([])
+          chatMessagesRef.current = []
           conversationRef.current?.disconnect(); conversationRef.current = null; clearSessionId()
         }}
           style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "none", padding: "6px 12px", borderRadius: 6, fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit" }}>
@@ -1066,7 +1078,7 @@ export function ExpressQuoteWidget() {
             )}
 
             {/* FAQ chips */}
-            {view === "faq" && (
+            {/* {view === "faq" && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 8 }}>
                 {FAQ_CHIPS.map(chip => (
                   <QuickReply key={chip} label={chip} onClick={() => {
@@ -1075,10 +1087,10 @@ export function ExpressQuoteWidget() {
                   }} />
                 ))}
               </div>
-            )}
+            )} */}
 
             {/* Advice chips */}
-            {view === "advice" && (
+            {/* {view === "advice" && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 8 }}>
                 {ADVICE_CHIPS.map(chip => (
                   <QuickReply key={chip} label={chip} onClick={() => {
@@ -1087,7 +1099,7 @@ export function ExpressQuoteWidget() {
                   }} />
                 ))}
               </div>
-            )}
+            )} */}
           </div>
         )}
       </div>

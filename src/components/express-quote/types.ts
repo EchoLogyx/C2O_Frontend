@@ -4,7 +4,7 @@ export interface ProductInfo {
   id: string
   name: string
   description: string
-  price: number
+  price: number | string
   sku: string
   image_url: string
   category: string
