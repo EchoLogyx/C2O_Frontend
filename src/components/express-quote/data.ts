@@ -22,9 +22,11 @@ export const PURPOSE_MAP: Record<string, { tags: string[]; sector?: string[] }> 
 
 // ─── UI-only constants ───────────────────────────────────────────
 export const SPEED_OPTIONS = [
-  { id: 'Within 2 days', label: 'Within 2 days' },
-  { id: 'Within 5 days', label: 'Within 5 days' },
-  { id: 'Not urgent',    label: "I'm flexible" },
+  { id: 'Within 2 days', label: 'Next day (before 11am cutoff)' },
+  { id: 'Within 5 days', label: 'Within 5 days (Express)' },
+  { id: '7-10 working days (Standard)', label: '7–10 working days (Standard)' },
+  { id: '2-3 weeks', label: '2–3 weeks' },
+  { id: 'No rush', label: 'No rush' },
 ]
 
 export const USE_CASES = [
@@ -67,8 +69,8 @@ export const PRIORITIES = [
 ]
 
 export const DECORATION_TYPES = [
-  { id: 'Printing',   label: 'Screen Print', desc: 'Vivid flat colour' },
-  { id: 'Embroidery', label: 'Embroidery',   desc: 'Textured premium finish' },
+  { id: 'Printing',   label: 'Print', desc: 'Best for t-shirts, large logos, and higher volumes.' },
+  { id: 'Embroidery', label: 'Embroidery',   desc: 'Premium look. Best for polos, hoodies, jackets.' },
 ]
 
 // Service pricing (from Services rows in spreadsheet)

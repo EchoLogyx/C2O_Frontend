@@ -182,24 +182,27 @@ export function ExpressQuoteWidget() {
 
   // ─── Quote steps (cascading facet filters) ────────────────────
   const quoteSteps = [
-    { key: "speed",   question: "When do you need this?" },
     { key: "purpose", question: "What's the main purpose of this order?" },
+    { key: "qty",     question: "How many items do you need?" },
     { key: "category", question: "What type of garment?" },
     { key: "gender",  question: "Who's it for?" },
     { key: "fabric",  question: "What fabric do you prefer?" },
     { key: "weight",  question: "What fabric weight?" },
     { key: "fit",     question: "What fit?" },
-    { key: "qty",     question: "How many items do you need?" },
     { key: "decorationType", question: "Any decoration needed?" },
     { key: "logoPosition", question: "Where would you like the logo?" },
     { key: "logoStatus", question: "Is this a new logo, or one we already have on file?" },
+    { key: "speed",   question: "When do you need them by?" },
   ]
 
   async function startCapability(v: ViewMode) {
     setView(v); setMessages([]); setStep(0)
     setAnswers({ qty: 25 }); setSelectedTier(null); setSelectedProduct(null)
     setActionView(""); setTextInput(""); setTierBuckets([])
-    if (v === "quote") push("morgan", "Great! Let's find the right products for you. I'll ask a few quick questions.")
+    if (v === "quote") {
+      push("morgan", "Great! Let's find the right products for you. I'll ask a few quick questions.")
+      push("morgan", quoteSteps[0].question)
+    }
     if (v === "faq") push("morgan", "Hi! Pick a topic or type your own question below.")
     if (v === "advice") push("morgan", "I'll help you find the perfect product. Pick a scenario or describe what you need.")
     if (v === "chat") push("morgan", "Connecting you to our team… You're through to Sarah 👋 How can I help?")
@@ -214,36 +217,36 @@ export function ExpressQuoteWidget() {
     const updated = { ...answers, [key]: value }
     setAnswers(updated)
     const nextStep = step + 1
-    setTimeout(() => {
-      if (nextStep < quoteSteps.length) {
+    if (nextStep < quoteSteps.length) {
+      setTimeout(() => {
         push("morgan", quoteSteps[nextStep].question)
         setStep(nextStep)
-      } else {
-        // All questions done — run engine
-        push("morgan", "Calculating results from our product catalogue…")
-        setTimeout(() => {
-          const decoTypeVal = updated.decorationType === "None" ? undefined : updated.decorationType
-          const input = {
-            speed: updated.speed,
-            purpose: updated.purpose,
-            category: updated.category,
-            gender: updated.gender,
-            fabric: updated.fabric,
-            weight: updated.weight,
-            fit: updated.fit,
-            qty: updated.qty ?? 25,
-            decorationType: decoTypeVal as "Printing" | "Embroidery" | undefined,
-            priority: "Balanced" as const,
-          }
-          const buckets = runQuoteEngine(input)
-          setTierBuckets(buckets); setSelectedProduct(null)
+      }, 250)
+    } else {
+      // All questions done — run engine
+      push("morgan", "Calculating results from our product catalogue…")
+      setTimeout(() => {
+        const decoTypeVal = updated.decorationType === "None" ? undefined : updated.decorationType
+        const input = {
+          speed: updated.speed,
+          purpose: updated.purpose,
+          category: updated.category,
+          gender: updated.gender,
+          fabric: updated.fabric,
+          weight: updated.weight,
+          fit: updated.fit,
+          qty: updated.qty ?? 25,
+          decorationType: decoTypeVal as "Printing" | "Embroidery" | undefined,
+          priority: "Balanced" as const,
+        }
+        const buckets = runQuoteEngine(input)
+        setTierBuckets(buckets); setSelectedProduct(null)
 
-          const hasDeco = input.decorationType ? ` with ${input.decorationType}` : ""
-          push("morgan", `Here are your results for ${input.category || "all garments"}${hasDeco}. We found ${buckets.reduce((s, b) => s + b.products.length, 0)} matching products across ${buckets.length} tiers.`)
-          setStep(nextStep)
-        }, 400)
-      }
-    }, 300)
+        const hasDeco = input.decorationType ? ` with ${input.decorationType}` : ""
+        push("morgan", `Here are your results for ${input.category || "all garments"}${hasDeco}. We found ${buckets.reduce((s, b) => s + b.products.length, 0)} matching products across ${buckets.length} tiers.`)
+        setStep(nextStep)
+      }, 400)
+    }
   }
 
   function goBack() {
@@ -270,26 +273,47 @@ export function ExpressQuoteWidget() {
     }
 
     switch (current.key) {
-      case "speed":
+      case "speed": {
+        const nextDayAvail = new Date().getHours() < 11
+        const speedOpts = [
+          { id: 'Within 2 days', label: 'Next day (before 11am cutoff)', tag: nextDayAvail ? 'AVAILABLE' : 'CUT OFF FOR TODAY', tagBg: nextDayAvail ? '#dcfce7' : '#fee2e2', tagColor: nextDayAvail ? '#166534' : '#991b1b' },
+          { id: 'Within 5 days', label: 'Within 5 days (Express)' },
+          { id: '7-10 working days (Standard)', label: '7–10 working days (Standard)' },
+          { id: '2-3 weeks', label: '2–3 weeks' },
+          { id: 'No rush', label: 'No rush' },
+        ]
         return (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {SPEED_OPTIONS.map(s => {
+          <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 420 }}>
+            {speedOpts.map(s => {
               const avail = optionAvailable(currentFilters, "speed", s.id)
               return (
                 <button key={s.id} onClick={() => avail && handleQuoteAnswer("speed", s.id)}
                   disabled={!avail}
                   style={{
-                    padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
-                    background: "#fff", color: INK,
-                    cursor: avail ? "pointer" : "not-allowed",
-                    fontSize: 13, fontWeight: 500, fontFamily: "inherit", opacity: avail ? 1 : 0.4,
+                    padding: "12px 14px", borderRadius: 10,
+                    border: `1.5px solid ${BORDER}`, background: avail ? "#fff" : "#f3f4f6",
+                    cursor: avail ? "pointer" : "not-allowed", textAlign: "left",
+                    fontFamily: "inherit", display: "flex", alignItems: "center",
+                    justifyContent: "space-between", opacity: avail ? 1 : 0.6,
                   }}>
-                  {s.label}
+                  <div style={{ fontSize: 13, fontWeight: 600, color: avail ? INK : MUTED }}>
+                    {s.label}
+                  </div>
+                  {s.tag && (
+                    <span style={{
+                      fontSize: 9, fontWeight: 700, letterSpacing: "0.5px",
+                      padding: "2px 6px", borderRadius: 4,
+                      background: s.tagBg, color: s.tagColor,
+                    }}>
+                      {s.tag}
+                    </span>
+                  )}
                 </button>
               )
             })}
           </div>
         )
+      }
 
       case "purpose":
         return (
@@ -314,20 +338,41 @@ export function ExpressQuoteWidget() {
 
       case "category": {
         const cats = getCategories()
+        const catDisplay: Record<string, { icon: string; desc: string }> = {
+          "t-shirts": { icon: "tshirts", desc: "Light, versatile, everyday wear" },
+          "polo-shirts": { icon: "polos", desc: "Smart-casual workhorse" },
+          "hoodies": { icon: "hoodies", desc: "Layering and warmth" },
+          "jackets": { icon: "jackets", desc: "Outerwear and softshells" },
+        }
         return (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          <div style={{ display: "grid", gap: 10, gridTemplateColumns: "repeat(2, 1fr)" }}>
             {cats.map(c => {
               const avail = optionAvailable(currentFilters, "category", c.id)
+              const d = catDisplay[c.id] ?? { icon: "tshirts", desc: "" }
               return (
                 <button key={c.id} onClick={() => avail && handleQuoteAnswer("category", c.id, c.label)}
                   disabled={!avail}
                   style={{
-                    padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
-                    background: "#fff", color: INK,
-                    cursor: avail ? "pointer" : "not-allowed",
-                    fontSize: 13, fontWeight: 500, fontFamily: "inherit", opacity: avail ? 1 : 0.4,
+                    padding: 12, borderRadius: 10, border: `1.5px solid ${BORDER}`,
+                    background: avail ? "#fff" : "#f3f4f6",
+                    cursor: avail ? "pointer" : "not-allowed", fontFamily: "inherit",
+                    display: "flex", alignItems: "center", gap: 10, opacity: avail ? 1 : 0.5,
                   }}>
-                  {c.label}
+                  <div style={{
+                    width: 48, height: 48, background: "#f3f6fb", borderRadius: 8,
+                    display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                  }}>
+                    <svg viewBox="0 0 64 64" width={38.4} height={38.4} fill="none" stroke={NAVY} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round">
+                      {d.icon === "tshirts" && <g><path d="M22 10 L14 16 L10 26 L18 30 L20 26 L20 54 L44 54 L44 26 L46 30 L54 26 L50 16 L42 10 L38 14 Q32 18 26 14 Z" /><path d="M26 14 Q32 18 38 14" /></g>}
+                      {d.icon === "polos" && <g><path d="M22 10 L14 16 L10 26 L18 30 L20 26 L20 54 L44 54 L44 26 L46 30 L54 26 L50 16 L42 10" /><path d="M22 10 L28 16 L32 22 L36 16 L42 10" /><line x1="32" y1="22" x2="32" y2="30" /><circle cx="30" cy="24" r="0.6" fill={NAVY} /><circle cx="30" cy="28" r="0.6" fill={NAVY} /></g>}
+                      {d.icon === "hoodies" && <g><path d="M22 12 L14 18 L8 30 L18 34 L20 30 L20 56 L44 56 L44 30 L46 34 L56 30 L50 18 L42 12 Q38 20 32 22 Q26 20 22 12 Z" /><path d="M22 12 Q26 4 32 4 Q38 4 42 12" /><line x1="30" y1="34" x2="30" y2="48" /><line x1="34" y1="34" x2="34" y2="48" /></g>}
+                      {d.icon === "jackets" && <g><path d="M22 10 L14 16 L10 28 L16 32 L16 54 L48 54 L48 32 L54 28 L50 16 L42 10" /><line x1="32" y1="10" x2="32" y2="54" /><line x1="22" y1="10" x2="32" y2="14" /><line x1="42" y1="10" x2="32" y2="14" /><rect x="20" y="38" width="6" height="8" /><rect x="38" y="38" width="6" height="8" /></g>}
+                    </svg>
+                  </div>
+                  <div style={{ textAlign: "left", minWidth: 0 }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: INK, fontFamily: "'Lato', Arial, sans-serif" }}>{c.label}</div>
+                    <div style={{ fontSize: 11, color: MUTED }}>{d.desc}</div>
+                  </div>
                 </button>
               )
             })}
@@ -469,19 +514,34 @@ export function ExpressQuoteWidget() {
       case "decorationType":
         const printPrice = decoUnitPrice("printing", answers.qty ?? 25)
         const embPrice = decoUnitPrice("embroidery", answers.qty ?? 25)
+        const decoOpts = [
+          { id: "Embroidery" as const, label: "Embroidery", desc: "Premium look. Best for polos, hoodies, jackets.", price: embPrice },
+          { id: "Printing" as const, label: "Print", desc: "Best for t-shirts, large logos, and higher volumes.", price: printPrice },
+        ]
         return (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            <button onClick={() => handleQuoteAnswer("decorationType", "Printing")}
-              style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
-              {DECORATION_TYPES[0].label} — £{printPrice.toFixed(2)}/unit
-            </button>
-            <button onClick={() => handleQuoteAnswer("decorationType", "Embroidery")}
-              style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
-              {DECORATION_TYPES[1].label} — £{embPrice.toFixed(2)}/unit
-            </button>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {decoOpts.map(d => (
+              <button key={d.id} onClick={() => handleQuoteAnswer("decorationType", d.id)}
+                style={{
+                  padding: 14, borderRadius: 10, border: `1.5px solid ${BORDER}`,
+                  background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit",
+                }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: INK, fontFamily: "'Lato', Arial, sans-serif" }}>{d.label}</div>
+                    <div style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>{d.desc}</div>
+                  </div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: NAVY, flexShrink: 0, marginLeft: 8 }}>+£{d.price.toFixed(2)}/unit</div>
+                </div>
+              </button>
+            ))}
             <button onClick={() => handleQuoteAnswer("decorationType", "None")}
-              style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
-              None — Plain garments only
+              style={{
+                padding: 14, borderRadius: 10, border: `1.5px solid ${BORDER}`,
+                background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit",
+              }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: INK, fontFamily: "'Lato', Arial, sans-serif" }}>None — Plain garments</div>
+              <div style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>No logo or decoration applied</div>
             </button>
           </div>
         )
