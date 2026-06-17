@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "QuoteAI Admin",
   description: "AI-powered product quotation admin panel",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({
