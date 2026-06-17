@@ -56,6 +56,28 @@ function MorganAvatar({ size = 40 }: { size?: number }) {
   )
 }
 
+// ─── Simple HTML sanitizer (allow safe tags only) ─────────────────
+function sanitizeHtml(html: string): string {
+  // Allow: a (href), b, strong, i, em, br, p, ul, ol, li, span, div, u, s
+  let clean = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<[^>]*\s+(on\w+)\s*=\s*["'][^"']*["'][^>]*>/gi, "")
+    .replace(/<[^>]*\s+(on\w+)\s*=\s*[^\s>]+/gi, "")
+    .replace(/javascript\s*:/gi, "")
+
+  // Add styling & safety attributes to anchor tags
+  const linkColor = "#1a6bc4"
+  clean = clean.replace(
+    /<a\s/gi,
+    `<a style="color:${linkColor};text-decoration:none;font-weight:600" target="_blank" rel="noopener noreferrer" `
+  )
+  // Also handle <a> tags with existing attributes (avoid double style)
+  clean = clean.replace(
+    /<a\s+([^>]*?)style\s*=\s*["][^"]*["]/gi,
+    (match) => match.replace(/style\s*=\s*["][^"]*["]/i, `style="color:${linkColor};text-decoration:none;font-weight:600"`)
+  )
+  return clean
+}
+
 // ─── Bubble ────────────────────────────────────────────────────────
 function Bubble({ role, text, senderIcon }: { role: Message["role"]; text: string; senderIcon?: string }) {
   const isUser = role === "user"
@@ -71,14 +93,17 @@ function Bubble({ role, text, senderIcon }: { role: Message["role"]; text: strin
           )}
         </div>
       )}
-      <div style={{
-        maxWidth: "75%", padding: "10px 14px",
-        borderRadius: isUser ? "18px 18px 4px 18px" : "4px 18px 18px 18px",
-        background: isUser ? NAVY : "#fff", color: isUser ? "#fff" : INK,
-        fontSize: 14, lineHeight: 1.55,
-        boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-        border: isUser ? "none" : `1px solid ${BORDER}`,
-      }}>{text}</div>
+      <div
+        style={{
+          maxWidth: "75%", padding: "10px 14px",
+          borderRadius: isUser ? "18px 18px 4px 18px" : "4px 18px 18px 18px",
+          background: isUser ? NAVY : "#fff", color: isUser ? "#fff" : INK,
+          fontSize: 14, lineHeight: 1.55,
+          boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+          border: isUser ? "none" : `1px solid ${BORDER}`,
+        }}
+        {...(isUser ? {} : { dangerouslySetInnerHTML: { __html: sanitizeHtml(text) } })}
+      >{isUser ? text : null}</div>
     </div>
   )
 }
