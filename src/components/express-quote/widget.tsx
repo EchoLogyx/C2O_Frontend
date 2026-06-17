@@ -791,10 +791,10 @@ export function ExpressQuoteWidget() {
             </button>
           ))}
         </div>
-        <div style={{ marginTop: 20, padding: 12, background: "#eff6ff", border: `1px solid ${NAVY_LIGHT}`, borderRadius: 10, fontSize: 12, color: "#1e40af", display: "flex", alignItems: "flex-start", gap: 8 }}>
+        {/* <div style={{ marginTop: 20, padding: 12, background: "#eff6ff", border: `1px solid ${NAVY_LIGHT}`, borderRadius: 10, fontSize: 12, color: "#1e40af", display: "flex", alignItems: "flex-start", gap: 8 }}>
           <Info size={14} style={{ marginTop: 1, flexShrink: 0 }} />
           <div><strong>Live data.</strong> Pricing is calculated in real time from our product catalogue using your quantity and decoration preferences.</div>
-        </div>
+        </div> */}
       </div>
     )
   }
