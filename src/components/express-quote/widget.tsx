@@ -274,7 +274,9 @@ export function ExpressQuoteWidget() {
           priority: "Balanced" as const,
         }
         const buckets = runQuoteEngine(input)
-        setTierBuckets(buckets); setSelectedProduct(null)
+        const allProducts = buckets.flatMap(b => b.products)
+        setTierBuckets(buckets)
+        setSelectedProduct(allProducts.length === 1 ? allProducts[0] : null)
 
         const hasDeco = input.decorationType ? ` with ${input.decorationType}` : ""
         push("morgan", `Here are your results for ${input.category || "all garments"}${hasDeco}. We found ${buckets.reduce((s, b) => s + b.products.length, 0)} matching products across ${buckets.length} tiers.`)
@@ -664,6 +666,7 @@ export function ExpressQuoteWidget() {
                 <strong style={l === "Est. total" ? { color: NAVY } : {}}>{v}</strong>
               </div>
             ))}
+            <div style={{ fontSize: 11, color: MUTED, textAlign: "center", marginTop: 8, opacity: 0.9 }}>All prices exclude VAT</div>
           </div>
           <input placeholder="Full name" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box", marginBottom: 8 }} />
           <input placeholder="Email" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
@@ -717,6 +720,7 @@ export function ExpressQuoteWidget() {
                     <div style={{ textAlign: "right", marginLeft: 12, flexShrink: 0 }}>
                       <div style={{ fontSize: 15, fontWeight: 800, color: t.color }}>£{r.totalPrice.toFixed(2)}</div>
                       <div style={{ fontSize: 10, color: MUTED }}>est. total</div>
+                      <div style={{ fontSize: 9, color: MUTED, opacity: 0.9 }}>Excludes VAT</div>
                     </div>
                   </button>
                 )
@@ -738,6 +742,7 @@ export function ExpressQuoteWidget() {
               <div style={{ textAlign: "right" }}>
                 <div style={{ fontSize: 24, fontWeight: 900, color: selTier.color }}>£{selectedProduct.totalPrice.toFixed(2)}</div>
                 <div style={{ fontSize: 12, color: MUTED }}>est. total for {answers.qty} items</div>
+                <div style={{ fontSize: 10, color: MUTED, opacity: 0.9 }}>Excludes VAT</div>
               </div>
             </div>
 
@@ -790,19 +795,19 @@ export function ExpressQuoteWidget() {
   // ─── Home screen ────────────────────────────────────────────────
   function renderHome() {
     const modes = [
-      { v: "quote" as ViewMode, icon: <FileText size={18} />, label: "Get a quote", sub: "5 priced tiers in 2 min", color: NAVY },
+      { v: "quote" as ViewMode, icon: <FileText size={18} />, label: "Get a quote", sub: "A full quote in under 60 seconds", color: NAVY },
       { v: "faq" as ViewMode, icon: <MessageSquare size={18} />, label: "Ask a question", sub: "Setup, delivery, minimums", color: "#7c3aed" },
       { v: "chat" as ViewMode, icon: <Headphones size={18} />, label: "Speak to a person", sub: "Live team — 9am to 5pm", color: GREEN },
-      { v: "advice" as ViewMode, icon: <Sparkles size={18} />, label: "Help me choose", sub: "Product & decoration advice", color: AMBER },
+      // { v: "advice" as ViewMode, icon: <Sparkles size={18} />, label: "Help me choose", sub: "Product & decoration advice", color: AMBER },
     ]
     return (
       <div>
         <div style={{ textAlign: "center", padding: "32px 0 24px" }}>
-          <div style={{ marginBottom: 12 }}><MorganAvatar size={64} /></div>
+          {/* <div style={{ marginBottom: 12 }}><MorganAvatar size={64} /></div> */}
           <div style={{ fontSize: 22, fontWeight: 900, color: INK, fontFamily: "'Quicksand', Lato, sans-serif" }}>Hi, I&apos;m Morgan</div>
           <div style={{ fontSize: 13, color: MUTED, marginTop: 4 }}>Your assistant at Clothes2Order. What can I help with today?</div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 10, maxWidth: 500, margin: "0 auto" }}>
           {modes.map(c => (
             <button key={c.v} onClick={() => startCapability(c.v)}
               style={{ padding: 16, borderRadius: 12, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit", display: "flex", flexDirection: "column", gap: 8 }}>
@@ -998,7 +1003,7 @@ export function ExpressQuoteWidget() {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ fontSize: 16, fontWeight: 900, letterSpacing: "-0.3px", fontFamily: "'Quicksand', Lato, sans-serif" }}>C2O</div>
           <div style={{ width: 1, height: 16, background: "rgba(255,255,255,0.2)" }} />
-          <div style={{ fontSize: 13, opacity: 0.85 }}>Customer Engine</div>
+          <div style={{ fontSize: 13, opacity: 0.85 }}>Morgan</div>
           <div style={{ fontSize: 10, fontWeight: 700, background: GOLD, color: NAVY_DARK, padding: "2px 8px", borderRadius: 4, letterSpacing: "0.5px" }}>MVP</div>
         </div>
         <button onClick={() => {
@@ -1026,7 +1031,7 @@ export function ExpressQuoteWidget() {
             <div style={{ fontSize: 11, color: MUTED, display: "flex", alignItems: "center", gap: 4 }}>
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e" }} />
               {view === "home" && "Always on · 24/7"}
-              {view === "quote" && (step < quoteSteps.length ? `Express Quote · Step ${step + 1} of ${quoteSteps.length}` : "Quote ready")}
+              {view === "quote" && (step < quoteSteps.length ? "Express Quote" : "Quote ready")}
               {view === "faq" && "Answering questions"}
               {view === "advice" && "Product advice"}
               {view === "chat" && "Live chat — Sarah"}
