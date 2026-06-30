@@ -30,6 +30,8 @@ export interface RawProduct {
   sizes?: string[]
   supportsPrint: boolean
   supportsEmbroidery: boolean
+  image_url?: string
+  url?: string
 }
 
 // ─── Engine inputs ────────────────────────────────────────────────
