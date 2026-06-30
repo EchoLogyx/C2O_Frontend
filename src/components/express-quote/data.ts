@@ -22,11 +22,10 @@ export const PURPOSE_MAP: Record<string, { tags: string[]; sector?: string[] }> 
 
 // ─── UI-only constants ───────────────────────────────────────────
 export const SPEED_OPTIONS = [
-  { id: 'Within 2 days', label: 'Next day (before 11am cutoff)' },
-  { id: 'Within 5 days', label: 'Within 5 days (Express)' },
-  { id: '7-10 working days (Standard)', label: '7–10 working days (Standard)' },
-  { id: '2-3 weeks', label: '2–3 weeks' },
-  { id: 'No rush', label: 'No rush' },
+  { id: 'Next day', label: 'Next day (order before 12:00am cut off)' },
+  { id: '4-5 days', label: '4–5 days' },
+  { id: '8-10 days', label: '8–10 days' },
+  { id: '11 days or longer', label: '11 days or longer' },
 ]
 
 export const USE_CASES = [

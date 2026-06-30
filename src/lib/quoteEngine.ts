@@ -30,6 +30,8 @@ export interface RawProduct {
   sizes?: string[]
   supportsPrint: boolean
   supportsEmbroidery: boolean
+  image_url?: string
+  url?: string
 }
 
 // ─── Engine inputs ────────────────────────────────────────────────
@@ -41,6 +43,7 @@ export interface QuoteInput {
   fabric?: string          // "Cotton" | "Polyester" | "Poly-cotton"
   weight?: string          // "Lightweight" | "Mediumweight" | "Heavyweight"
   fit?: string             // "Regular" | "Slim"
+  colour?: string          // colour name from product feed
   qty: number
   decorationType?: "Printing" | "Embroidery"
   priority?: "Lowest price" | "Balanced" | "Best quality"
@@ -139,8 +142,12 @@ function matchesWeight(p: RawProduct, weight: string): boolean {
 }
 
 function matchesSpeed(p: RawProduct, speed: string): boolean {
-  if (speed === "Within 2 days") return p.nextDay === true
+  if (speed === "Next day") return p.nextDay === true
   return true // other speed options don't filter
+}
+
+function matchesColour(p: RawProduct, colour: string): boolean {
+  return (p.colours ?? []).some(c => c.toLowerCase() === colour.toLowerCase())
 }
 
 // ─── Main: count available products for a set of filters ──────────
@@ -174,6 +181,9 @@ export function productPassesFilters(
         break
       case "fit":
         if ((p.fit ?? "") !== value) return false
+        break
+      case "colour":
+        if (!matchesColour(p, value as string)) return false
         break
     }
   }
@@ -316,4 +326,24 @@ export function getCategories(): Array<{ id: string; label: string; desc: string
 export function getProductsForCategory(category: string): RawProduct[] {
   const products = allProducts as unknown as RawProduct[]
   return products.filter(p => p.category === category)
+}
+
+/** Get all unique colour options available across products matching given filters (optionally ignoring one key). */
+export function getAvailableColours(filters: QuoteInput, ignoreKey?: string): Array<{ id: string; label: string; count: number }> {
+  const products = allProducts as unknown as RawProduct[]
+  const matching = products.filter(p => productPassesFilters(p, filters, ignoreKey))
+  const colourCounts = new Map<string, number>()
+  matching.forEach(p => {
+    (p.colours ?? []).forEach(c => {
+      colourCounts.set(c, (colourCounts.get(c) ?? 0) + 1)
+    })
+  })
+  const order = ["White","Black","Navy","Blue","Red","Green","Grey","Yellow","Purple","Orange","Pink","Brown","Cream","Multi"]
+  return [...colourCounts.entries()]
+    .map(([id, count]) => ({ id, label: id, count }))
+    .sort((a, b) => {
+      const ai = order.indexOf(a.id)
+      const bi = order.indexOf(b.id)
+      return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi)
+    })
 }

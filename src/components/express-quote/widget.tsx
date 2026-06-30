@@ -13,7 +13,7 @@ import {
   LOGO_POSITIONS, LOGO_STATUS,
 } from "./data"
 import type { ViewMode, Message, QuoteAnswers, ProductInfo } from "./types"
-import { runQuoteEngine, getCategories, getProductsForCategory, countMatchingProducts, optionAvailable } from "@/lib/quoteEngine"
+import { runQuoteEngine, getCategories, getProductsForCategory, countMatchingProducts, optionAvailable, getAvailableColours } from "@/lib/quoteEngine"
 import type { TierBucket, QuoteInput, ProductQuoteResult } from "@/lib/quoteEngine"
 
 // ─── Morgan Avatar ─────────────────────────────────────────────────
@@ -54,6 +54,17 @@ function MorganAvatar({ size = 40 }: { size?: number }) {
       boxShadow: "0 2px 8px rgba(74,144,226,0.35)",
     }}>🤖</div>
   )
+}
+
+// ─── Origination charges (one-time, not per-unit) ─────────────────
+const ORIGINATION_CHARGES: Record<string, number> = {
+  Printing: 4.99,
+  Embroidery: 9.99,
+}
+function getOriginationCharge(decorationType: string | undefined, logoStatus: string | undefined): number {
+  if (!decorationType || decorationType === "None") return 0
+  if (logoStatus !== "new-artwork") return 0
+  return ORIGINATION_CHARGES[decorationType] ?? 0
 }
 
 // ─── Simple HTML sanitizer (allow safe tags only) ─────────────────
@@ -213,6 +224,7 @@ export function ExpressQuoteWidget() {
     { key: "fabric",  question: "What fabric do you prefer?" },
     { key: "weight",  question: "What fabric weight?" },
     { key: "fit",     question: "What fit?" },
+    { key: "colour",  question: "Any colour preference?" },
     { key: "decorationType", question: "Any decoration needed?" },
     { key: "logoPosition", question: "Where would you like the logo?" },
     { key: "logoStatus", question: "Is this a new logo, or one we already have on file?" },
@@ -266,15 +278,18 @@ export function ExpressQuoteWidget() {
           purpose: updated.purpose,
           category: updated.category,
           gender: updated.gender,
-          fabric: updated.fabric,
-          weight: updated.weight,
+          fabric: updated.fabric === "dont-know" ? undefined : updated.fabric,
+          weight: updated.weight === "dont-know" ? undefined : updated.weight,
           fit: updated.fit,
+          colour: updated.colour === "dont-know" ? undefined : updated.colour,
           qty: updated.qty ?? 25,
           decorationType: decoTypeVal as "Printing" | "Embroidery" | undefined,
           priority: "Balanced" as const,
         }
         const buckets = runQuoteEngine(input)
-        setTierBuckets(buckets); setSelectedProduct(null)
+        const allProducts = buckets.flatMap(b => b.products)
+        setTierBuckets(buckets)
+        setSelectedProduct(allProducts.length === 1 ? allProducts[0] : null)
 
         const hasDeco = input.decorationType ? ` with ${input.decorationType}` : ""
         push("morgan", `Here are your results for ${input.category || "all garments"}${hasDeco}. We found ${buckets.reduce((s, b) => s + b.products.length, 0)} matching products across ${buckets.length} tiers.`)
@@ -300,21 +315,25 @@ export function ExpressQuoteWidget() {
 
     // Build current filters so far (excluding current step) to check option availability
     const decoSafe = answers.decorationType === "None" ? undefined : answers.decorationType
+    const fabricSafe = answers.fabric === "dont-know" ? undefined : answers.fabric
+    const weightSafe = answers.weight === "dont-know" ? undefined : answers.weight
+    const colourSafe = answers.colour === "dont-know" ? undefined : answers.colour
     const currentFilters: QuoteInput = {
-      ...answers as Omit<QuoteAnswers, "decorationType">,
+      ...answers as Omit<QuoteAnswers, "decorationType" | "fabric" | "weight" | "colour">,
       decorationType: decoSafe,
+      fabric: fabricSafe,
+      weight: weightSafe,
+      colour: colourSafe,
       qty: answers.qty ?? 25,
     }
 
     switch (current.key) {
       case "speed": {
-        const nextDayAvail = new Date().getHours() < 11
         const speedOpts = [
-          { id: 'Within 2 days', label: 'Next day (before 11am cutoff)', tag: nextDayAvail ? 'AVAILABLE' : 'CUT OFF FOR TODAY', tagBg: nextDayAvail ? '#dcfce7' : '#fee2e2', tagColor: nextDayAvail ? '#166534' : '#991b1b' },
-          { id: 'Within 5 days', label: 'Within 5 days (Express)' },
-          { id: '7-10 working days (Standard)', label: '7–10 working days (Standard)' },
-          { id: '2-3 weeks', label: '2–3 weeks' },
-          { id: 'No rush', label: 'No rush' },
+          { id: 'Next day', label: 'Next day (order before 12:00am cut off)' },
+          { id: '4-5 days', label: '4–5 days' },
+          { id: '8-10 days', label: '8–10 days' },
+          { id: '11 days or longer', label: '11 days or longer' },
         ]
         return (
           <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 420 }}>
@@ -333,15 +352,6 @@ export function ExpressQuoteWidget() {
                   <div style={{ fontSize: 13, fontWeight: 600, color: avail ? INK : MUTED }}>
                     {s.label}
                   </div>
-                  {s.tag && (
-                    <span style={{
-                      fontSize: 9, fontWeight: 700, letterSpacing: "0.5px",
-                      padding: "2px 6px", borderRadius: 4,
-                      background: s.tagBg, color: s.tagColor,
-                    }}>
-                      {s.tag}
-                    </span>
-                  )}
                 </button>
               )
             })}
@@ -453,6 +463,10 @@ export function ExpressQuoteWidget() {
                 </button>
               )
             })}
+            <button onClick={() => handleQuoteAnswer("fabric", "dont-know", "Don't know")}
+              style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
+              I don't know
+            </button>
           </div>
         )
 
@@ -474,6 +488,10 @@ export function ExpressQuoteWidget() {
                 </button>
               )
             })}
+            <button onClick={() => handleQuoteAnswer("weight", "dont-know", "Don't know")}
+              style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
+              I don't know
+            </button>
           </div>
         )
 
@@ -497,6 +515,43 @@ export function ExpressQuoteWidget() {
             })}
           </div>
         )
+
+      case "colour": {
+        const colourOpts = getAvailableColours(currentFilters, "colour")
+        // Colour → hex map for swatch circles
+        const colourHex: Record<string, string> = {
+          White: "#ffffff", Black: "#222222", Navy: "#1a2744", Blue: "#2563eb",
+          Red: "#dc2626", Green: "#16a34a", Grey: "#6b7280", Yellow: "#eab308",
+          Purple: "#9333ea", Orange: "#ea580c", Pink: "#ec4899", Brown: "#8B4513",
+          Cream: "#fef3c7", Multi: "linear-gradient(90deg,red,orange,yellow,green,blue,purple)",
+        }
+        return (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {colourOpts.map(c => {
+              const hex = colourHex[c.id] ?? "#ccc"
+              return (
+                <button key={c.id} onClick={() => handleQuoteAnswer("colour", c.id)}
+                  style={{
+                    padding: "6px 12px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
+                    background: "#fff", color: INK, cursor: "pointer",
+                    fontSize: 13, fontWeight: 500, fontFamily: "inherit",
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                  }}>
+                  <span style={{
+                    width: 14, height: 14, borderRadius: "50%", display: "inline-block", flexShrink: 0,
+                    background: hex, border: c.id === "White" ? `1px solid ${BORDER}` : "none",
+                  }} />
+                  {c.label}
+                </button>
+              )
+            })}
+            <button onClick={() => handleQuoteAnswer("colour", "dont-know", "Don't know")}
+              style={{ padding: "6px 12px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
+              I don't know
+            </button>
+          </div>
+        )
+      }
 
       case "qty":
         const quickQtys = [1, 5, 10, 25, 50, 100, 250, 500]
@@ -621,6 +676,8 @@ export function ExpressQuoteWidget() {
       t.products.map(r => ({ ...r, tier: t }))
     )
 
+    console.log(allProducts.length, "products found")
+
     // ── Action overlay (email / callback / order) ────────────────
     if (actionView && selectedProduct) {
       const t = tierBuckets.find(b => b.products.some(p => p.product.id === selectedProduct.product.id))!
@@ -651,19 +708,26 @@ export function ExpressQuoteWidget() {
           <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginBottom: 4 }}>🛒 Confirm order intent</div>
           <div style={{ fontSize: 13, color: MUTED, marginBottom: 16 }}>We'll contact you to finalise artwork, sizes and payment.</div>
           <div style={{ background: GREY_BG, borderRadius: 8, padding: 12, marginBottom: 16, fontSize: 13 }}>
-            {[
-              ["Tier", t.tierName],
-              ["Product", selectedProduct.product.name],
-              ["Qty", `${answers.qty} items`],
-              ["Unit price (garment)", `£${selectedProduct.unitPrice.toFixed(2)}`],
-              ...(hasDeco ? [["Decoration/unit", `£${selectedProduct.decorationCostPerUnit.toFixed(2)}`]] : []),
-              ["Est. total", `£${selectedProduct.totalPrice.toFixed(2)}`],
-            ].map(([l, v]) => (
-              <div key={l} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                <span style={{ color: MUTED }}>{l}</span>
-                <strong style={l === "Est. total" ? { color: NAVY } : {}}>{v}</strong>
-              </div>
-            ))}
+            {(() => {
+              const originationCharge = getOriginationCharge(answers.decorationType, answers.logoStatus)
+              const totalWithOrig = selectedProduct.totalPrice + originationCharge
+              const rows: [string, string][] = [
+                ["Tier", t.tierName],
+                ["Product", selectedProduct.product.name],
+                ["Qty", `${answers.qty} items`],
+                ["Unit price (garment)", `£${selectedProduct.unitPrice.toFixed(2)}`],
+              ]
+              if (hasDeco) rows.push(["Decoration/unit", `£${selectedProduct.decorationCostPerUnit.toFixed(2)}`])
+              if (originationCharge > 0) rows.push(["Origination (one-time)", `£${originationCharge.toFixed(2)}`])
+              rows.push(["Est. total", `£${totalWithOrig.toFixed(2)}`])
+              return rows.map(([l, v]) => (
+                <div key={l} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                  <span style={{ color: MUTED }}>{l}</span>
+                  <strong style={l === "Est. total" ? { color: NAVY } : {}}>{v}</strong>
+                </div>
+              ))
+            })()}
+            <div style={{ fontSize: 11, color: MUTED, textAlign: "center", marginTop: 8, opacity: 0.9 }}>All prices exclude VAT</div>
           </div>
           <input placeholder="Full name" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box", marginBottom: 8 }} />
           <input placeholder="Email" style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: `1.5px solid ${BORDER}`, fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
@@ -699,6 +763,9 @@ export function ExpressQuoteWidget() {
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               {t.products.map(r => {
                 const isSelected = selectedProduct?.product.id === r.product.id
+                const origFee = getOriginationCharge(answers.decorationType, answers.logoStatus)
+                const totalPerUnit = (r.totalPrice + origFee) / (answers.qty ?? 1)
+                const totalWithOrig = r.totalPrice + origFee
                 return (
                   <button key={r.product.id} onClick={() => { setSelectedProduct(isSelected ? null : r); setActionView("") }}
                     style={{
@@ -711,12 +778,13 @@ export function ExpressQuoteWidget() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: 13, fontWeight: 700, color: INK }}>{r.product.name}</div>
                       <div style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>
-                        {r.product.brand} · £{r.unitPrice.toFixed(2)}/unit
+                        {r.product.brand} · £{totalPerUnit.toFixed(2)}/unit total
                       </div>
                     </div>
                     <div style={{ textAlign: "right", marginLeft: 12, flexShrink: 0 }}>
-                      <div style={{ fontSize: 15, fontWeight: 800, color: t.color }}>£{r.totalPrice.toFixed(2)}</div>
+                      <div style={{ fontSize: 15, fontWeight: 800, color: t.color }}>£{totalWithOrig.toFixed(2)}</div>
                       <div style={{ fontSize: 10, color: MUTED }}>est. total</div>
+                      <div style={{ fontSize: 9, color: MUTED, opacity: 0.9 }}>Excludes VAT</div>
                     </div>
                   </button>
                 )
@@ -726,7 +794,10 @@ export function ExpressQuoteWidget() {
         ))}
 
         {/* ── Product detail panel (when a product is selected) ── */}
-        {selectedProduct && selTier && (
+        {selectedProduct && selTier && (() => {
+          const originationCharge = getOriginationCharge(answers.decorationType, answers.logoStatus)
+          const totalWithOrigination = selectedProduct.totalPrice + originationCharge
+          return (
           <div style={{ background: "#fff", borderRadius: 12, border: `2px solid ${selTier.color}`, padding: 20, marginTop: 8, marginBottom: 12 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -736,31 +807,47 @@ export function ExpressQuoteWidget() {
                 </div>
               </div>
               <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 24, fontWeight: 900, color: selTier.color }}>£{selectedProduct.totalPrice.toFixed(2)}</div>
+                <div style={{ fontSize: 24, fontWeight: 900, color: selTier.color }}>£{totalWithOrigination.toFixed(2)}</div>
                 <div style={{ fontSize: 12, color: MUTED }}>est. total for {answers.qty} items</div>
+                <div style={{ fontSize: 10, color: MUTED, opacity: 0.9 }}>Excludes VAT</div>
               </div>
             </div>
 
             {/* Pricing breakdown */}
-            <div style={{ display: "grid", gridTemplateColumns: answers.decorationType && answers.decorationType !== "None" ? "repeat(4,1fr)" : "repeat(3,1fr)", gap: 8, marginBottom: 14 }}>
-              {[
+            {(() => {
+              const totalPerUnit = (selectedProduct.totalPrice + originationCharge) / (answers.qty ?? 1)
+              const gridCards = [
                 { label: "Unit (garment)", value: `£${selectedProduct.unitPrice.toFixed(2)}` },
                 ...(answers.decorationType && answers.decorationType !== "None" ? [{ label: "Decoration/unit", value: `£${selectedProduct.decorationCostPerUnit.toFixed(2)}` }] : []),
+                ...(originationCharge > 0 ? [{ label: "Origination (one-off)", value: `£${originationCharge.toFixed(2)}` }] : []),
                 { label: "Delivery", value: selTier.delivery },
-              ].map(row => (
-                <div key={row.label} style={{ textAlign: "center", background: GREY_BG, borderRadius: 8, padding: "10px 6px" }}>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: INK }}>{row.value}</div>
-                  <div style={{ fontSize: 11, color: MUTED }}>{row.label}</div>
-                </div>
-              ))}
-            </div>
+              ]
+              return (
+                <>
+                  {gridCards.length > 0 && (
+                    <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(gridCards.length, 4)},1fr)`, gap: 8, marginBottom: 8 }}>
+                      {gridCards.map(row => (
+                        <div key={row.label} style={{ textAlign: "center", background: GREY_BG, borderRadius: 8, padding: "10px 6px" }}>
+                          <div style={{ fontSize: 15, fontWeight: 700, color: INK }}>{row.value}</div>
+                          <div style={{ fontSize: 11, color: MUTED }}>{row.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: GREY_BG, borderRadius: 8, marginBottom: 14, fontSize: 14 }}>
+                    <span style={{ color: INK, fontWeight: 600 }}>Per unit cost</span>
+                    <strong style={{ color: INK, fontSize: 16 }}>£{totalPerUnit.toFixed(2)}</strong>
+                  </div>
+                </>
+              )
+            })()}
 
             {/* Product info */}
-            {selectedProduct.product.featureText && (
+            {/* {selectedProduct.product.featureText && (
               <div style={{ fontSize: 13, color: MUTED, lineHeight: 1.5, marginBottom: 14, padding: "10px 12px", background: GREY_BG, borderRadius: 8 }}>
                 {selectedProduct.product.featureText}
               </div>
-            )}
+            )} */}
 
             {/* Brand & specs */}
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 14, fontSize: 12, color: MUTED }}>
@@ -782,7 +869,7 @@ export function ExpressQuoteWidget() {
               </button>
             </div>
           </div>
-        )}
+        )})()}
       </div>
     )
   }
@@ -790,19 +877,19 @@ export function ExpressQuoteWidget() {
   // ─── Home screen ────────────────────────────────────────────────
   function renderHome() {
     const modes = [
-      { v: "quote" as ViewMode, icon: <FileText size={18} />, label: "Get a quote", sub: "5 priced tiers in 2 min", color: NAVY },
+      { v: "quote" as ViewMode, icon: <FileText size={18} />, label: "Get a quote", sub: "A full quote in under 60 seconds", color: NAVY },
       { v: "faq" as ViewMode, icon: <MessageSquare size={18} />, label: "Ask a question", sub: "Setup, delivery, minimums", color: "#7c3aed" },
       { v: "chat" as ViewMode, icon: <Headphones size={18} />, label: "Speak to a person", sub: "Live team — 9am to 5pm", color: GREEN },
-      { v: "advice" as ViewMode, icon: <Sparkles size={18} />, label: "Help me choose", sub: "Product & decoration advice", color: AMBER },
+      // { v: "advice" as ViewMode, icon: <Sparkles size={18} />, label: "Help me choose", sub: "Product & decoration advice", color: AMBER },
     ]
     return (
       <div>
         <div style={{ textAlign: "center", padding: "32px 0 24px" }}>
-          <div style={{ marginBottom: 12 }}><MorganAvatar size={64} /></div>
+          {/* <div style={{ marginBottom: 12 }}><MorganAvatar size={64} /></div> */}
           <div style={{ fontSize: 22, fontWeight: 900, color: INK, fontFamily: "'Quicksand', Lato, sans-serif" }}>Hi, I&apos;m Morgan</div>
           <div style={{ fontSize: 13, color: MUTED, marginTop: 4 }}>Your assistant at Clothes2Order. What can I help with today?</div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 10, maxWidth: 500, margin: "0 auto" }}>
           {modes.map(c => (
             <button key={c.v} onClick={() => startCapability(c.v)}
               style={{ padding: 16, borderRadius: 12, border: `1.5px solid ${BORDER}`, background: "#fff", cursor: "pointer", textAlign: "left", fontFamily: "inherit", display: "flex", flexDirection: "column", gap: 8 }}>
@@ -985,7 +1072,7 @@ export function ExpressQuoteWidget() {
   const tabs = [
     { v: "quote" as ViewMode, icon: <FileText size={14} />, label: "Quote" },
     { v: "faq" as ViewMode, icon: <MessageSquare size={14} />, label: "FAQ" },
-    { v: "advice" as ViewMode, icon: <Sparkles size={14} />, label: "Advice" },
+    // { v: "advice" as ViewMode, icon: <Sparkles size={14} />, label: "Advice" },
     { v: "chat" as ViewMode, icon: <Headphones size={14} />, label: "Human" },
   ]
 
@@ -998,7 +1085,7 @@ export function ExpressQuoteWidget() {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ fontSize: 16, fontWeight: 900, letterSpacing: "-0.3px", fontFamily: "'Quicksand', Lato, sans-serif" }}>C2O</div>
           <div style={{ width: 1, height: 16, background: "rgba(255,255,255,0.2)" }} />
-          <div style={{ fontSize: 13, opacity: 0.85 }}>Customer Engine</div>
+          <div style={{ fontSize: 13, opacity: 0.85 }}>Morgan</div>
           <div style={{ fontSize: 10, fontWeight: 700, background: GOLD, color: NAVY_DARK, padding: "2px 8px", borderRadius: 4, letterSpacing: "0.5px" }}>MVP</div>
         </div>
         <button onClick={() => {
@@ -1026,7 +1113,7 @@ export function ExpressQuoteWidget() {
             <div style={{ fontSize: 11, color: MUTED, display: "flex", alignItems: "center", gap: 4 }}>
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e" }} />
               {view === "home" && "Always on · 24/7"}
-              {view === "quote" && (step < quoteSteps.length ? `Express Quote · Step ${step + 1} of ${quoteSteps.length}` : "Quote ready")}
+              {view === "quote" && (step < quoteSteps.length ? "Express Quote" : "Quote ready")}
               {view === "faq" && "Answering questions"}
               {view === "advice" && "Product advice"}
               {view === "chat" && "Live chat — Sarah"}

@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <head>
         <Script
-          src="https://staging.d1n7r7gw9tmtrw.amplifyapp.com/chatBot.js?botid=c6a6ecbb-66f0-4097-be42-e743fa400e62"
+          src={`${process.env.NEXT_PUBLIC_BOT_URL}?botid=${process.env.NEXT_PUBLIC_BOT_ID}`}
           strategy="beforeInteractive"
         />
       </head>

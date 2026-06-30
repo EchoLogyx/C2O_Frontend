@@ -30,6 +30,7 @@ export interface QuoteAnswers {
   fabric?: string         // "Cotton" | "Polyester" | "Poly-cotton"
   weight?: string         // "Lightweight" | "Mediumweight" | "Heavyweight"
   fit?: string            // "Regular" | "Slim"
+  colour?: string         // colour name from product feed
   qty?: number
   decorationType?: 'Printing' | 'Embroidery' | 'None'
   priority?: 'Lowest price' | 'Balanced' | 'Best quality'

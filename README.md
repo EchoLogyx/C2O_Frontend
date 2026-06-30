@@ -1,4 +1,4 @@
-# C2O Customer Engine — Quotation Admin
+# C2O Morgan — Quotation Admin
 
 An AI-powered product quotation and admin panel for **Clothes2Order (C2O)**. The front-facing **Express Quote Widget** lets customers get instant garment quotes via a conversational AI assistant ("Morgan"), while the **admin panel** provides CRUD management for products, categories, quotes, pricing tiers, and CSV data imports.
 
