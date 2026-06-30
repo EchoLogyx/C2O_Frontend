@@ -13,7 +13,7 @@ import {
   LOGO_POSITIONS, LOGO_STATUS,
 } from "./data"
 import type { ViewMode, Message, QuoteAnswers, ProductInfo } from "./types"
-import { runQuoteEngine, getCategories, getProductsForCategory, countMatchingProducts, optionAvailable } from "@/lib/quoteEngine"
+import { runQuoteEngine, getCategories, getProductsForCategory, countMatchingProducts, optionAvailable, getAvailableColours } from "@/lib/quoteEngine"
 import type { TierBucket, QuoteInput, ProductQuoteResult } from "@/lib/quoteEngine"
 
 // ─── Morgan Avatar ─────────────────────────────────────────────────
@@ -224,6 +224,7 @@ export function ExpressQuoteWidget() {
     { key: "fabric",  question: "What fabric do you prefer?" },
     { key: "weight",  question: "What fabric weight?" },
     { key: "fit",     question: "What fit?" },
+    { key: "colour",  question: "Any colour preference?" },
     { key: "decorationType", question: "Any decoration needed?" },
     { key: "logoPosition", question: "Where would you like the logo?" },
     { key: "logoStatus", question: "Is this a new logo, or one we already have on file?" },
@@ -280,6 +281,7 @@ export function ExpressQuoteWidget() {
           fabric: updated.fabric === "dont-know" ? undefined : updated.fabric,
           weight: updated.weight === "dont-know" ? undefined : updated.weight,
           fit: updated.fit,
+          colour: updated.colour === "dont-know" ? undefined : updated.colour,
           qty: updated.qty ?? 25,
           decorationType: decoTypeVal as "Printing" | "Embroidery" | undefined,
           priority: "Balanced" as const,
@@ -315,23 +317,23 @@ export function ExpressQuoteWidget() {
     const decoSafe = answers.decorationType === "None" ? undefined : answers.decorationType
     const fabricSafe = answers.fabric === "dont-know" ? undefined : answers.fabric
     const weightSafe = answers.weight === "dont-know" ? undefined : answers.weight
+    const colourSafe = answers.colour === "dont-know" ? undefined : answers.colour
     const currentFilters: QuoteInput = {
-      ...answers as Omit<QuoteAnswers, "decorationType" | "fabric" | "weight">,
+      ...answers as Omit<QuoteAnswers, "decorationType" | "fabric" | "weight" | "colour">,
       decorationType: decoSafe,
       fabric: fabricSafe,
       weight: weightSafe,
+      colour: colourSafe,
       qty: answers.qty ?? 25,
     }
 
     switch (current.key) {
       case "speed": {
-        const nextDayAvail = new Date().getHours() < 11
         const speedOpts = [
-          { id: 'Within 2 days', label: 'Next day (before 11am cutoff)', tag: nextDayAvail ? 'AVAILABLE' : 'CUT OFF FOR TODAY', tagBg: nextDayAvail ? '#dcfce7' : '#fee2e2', tagColor: nextDayAvail ? '#166534' : '#991b1b' },
-          { id: 'Within 5 days', label: 'Within 5 days (Express)' },
-          { id: '7-10 working days (Standard)', label: '7–10 working days (Standard)' },
-          { id: '2-3 weeks', label: '2–3 weeks' },
-          { id: 'No rush', label: 'No rush' },
+          { id: 'Next day', label: 'Next day (order before 12:00am cut off)' },
+          { id: '4-5 days', label: '4–5 days' },
+          { id: '8-10 days', label: '8–10 days' },
+          { id: '11 days or longer', label: '11 days or longer' },
         ]
         return (
           <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 420 }}>
@@ -350,15 +352,6 @@ export function ExpressQuoteWidget() {
                   <div style={{ fontSize: 13, fontWeight: 600, color: avail ? INK : MUTED }}>
                     {s.label}
                   </div>
-                  {s.tag && (
-                    <span style={{
-                      fontSize: 9, fontWeight: 700, letterSpacing: "0.5px",
-                      padding: "2px 6px", borderRadius: 4,
-                      background: s.tagBg, color: s.tagColor,
-                    }}>
-                      {s.tag}
-                    </span>
-                  )}
                 </button>
               )
             })}
@@ -522,6 +515,43 @@ export function ExpressQuoteWidget() {
             })}
           </div>
         )
+
+      case "colour": {
+        const colourOpts = getAvailableColours(currentFilters, "colour")
+        // Colour → hex map for swatch circles
+        const colourHex: Record<string, string> = {
+          White: "#ffffff", Black: "#222222", Navy: "#1a2744", Blue: "#2563eb",
+          Red: "#dc2626", Green: "#16a34a", Grey: "#6b7280", Yellow: "#eab308",
+          Purple: "#9333ea", Orange: "#ea580c", Pink: "#ec4899", Brown: "#8B4513",
+          Cream: "#fef3c7", Multi: "linear-gradient(90deg,red,orange,yellow,green,blue,purple)",
+        }
+        return (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {colourOpts.map(c => {
+              const hex = colourHex[c.id] ?? "#ccc"
+              return (
+                <button key={c.id} onClick={() => handleQuoteAnswer("colour", c.id)}
+                  style={{
+                    padding: "6px 12px", borderRadius: 20, border: `1.5px solid ${BORDER}`,
+                    background: "#fff", color: INK, cursor: "pointer",
+                    fontSize: 13, fontWeight: 500, fontFamily: "inherit",
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                  }}>
+                  <span style={{
+                    width: 14, height: 14, borderRadius: "50%", display: "inline-block", flexShrink: 0,
+                    background: hex, border: c.id === "White" ? `1px solid ${BORDER}` : "none",
+                  }} />
+                  {c.label}
+                </button>
+              )
+            })}
+            <button onClick={() => handleQuoteAnswer("colour", "dont-know", "Don't know")}
+              style={{ padding: "6px 12px", borderRadius: 20, border: `1.5px solid ${BORDER}`, background: "#fff", color: INK, cursor: "pointer", fontSize: 13, fontWeight: 500, fontFamily: "inherit" }}>
+              I don't know
+            </button>
+          </div>
+        )
+      }
 
       case "qty":
         const quickQtys = [1, 5, 10, 25, 50, 100, 250, 500]
@@ -805,7 +835,7 @@ export function ExpressQuoteWidget() {
                     </div>
                   )}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: GREY_BG, borderRadius: 8, marginBottom: 14, fontSize: 14 }}>
-                    <span style={{ color: INK, fontWeight: 600 }}>Total/unit</span>
+                    <span style={{ color: INK, fontWeight: 600 }}>Per unit cost</span>
                     <strong style={{ color: INK, fontSize: 16 }}>£{totalPerUnit.toFixed(2)}</strong>
                   </div>
                 </>
@@ -1042,7 +1072,7 @@ export function ExpressQuoteWidget() {
   const tabs = [
     { v: "quote" as ViewMode, icon: <FileText size={14} />, label: "Quote" },
     { v: "faq" as ViewMode, icon: <MessageSquare size={14} />, label: "FAQ" },
-    { v: "advice" as ViewMode, icon: <Sparkles size={14} />, label: "Advice" },
+    // { v: "advice" as ViewMode, icon: <Sparkles size={14} />, label: "Advice" },
     { v: "chat" as ViewMode, icon: <Headphones size={14} />, label: "Human" },
   ]
 
